@@ -64,6 +64,7 @@ export function toonVergelijk(el, gevraagd) {
   el.innerHTML = `<div class="vgl">
     <p class="kicker">${esc(meta().reisdata)}</p>
     <h1>${t('Vergelijk wat je kent', "Compare what you've found")}</h1>
+    <p class="doorverwijs"><a class="knop" href="#/huizen">${icoon('huis')}${t('Liever op het huis kiezen? Alle huizen', 'Rather choose by house? All houses')}</a></p>
     <p class="lead">${t('Geen officiële ranglijst: de volgorde komt uit jouw weging en jouw koffer, en schuift mee als je iets verandert.', 'Not an official ranking: the order comes from your weighting and your suitcase, and shifts when you change something.')}</p>
     ${geheim ? `<p class="geheimbalk"><span><strong>${geheim === 1 ? t('Nog 1 bestemming is geheim.', '1 destination is still secret.') : t(`Nog ${geheim} bestemmingen zijn geheim.`, `${geheim} destinations are still secret.`)}</strong> <a href="#/hal">${t('Ga ze ontdekken', 'Go discover them')}</a></span><button type="button" class="linkknop" id="onthul">${t('of onthul alles', 'or reveal everything')}</button></p>` : ''}
 
@@ -123,7 +124,7 @@ export function toonVergelijk(el, gevraagd) {
     el.querySelector('#vgl-paneel').setAttribute('aria-labelledby', `vgl-tab-${weergave}`);
     uitleg.textContent = b.kids
       ? t('Door de ogen van de kids: gesorteerd op het kids-oordeel, bij gelijke stand op de kortste reistijd.', "Through the kids' eyes: sorted by the kids' verdict, and by shortest travel time in case of a tie.")
-      : t('Gesorteerd op jouw score. Kosten per persoon gelden voor de sterkste huiskeuze en zijn een indicatie.', 'Sorted by your score. Cost per person is for the strongest house pick and is an estimate.');
+      : t('Gesorteerd op jouw score. Kosten per persoon gelden voor het eerste huis van elke plek en zijn een indicatie.', 'Sorted by your score. Cost per person is for the first house of each place and is an estimate.');
 
     el.querySelector('#sortering').hidden = weergave !== 'scores';
     if (sortering === 'rondje' && weergave === 'scores') uitleg.textContent = t('Gesorteerd op de prijs van een rondje voor de mannen, goedkoopste bovenaan.', 'Sorted by the price of a round for the guys, cheapest on top.');

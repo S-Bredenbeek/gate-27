@@ -15,6 +15,12 @@ async function haal(bestand) {
 
 export async function laadData() {
   NL = await haal('vakantie-data.json');
+  // Het soort huis volgt uit de Nederlandse rol en blijft in beide talen gelijk.
+  for (const o of NL.opties) {
+    for (const h of o.huizen) {
+      h.soort = /luxe/i.test(h.rol) ? 'luxe' : /tip/i.test(h.rol) ? 'tip' : /sterkste/i.test(h.rol) ? 'sterkste' : 'alternatief';
+    }
+  }
   D = NL;
   return D;
 }
@@ -60,6 +66,14 @@ export async function kiesDataTaal(taal) {
 export const meta = () => D.meta;
 export const opties = () => D.opties;
 export const optie = (id) => D.opties.find((o) => o.id === id);
+export const alleHuizen = () => D.opties.flatMap((o) => o.huizen.map((h, i) => ({ o, h, i })));
+export const huis = (airbnbId) => alleHuizen().find((x) => String(x.h.airbnb_id) === String(airbnbId));
+export const huiskenmerken = () => D.meta.huiskenmerken?.lijst ?? [];
+// Vluchtduur ("3u10" of "3h10") plus de rit naar het huis, in minuten.
+export function reistijd(o) {
+  const [, uren = 0, min = 0] = /(\d+)\s*[uh]\s*(\d+)?/i.exec(o.vlucht?.duur ?? '') ?? [];
+  return Number(uren) * 60 + Number(min || 0) + (o.kidscheck?.transfer_min ?? 0);
+}
 export const landNamen = () => [...new Set(D.opties.map((o) => o.land))];
 export const optiesIn = (landNaam) => D.opties.filter((o) => o.land === landNaam);
 export const categorieen = () => D.meta.mogelijkheden.categorieen;

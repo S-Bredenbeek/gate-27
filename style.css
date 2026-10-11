@@ -164,7 +164,7 @@ select { margin-top: 6px; font-weight: 400; }
 
 /* ---------- podium: kaart met paneel ---------- */
 
-.kaartvak { position: sticky; top: var(--top-h); z-index: 0; height: 40vh; height: 40svh; background: #D5E3EC; transition: height .3s; }
+.kaartvak { position: sticky; top: var(--top-h); z-index: 0; height: 40vh; height: 40svh; background: #D5E3EC; }
 body[data-scherm="b"] .kaartvak { height: 30vh; height: 30svh; }
 #kaart { height: 100%; font-family: var(--tekst); }
 .kaart-fout { display: grid; place-items: center; height: 100%; padding: 24px; text-align: center; color: var(--dim); }
@@ -307,7 +307,6 @@ body.vliegt .paneel { display: none; }
 .fotoplaats { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 6px; color: var(--dim); font-size: .85rem; background: repeating-linear-gradient(135deg, var(--zand) 0 14px, var(--zand-2) 14px 28px); }
 .fotoplaats .ico { width: 40px; height: 40px; }
 .rol { position: absolute; left: 12px; top: 12px; padding: 6px 12px; border-radius: 999px; background: var(--papier); color: var(--inkt); font-weight: 700; font-size: .78rem; box-shadow: 0 1px 4px rgba(0, 0, 0, .25); }
-.sterkste .rol { background: var(--vlak); color: var(--op-vlak); }
 .huisnr { position: absolute; right: 12px; top: 12px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #fff; color: var(--inkt); font-weight: 700; font-size: .85rem; box-shadow: 0 1px 4px rgba(0, 0, 0, .25); }
 .huis-tekst { padding: 16px; }
 .huis-tekst h2 { margin: 0; font-size: 1.4rem; }
@@ -609,7 +608,7 @@ body.vliegt .paneel { display: none; }
 .top.land { background: var(--land-basis); color: var(--land-op-basis); }
 .top.land .topknop { color: inherit; }
 .paneel.thema { background-image: var(--patroon-zacht); background-size: 64px; }
-.thema h2 { padding-bottom: 6px; background: linear-gradient(var(--land-accent), var(--land-accent)) left bottom / 44px 4px no-repeat; }
+.thema .tabinhoud > h2 { padding-bottom: 6px; background: linear-gradient(var(--land-accent), var(--land-accent)) left bottom / 44px 4px no-repeat; }
 .thema .tabs [aria-selected="true"] { box-shadow: 0 3px 0 var(--land-accent); }
 .best-band { padding-bottom: 20px; }
 .best-band::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 8px; background: var(--land-accent); }
@@ -772,6 +771,71 @@ body.vliegt .onderbalk { display: none; }
 .spel-totaal { margin: -8px 0 14px; font-size: .9rem; color: var(--dim); }
 .knop.groot + .knop.groot { margin-top: 10px; }
 
+/* ---------- huizen: labels, kenmerken en Alle huizen ---------- */
+
+.rol { display: inline-flex; align-items: center; gap: 5px; }
+.rol .ico { width: 14px; height: 14px; }
+.rol-sterkste { background: var(--vlak); color: var(--op-vlak); }
+.rol-luxe { background: #FFF8E1; color: #6B4E00; box-shadow: 0 0 0 1.5px #C9A227, 0 1px 4px rgba(0, 0, 0, .25); }
+.rol-luxe .ico { fill: #C9A227; stroke: #C9A227; }
+.rol-tip { background: var(--inkt); color: #fff; }
+.soort-luxe { border-color: #C9A227; }
+.huis.soort-luxe.gekozen { border-color: var(--kleur); box-shadow: 0 0 0 2px #C9A227, var(--schaduw); }
+.huisfoto .huishart { position: absolute; right: 10px; bottom: 10px; border-color: transparent; box-shadow: 0 1px 4px rgba(0, 0, 0, .3); }
+.kenmerken { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.kenmerken li { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px 4px 7px; border-radius: 999px; background: color-mix(in srgb, var(--kleur) 9%, transparent); font-size: .78rem; font-weight: 500; }
+.kenmerken .ico { width: 16px; height: 16px; color: var(--kleur); }
+
+.filters { margin-top: 18px; border-radius: 6px 16px 16px 16px; background: var(--papier); border: 2px solid var(--inkt); }
+.filters summary { display: flex; align-items: center; gap: 8px; min-height: 50px; padding: 12px 16px; font-weight: 700; cursor: pointer; }
+.filter-aantal { color: var(--blauw); }
+.filter-in { padding: 0 16px 14px; }
+.filterraster { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+.filterraster .veld { margin-top: 10px; font-size: .88rem; }
+.filterraster .veld:last-child { grid-column: 1 / -1; }
+.filterraster input[type="range"] { width: 100%; height: 44px; margin: 0; accent-color: var(--blauw); }
+.filterraster output { font-family: var(--mono); }
+.filterkop { margin: 14px 0 8px; font-weight: 600; font-size: .88rem; }
+.kenmerkfilters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.kenmerkfilters .keuze { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px 6px 9px; }
+.kenmerkfilters .keuze .ico { width: 18px; height: 18px; }
+.keuze.kidsproof { border-color: var(--inkt); background: var(--amber); }
+.keuze.kidsproof[aria-pressed="true"] { background: var(--inkt); }
+.sorteerrij { display: flex; align-items: flex-end; gap: 10px; margin-top: 14px; }
+.sorteerrij .veld { flex: 1; margin: 0; font-size: .88rem; }
+.huizen-aantal { margin: 14px 0 10px; font-size: .88rem; color: var(--dim); }
+.huizenraster { display: grid; gap: 18px; }
+.huiskaart { border-radius: 18px; overflow: hidden; background: var(--papier); box-shadow: var(--schaduw); border: 2px solid transparent; }
+.huiskaart.soort-luxe { border-color: #C9A227; }
+.huiskaart .huisfoto { aspect-ratio: 16 / 9; }
+.huiskaart h2 { font-size: 1.25rem; }
+.huiskaart .kicker { display: flex; align-items: center; gap: 6px; }
+.landstip { width: 10px; height: 10px; border-radius: 50%; background: var(--land-basis); }
+.vinkje.naast { margin-top: 8px; font-size: .9rem; }
+.vergelijkbalk { position: sticky; bottom: calc(var(--onder-h) + 8px); z-index: 6; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; padding: 10px 12px 10px 16px; border-radius: 16px; background: var(--inkt); color: #fff; font-weight: 600; font-size: .9rem; box-shadow: 0 6px 20px rgba(0, 0, 0, .3); }
+.vergelijkbalk .knop.primair { background: var(--amber); border-color: var(--amber); color: var(--inkt); }
+.doorverwijs { margin-top: 14px; }
+body.kaart-groot .kaartvak { height: 72vh; height: 72svh; }
+.huisstip { background: none; border: 0; }
+.huisstip span { display: block; width: 22px; height: 22px; border-radius: 50%; background: var(--k); border: 3px solid #fff; box-shadow: 0 1px 5px rgba(0, 0, 0, .45); }
+.huisstip::after { content: ''; position: absolute; inset: -11px; }
+
+.naastwrap { overflow-x: auto; margin: 12px -16px 0; padding: 0 16px 8px; -webkit-overflow-scrolling: touch; }
+.naast { border-collapse: separate; border-spacing: 0; font-size: .85rem; }
+.naast th, .naast td { padding: 9px 10px; border-bottom: 1px solid var(--lijn); text-align: left; vertical-align: top; }
+.naast td, .naast thead th { min-width: 168px; max-width: 220px; }
+.naast tbody th { position: sticky; left: -16px; z-index: 1; min-width: 104px; max-width: 120px; background: var(--papier); font-weight: 600; color: var(--dim); }
+.dialoog.breed .naast tbody th { background: #F3EBDD; }
+.naast thead th { vertical-align: bottom; border-bottom: 4px solid var(--land-basis); }
+.naast thead th:first-child { min-width: 104px; border-bottom-color: transparent; }
+.naast thead img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 10px; margin-bottom: 8px; }
+.naast thead strong { display: block; font: 700 1rem/1.2 var(--display); margin-bottom: 6px; }
+.naast .rol { position: static; padding: 4px 9px; font-size: .7rem; border-radius: 999px; }
+
+.luxe-uitleg { display: flex; gap: 8px; margin-top: 10px; padding: 9px 12px; border-radius: 10px; background: #FFF8E1; color: #5C4300; font-size: .85rem; line-height: 1.4; }
+.luxe-uitleg .ico { flex: none; width: 16px; height: 16px; margin-top: 2px; fill: #C9A227; stroke: #C9A227; }
+.luxe-uitleg.los { margin: 0 0 14px; }
+
 /* ---------- brede schermen ---------- */
 
 @media (min-width: 900px) {
@@ -784,6 +848,7 @@ body.vliegt .onderbalk { display: none; }
   body.vliegt .kaartvak { height: auto; }
   .leaflet-control-zoom { display: block; }
   .pp-paginas { grid-template-columns: 1fr 1fr; }
+  #h-kaart { display: none; }
   .wie { grid-template-columns: repeat(8, 1fr); }
   .gates { grid-template-columns: repeat(2, 1fr); }
   .scherm { padding-top: 48px; }

@@ -18,6 +18,12 @@ Alles wat je op de site leest, komt uit `vakantie-data.json`. Na een wijziging v
 
 **Een huis toevoegen.** Voeg een blok toe aan `huizen` van de plek. Het eerste huis in de lijst is altijd de sterkste keuze en bepaalt het bedrag per persoon op het vertrekbord. `kosten_pp` is het totaal per volwassene; de site rekent zelf het huisdeel uit (`prijs_totaal` gedeeld door het aantal volwassenen uit `meta.groep_indeling`).
 
+**De rol van een huis.** `rol` is het label op de huiskaart en mag elke tekst zijn. Begint hij met "Sterkste keuze", "Luxe-variant" of "Tip uit de groep", dan krijgt het huis het bijbehorende label (luxe-varianten met een gouden rand en een ster, tips met een praatwolkje). Alles daarbuiten telt als gewoon alternatief.
+
+**Kenmerken van een huis.** Elk huis heeft `kenmerken` met ja/nee-waarden (wieg, kinderstoel, omheind, airco, zwembad_verwarmd, zeezicht, strand_loopafstand, speeltuin, bbq, buiten_eten, wellness). De namen en de toelichting staan in `meta.huiskenmerken`. Wat op `false` staat of ontbreekt, wordt niet getoond. Een nieuw kenmerk voeg je toe aan `meta.huiskenmerken.lijst`; het verschijnt dan vanzelf als filter in "Alle huizen" (zonder eigen tekening krijgt het een standaardicoon uit `js/icons.js`).
+
+**Alle huizen.** De weergave "Alle huizen" (vanuit de vertrekhal en de vergelijking) toont elk huis uit de JSON met filters, sorteren, een kaart en twee tot vier huizen naast elkaar. Er hoeft niets voor ingesteld te worden.
+
 **Een land toevoegen.** Voeg het toe aan `meta.landen` met `welkom`, `intro`, `kleuren` (basis, licht, accent), `patroon`, `motieven`, `pils` en `stekker`. Het patroon wordt gekozen op een trefwoord in `patroon`: azulejo, weef, ster, dambord, bloem of iznik, strepen of luzzu, meander, majolica of citroen. Zonder trefwoord krijgt het land stippen. De motieven en stempelmotieven die een tekening hebben staan in `js/motifs.js`; een onbekend motief wordt overgeslagen.
 
 **Een maatschappij toevoegen.** Voeg een blok toe aan `meta.carriers` met `romp`, `staart`, `motor` en `streep` (en eventueel `buik`), en verwijs ernaar met `carrier` in de optie.

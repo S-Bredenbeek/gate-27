@@ -13,11 +13,12 @@ import { toast, kopieer, hartKnop, bronnenBlok } from './js/ui.js';
 import * as kaart from './js/map.js';
 import { toonBestemming } from './js/destination.js';
 import { toonVergelijk } from './js/compare.js';
+import { toonHuizen } from './js/houses.js';
 import { poppetje, KEUZES, UITERLIJK } from './js/avatar.js';
 import { thema } from './js/patterns.js';
 import { motief, heeftMotief } from './js/motifs.js';
 import { speel, stopSpel, totaalHooghouden } from './js/game.js';
-import { mijnCode, leesCodes, uitslag, vanCode } from './js/group.js';
+import { mijnCode, leesCodes, uitslag, huizenUitslag, vanCode } from './js/group.js';
 import { figuurNaam } from './js/extras.js';
 import { tekenAnsichtkaart, kaartNaam } from './js/postcard.js';
 import { stempel, kanteling } from './js/stamps.js';
@@ -41,7 +42,8 @@ const el = {
   vluchtinfo: $('#vluchtinfo'),
 };
 
-const SCHERMEN = ['start', 'koffer', 'hal', 'gate', 'b', 'vergelijk', 'uitslag'];
+const SCHERMEN = ['start', 'koffer', 'hal', 'gate', 'b', 'vergelijk', 'uitslag', 'huizen'];
+let landingsTab = null; // tabblad waarop je na een vlucht uitkomt (bijvoorbeeld 'huis' vanuit Alle huizen)
 let kaartOk = false;
 let stopVlucht = null;
 
@@ -119,7 +121,7 @@ function tekenVast() {
 function tekenOnderbalk() {
   const s = staat();
   const scherm = document.body.dataset.scherm;
-  const hier = { hal: 'hal', gate: 'hal', b: 'hal', vergelijk: 'vergelijk', uitslag: 'vergelijk', start: 'ik', koffer: 'ik' }[scherm];
+  const hier = { hal: 'hal', gate: 'hal', b: 'hal', huizen: 'hal', vergelijk: 'vergelijk', uitslag: 'vergelijk', start: 'ik', koffer: 'ik' }[scherm];
   const aan = (naam) => (naam === hier ? ' aria-current="page"' : '');
   const balk = $('#onderbalk');
   balk.setAttribute('aria-label', t('Hoofdmenu', 'Main menu'));
@@ -184,7 +186,8 @@ function route() {
   else if (!SCHERMEN.includes(scherm)) scherm = 'hal';
   if ((scherm === 'gate' && !landNamen().includes(a)) || (scherm === 'b' && !optie(a))) scherm = 'hal';
 
-  const opPodium = ['hal', 'gate', 'b'].includes(scherm);
+  const opPodium = ['hal', 'gate', 'b', 'huizen'].includes(scherm);
+  document.body.classList.remove('kaart-groot');
   document.body.dataset.scherm = scherm;
   el.start.hidden = !['start', 'koffer'].includes(scherm);
   el.podium.hidden = !opPodium;
@@ -198,6 +201,7 @@ function route() {
     b: `#/gate/${encodeURIComponent(optie(a)?.land ?? '')}`,
     vergelijk: '#/hal',
     uitslag: '#/hal',
+    huizen: '#/hal',
   }[scherm];
   el.terug.hidden = !stapTerug;
   el.terug.href = stapTerug ?? '#/hal';
@@ -214,6 +218,7 @@ function route() {
   if (scherm === 'start') toonStart();
   else if (scherm === 'koffer') toonKoffer();
   else if (scherm === 'hal') toonHal();
+  else if (scherm === 'huizen') toonHuizen(el.paneel);
   else if (scherm === 'gate') toonGate(a);
   else if (scherm === 'b') aankomst(optie(a), b);
   else if (scherm === 'uitslag') toonUitslag();
@@ -414,6 +419,7 @@ function toonHal() {
 
     <p class="voortgang"><span class="hand">${gezien === 0 ? t('nog niks ontdekt, ga maar vliegen', 'nothing discovered yet, off you fly') : gezien === totaal ? t('alles gezien!', 'seen it all!') : t(`${gezien} van de ${totaal} plekken ontdekt`, `${gezien} of the ${totaal} places discovered`)}</span></p>
     <div class="acties">
+      <a class="knop" href="#/huizen">${icoon('huis')}${t('Alle huizen', 'All houses')}</a>
       <button type="button" class="knop" data-spel>${icoon('hooghouden')}${t('Hooghouden', 'Keepy-uppies')}${totaalHooghouden() ? ` · ${totaalHooghouden()}` : ''}</button>
       ${gezien >= 2 ? `<a class="knop" href="#/vergelijk">${t('Vergelijk wat je kent', "Compare what you've found")}</a>` : ''}
     </div>
@@ -555,7 +561,8 @@ function reisdatum() {
   return new Date(`${van}T12:00:00`).toLocaleDateString(locale(), { day: 'numeric', month: 'short' }).replace('.', '');
 }
 
-function instappen(id) {
+function instappen(id, tab = null) {
+  landingsTab = tab;
   const o = optie(id);
   if (!o) return;
   const s = staat();
@@ -588,7 +595,7 @@ function instappen(id) {
     </div>
     <div class="dialoog-acties">
       <button type="button" class="knop" data-sluit>${t('Toch niet', 'Never mind')}</button>
-      ${bekend ? `<a class="knop" href="#/b/${esc(o.id)}">${t('Direct erheen', 'Go straight there')}</a>` : ''}
+      ${bekend ? `<a class="knop" href="#/b/${esc(o.id)}${tab ? `/${tab}` : ''}">${t('Direct erheen', 'Go straight there')}</a>` : ''}
       <button type="button" class="knop primair" id="vertrek" autofocus>${icoon('vliegtuig')}${t('Vertrek', 'Take off')}</button>
     </div>`;
   el.dialoog.onclick = null;
@@ -600,7 +607,7 @@ function instappen(id) {
 
 function vertrek(o) {
   el.dialoog.close();
-  const doel = `#/b/${o.id}`;
+  const doel = `#/b/${o.id}${landingsTab ? `/${landingsTab}` : ''}`;
   if (!kaartOk || rustig()) {
     location.hash = doel;
     return;
@@ -778,7 +785,15 @@ function toonUitslag() {
             ${r.match == null ? '' : `<span class="dim">${t('gezamenlijke koffermatch', 'combined suitcase match')} ${pct(r.match)}</span>`}</span>
           <span class="punten"><b>${r.punten}</b>${r.punten === 1 ? t('punt', 'point') : t('punten', 'points')}</span>
         </li>`;
-      }).join('')}</ol>` : `<p class="leeg">${t('Nog geen codes gevonden.', 'No codes found yet.')}</p>`;
+      }).join('')}</ol>
+      ${huizenUitslag(deelnemers).length ? `<h2>${t('Meest gekozen huizen', 'Most picked houses')}</h2>
+      <ol class="uitslaglijst">${huizenUitslag(deelnemers).map((r, i) => `<li style="${themaStijl(r.o)}">
+          <span class="plek">${i + 1}</span>
+          <span class="uitslag-naam"><strong>${esc(r.h.naam)}</strong>
+            <span class="dim">${esc(landNaam(r.o.land))} · ${euro(kosten(r.o, r.h).totaal)} ${t('p.p.', 'pp')}</span>
+            <span class="dim">${r.wie.map(esc).join(', ')}</span></span>
+          <span class="punten"><b>${r.wie.length}</b>${r.wie.length === 1 ? t('stem', 'vote') : t('stemmen', 'votes')}</span>
+        </li>`).join('')}</ol>` : ''}` : `<p class="leeg">${t('Nog geen codes gevonden.', 'No codes found yet.')}</p>`;
   };
 
   $('#kopieer-code')?.addEventListener('click', () => kopieer(t(`Mijn vakantiecode: ${code}`, `My holiday code: ${code}`), t('Code gekopieerd: plak hem in de groepsapp', 'Code copied: paste it in the group chat')));
@@ -827,6 +842,23 @@ async function toonAnsichtkaart() {
   }
 }
 
+// ---------- favoriete huizen ----------
+
+function wisselHuisHart(id) {
+  const lijst = staat().huisFav ?? [];
+  const aan = !lijst.includes(id);
+  wijzig({ huisFav: aan ? [...lijst, id] : lijst.filter((x) => x !== id) });
+  for (const knop of document.querySelectorAll(`[data-huishart="${CSS.escape(id)}"]`)) knop.setAttribute('aria-pressed', aan);
+  toast(aan ? t('Bewaard als favoriet huis', 'Saved as a favourite house') : t('Geen favoriet huis meer', 'No longer a favourite house'));
+}
+
+// Vanuit Alle huizen: naar het huistabblad van de plek, met een vlucht als je er nog niet bent geweest.
+document.addEventListener('naarhuis', (e) => {
+  const { id } = e.detail;
+  if (ontdekt(id)) location.hash = `#/b/${id}/huis`;
+  else instappen(id, 'huis');
+});
+
 // ---------- opnieuw beginnen ----------
 
 const resetKnop = () => `<p class="reset"><button type="button" class="linkknop" data-reset>${t('Alles wissen en opnieuw beginnen', 'Clear everything and start over')}</button></p>`;
@@ -845,6 +877,8 @@ function klik(e) {
   const hart = e.target.closest('[data-hart]');
   if (hart) return wisselHart(hart.dataset.hart);
   if (e.target.closest('[data-reset]')) return opnieuwBeginnen();
+  const huishart = e.target.closest('[data-huishart]');
+  if (huishart) return wisselHuisHart(huishart.dataset.huishart);
   const open = e.target.closest('[data-open]');
   if (open) return open.dataset.open === 'top3' ? toonTop3() : toonPaspoort();
   const spel = e.target.closest('[data-spel]');

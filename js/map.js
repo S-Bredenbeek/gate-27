@@ -157,6 +157,24 @@ export function toonBestemming(o, gekozen, opHuis, animeer = true) {
   pas([[lh.lat, lh.lng], ...o.huizen.map((h) => [h.lat, h.lng])], { maxZoom: 11, animeer });
 }
 
+// Alle huizen: een pin per huis in de kleur van het land. Alleen huizen op plekken die je al kent.
+export function toonHuizen(lijst, opKlik) {
+  if (!kaart) return;
+  wis();
+  for (const { o, h } of lijst) {
+    const pin = L.marker([h.lat, h.lng], {
+      icon: L.divIcon({ className: 'huisstip', html: `<span style="--k:${esc(landKleur(o))}"></span>`, iconSize: [22, 22], iconAnchor: [11, 11] }),
+      title: h.naam,
+      alt: h.naam,
+    }).addTo(laagHuizen);
+    pin.bindTooltip(esc(h.naam), { direction: 'top', offset: [0, -10], className: 'pinlabel' });
+    pin.on('click', () => opKlik(h.airbnb_id));
+  }
+  const v = meta().vertrek;
+  const punten = lijst.length ? lijst.map(({ h }) => [h.lat, h.lng]) : [[v.lat, v.lng], ...opties().map((o) => [o.lat, o.lng])];
+  pas(lijst.length === 1 ? [...punten, [punten[0][0] + 0.3, punten[0][1] + 0.3], [punten[0][0] - 0.3, punten[0][1] - 0.3]] : punten, { maxZoom: 9, animeer: false });
+}
+
 export function markeerHuis(index) {
   huisPinnen.forEach((pin, i) => {
     pin.getElement()?.classList.toggle('gekozen', i === index);

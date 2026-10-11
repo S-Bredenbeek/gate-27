@@ -47,6 +47,21 @@ const TEKENING = {
   huis: '<path d="M3 11.5L12 4l9 7.5M5.5 10v10h13V10M10 20v-6h4v6"/>',
   weging: '<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',
   paspoort: '<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M9 16.5h6"/>',
+  // huiskenmerken
+  wieg: '<path d="M4 8v8a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8M4 12h16M8 12v7M12 12v7M16 12v7M6 21l1.5-2M18 21l-1.5-2"/>',
+  kinderstoel: '<path d="M8 3v8h8V3M6 11h12M8 11l-2 10M16 11l2 10M7 16h10"/>',
+  omheind: '<path d="M4 20V8l2-3 2 3v12M10 20V8l2-3 2 3v12M16 20V8l2-3 2 3v12M3 12h18M3 17h18"/>',
+  airco: '<rect x="3" y="5" width="18" height="8" rx="2"/><path d="M7 10h10M8 16c0 2-1 2-1 4M12 16c0 2-1 2-1 4M16 16c0 2-1 2-1 4"/>',
+  zwembad_verwarmd: '<path d="M2 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 15c2-2 4-2 6 0s4 2 6 0 4-2 5-1M9 4c2 2-2 3 0 6M14 4c2 2-2 3 0 6"/>',
+  zeezicht: '<circle cx="12" cy="9" r="4"/><path d="M2 16c2-2 4-2 6 0s4 2 6 0 4-2 6 0M2 20c2-2 4-2 6 0s4 2 6 0 4-2 6 0M12 2v1.5M5 9H3.5M20.5 9H19"/>',
+  strand_loopafstand: '<path d="M3 13a9 9 0 0 1 18 0zM12 13v6"/><path d="M4 21c1.5-1 3-1 4.5 0M15 21c1.5-1 3-1 4.5 0"/>',
+  speeltuin: '<path d="M4 21L8 4l4 17M5.5 14h5M12 8h9M16 8v5M20 8v5M15 13h6"/>',
+  bbq: '<path d="M5 9h14a7 7 0 0 1-14 0zM9 15l-3 6M15 15l3 6M9 3c1 1-1 2 0 3M13 3c1 1-1 2 0 3"/>',
+  buiten_eten: '<path d="M3 11h18M12 11v10M8 21h8M5 11l2-6h10l2 6"/>',
+  wellness: '<path d="M4 13h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4zM8 5c1.5 1.5-1.5 2.5 0 4.5M12 4c1.5 1.5-1.5 2.5 0 4.5M16 5c1.5 1.5-1.5 2.5 0 4.5"/>',
+  praat: '<path d="M4 5h16v11H11l-5 4v-4H4z"/>',
+  kaart: '<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/>',
+  filter: '<path d="M3 5h18l-7 8v6l-4-2v-4z"/>',
   bord: '<rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M7 8.5h6M7 12.5h10M9 21l1-4M15 21l-1-4"/>',
 };
 

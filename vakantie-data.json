@@ -25,7 +25,7 @@
       "avontuur": "Hoe anders en avontuurlijk het voelt"
     },
     "bronnen": {
-      "huizen": "Airbnb.nl, opgehaald op 11 okt 2026. Filters: 18 t/m 25 sept 2027, 8 volwassenen en 2 baby's, minimaal 5 slaapkamers, zwembad. Prijzen zijn totaalprijzen inclusief kosten. Per gebied zijn 54 tot 90 resultaten gescand; de sterkste keuze is gekozen op beoordeling, aantal reviews, kindvoorzieningen (wieg, kinderstoel, omheinde tuin), airco, buiten eten en ligging.",
+      "huizen": "Airbnb.nl, opgehaald op 11 okt 2026. Filters: 18 t/m 25 sept 2027, 8 volwassenen en 2 baby's, minimaal 5 slaapkamers, zwembad. Prijzen zijn totaalprijzen inclusief kosten. Per gebied zijn 54 tot 90 resultaten gescand; de sterkste keuze is gekozen op beoordeling, aantal reviews, kindvoorzieningen (wieg, kinderstoel, omheinde tuin), airco, buiten eten en ligging. Luxe-varianten: huizen tot ca. € 5.500 die binnen het budget van € 1.500 per persoon blijven.",
       "vluchten": "Skyscanner-routepagina's en Google Flights, okt 2026. De week van 18 sept 2027 is nog niet boekbaar; de prijs is een realistische indicatie per volwassene retour, zonder ruimbagage.",
       "klimaat": "Klimaatgemiddelden voor de tweede helft van september (indicatief).",
       "prijzen_lokaal": "Numbeo, landgemiddelden okt 2026: bier 0,5 l van de tap en diner voor 2 in een middenklasse restaurant.",
@@ -128,7 +128,7 @@
           "Birra Tirana"
         ],
         "stekker": "Type F",
-        "intro": "Drie varianten: stad en cultuur, strand, of een ruige kust. Het avontuurlijkste land van de lijst."
+        "intro": "Vier varianten: stad en cultuur, strand, een ruige kust, of een villa aan een groot meer. Het avontuurlijkste land van de lijst."
       },
       "Spanje": {
         "welkom": "Bienvenidos",
@@ -461,7 +461,56 @@
       "Regelt het uitje",
       "Badmeester bij het zwembad",
       "Kiest het restaurant"
-    ]
+    ],
+    "huiskenmerken": {
+      "toelichting": "Kenmerken volgens de Airbnb-listing (okt 2026); 'strand op loopafstand' is een eigen inschatting op basis van de ligging. Ontbreekt iets, dan staat het niet in de listing: navragen kan altijd.",
+      "lijst": [
+        {
+          "id": "wieg",
+          "naam": "Wieg"
+        },
+        {
+          "id": "kinderstoel",
+          "naam": "Kinderstoel"
+        },
+        {
+          "id": "omheind",
+          "naam": "Omheinde tuin"
+        },
+        {
+          "id": "airco",
+          "naam": "Airco"
+        },
+        {
+          "id": "zwembad_verwarmd",
+          "naam": "Verwarmd zwembad"
+        },
+        {
+          "id": "zeezicht",
+          "naam": "Zeezicht"
+        },
+        {
+          "id": "strand_loopafstand",
+          "naam": "Strand op loopafstand"
+        },
+        {
+          "id": "speeltuin",
+          "naam": "Speeltuin of speelkamer"
+        },
+        {
+          "id": "bbq",
+          "naam": "Barbecue"
+        },
+        {
+          "id": "buiten_eten",
+          "naam": "Buiten eten"
+        },
+        {
+          "id": "wellness",
+          "naam": "Sauna of jacuzzi"
+        }
+      ]
+    }
   },
   "opties": [
     {
@@ -560,7 +609,20 @@
           "waarom": "Het meest kindvriendelijke huis van de hele lijst: wieg, speelgoed 0 tot 2 jaar, speeltuin en speelkamer, volledig omheinde tuin, verwarmd zwembad met afdekzeil, airco, fitnessruimte en buiten eten. 164 reviews met een 4,96.",
           "let_op": "Ligt 5 km van het strand (locatiescore 4,59).",
           "foto": "https://a0.muscache.com/im/pictures/90632f51-8dcb-4ba7-90e9-24111d245035.jpg",
-          "kosten_pp": 1175
+          "kosten_pp": 1175,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": true,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": true,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         },
         {
           "rol": "Alternatief: strand op loopafstand",
@@ -578,7 +640,20 @@
           "waarom": "500 m van het strand, uitzicht op zee, omheinde tuin, wieg en kinderstoel. Hoogste locatiescore (4,98).",
           "let_op": "Ruim € 750 duurder dan Villa Charme.",
           "foto": "https://a0.muscache.com/im/pictures/8a7747bc-556b-4dce-af36-e51a1c231eed.jpg",
-          "kosten_pp": 1272
+          "kosten_pp": 1272,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": true,
+            "zeezicht": true,
+            "strand_loopafstand": true,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         },
         {
           "rol": "Alternatief: goedkoopst",
@@ -596,7 +671,51 @@
           "waarom": "6 slaapkamers voor € 2.469, 3 minuten rijden naar het strand, 160 reviews.",
           "let_op": "Zwembad ligt op het dak: met peuters goed opletten.",
           "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-43119730/original/f049bb6f-4ff1-4ac4-8f53-359e848cd1e5.jpeg",
-          "kosten_pp": 1062
+          "kosten_pp": 1062,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": true,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
+        },
+        {
+          "rol": "Luxe-variant",
+          "airbnb_id": "3199726",
+          "naam": "Villa Galé Sun",
+          "plaats": "Galé (Albufeira)",
+          "lat": 37.082,
+          "lng": -8.309,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 4.98,
+          "reviews": 61,
+          "prijs_totaal": 4522,
+          "zwembad": "Privé, met afdekzeil",
+          "waarom": "Kleurrijke, Marokkaans geïnspireerde villa bij het strand van Galé, zeezicht, speeltuin, omheinde tuin, airco. Locatiescore 4,93.",
+          "let_op": "Geen kinderstoel vermeld.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-3199726/original/d1fe8747-d74c-468d-807f-047414b4561d.jpeg",
+          "kosten_pp": 1318,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": false,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": true,
+            "strand_loopafstand": true,
+            "speeltuin": true,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         }
       ],
       "kosten_opbouw": {
@@ -782,7 +901,20 @@
           "waarom": "Meeste reviews van alle Portugese opties, 6 slaapkamers, speeltuin en voetbalveld, omheinde tuin, airco, buiten eten. Voor € 2.626.",
           "let_op": "Dakzwembad: met peuters goed opletten. Wieg is tegen betaling.",
           "foto": "https://a0.muscache.com/im/pictures/4853639e-8cff-4736-9c93-c7f179c0c13a.jpg",
-          "kosten_pp": 1081
+          "kosten_pp": 1081,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": true,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": true,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         },
         {
           "rol": "Alternatief: zeezicht",
@@ -800,7 +932,20 @@
           "waarom": "Landelijk met uitzicht op zee, dicht bij Tavira, wieg en airco.",
           "let_op": "Minder reviews, geen omheinde tuin vermeld.",
           "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NDg1MzYzMDk=/original/f2d2c939-25f9-4c2f-bb05-9930516197e5.jpeg",
-          "kosten_pp": 1154
+          "kosten_pp": 1154,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": false,
+            "omheind": false,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": true,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         },
         {
           "rol": "Alternatief: karakterhuis",
@@ -818,7 +963,51 @@
           "waarom": "Oud handelshuis met balzaal, prachtig gerestaureerd.",
           "let_op": "Max. 9 gasten, check of de baby's meetellen; tuin niet volledig omheind.",
           "foto": "https://a0.muscache.com/im/pictures/cd71f404-360e-4c5c-81f2-b3fdbfd491aa.jpg",
-          "kosten_pp": 1282
+          "kosten_pp": 1282,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": false,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
+        },
+        {
+          "rol": "Luxe-variant",
+          "airbnb_id": "711339092428534302",
+          "naam": "Luxe villa met infinity pool",
+          "plaats": "Pechão (Olhão)",
+          "lat": 37.053,
+          "lng": -7.872,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 5.0,
+          "reviews": 23,
+          "prijs_totaal": 4690,
+          "zwembad": "Privé overloopzwembad met zeezicht",
+          "waarom": "Rustig op 3 km van Olhão, infinity pool met uitzicht over zee en de Ria Formosa, omheinde tuin, airco.",
+          "let_op": "Geen wieg of kinderstoel vermeld; 23 reviews.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-711339092428534302/original/777af22c-a00d-4496-ae20-7390dc6b60a8.jpeg",
+          "kosten_pp": 1339,
+          "kenmerken": {
+            "wieg": false,
+            "kinderstoel": false,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": true,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         }
       ],
       "kosten_opbouw": {
@@ -1005,7 +1194,20 @@
           "waarom": "Traditionele villa met 6 slaapkamers, groot zwembad, zeezicht, omheinde tuin, 350 m van het strand.",
           "let_op": "Geen wieg of airco vermeld; dat vragen bij de host.",
           "foto": "https://a0.muscache.com/im/pictures/ad3e26b1-49ff-40eb-b8a2-3b90ba03a9b7.jpg",
-          "kosten_pp": 1290
+          "kosten_pp": 1290,
+          "kenmerken": {
+            "wieg": false,
+            "kinderstoel": false,
+            "omheind": true,
+            "airco": false,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": true,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         },
         {
           "rol": "Alternatief: Arrábida",
@@ -1023,7 +1225,51 @@
           "waarom": "Goedkoper, veel reviews, kindvriendelijk en dicht bij de kalmste en warmste baaien rond Lissabon.",
           "let_op": "45 minuten naar Lissabon, verder van Sintra.",
           "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-10655747/original/56c63a96-5794-4b8a-9f05-487abca23ef7.jpeg",
-          "kosten_pp": 1156
+          "kosten_pp": 1156,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": false,
+            "airco": false,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
+        },
+        {
+          "rol": "Luxe-variant",
+          "airbnb_id": "50047783",
+          "naam": "Villa Ita",
+          "plaats": "Colares",
+          "lat": 38.795,
+          "lng": -9.466,
+          "slaapkamers": 7,
+          "max_gasten": 15,
+          "beoordeling": 4.97,
+          "reviews": 68,
+          "prijs_totaal": 5345,
+          "zwembad": "Privé overloopzwembad",
+          "waarom": "7 slaapkamers, zeezicht, speeltuin, wieg en kinderstoel, omheinde tuin, 2 km van het strand van Adraga.",
+          "let_op": "Duurste huis in Portugal.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-50047783/original/0b29ccbb-3cb3-430d-9345-f38a696bd266.jpeg",
+          "kosten_pp": 1401,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": true,
+            "strand_loopafstand": false,
+            "speeltuin": true,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         }
       ],
       "kosten_opbouw": {
@@ -1209,7 +1455,20 @@
           "waarom": "Moderne villa van 350 m² met drie suites en panoramisch uitzicht, wieg en kinderstoel, speelgoed, omheinde tuin, airco. 142 reviews met een 4,97.",
           "let_op": "Ruim 2 uur rijden vanaf Porto.",
           "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-42961840/original/96c005be-2924-4f9c-bd9e-6129f73cf162.jpeg",
-          "kosten_pp": 1022
+          "kosten_pp": 1022,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         },
         {
           "rol": "Alternatief: dichterbij en goedkoopst",
@@ -1227,7 +1486,51 @@
           "waarom": "Goedkoopste sterke huis van de hele lijst, 1 uur van Porto, uitzicht op de vallei, airco.",
           "let_op": "Eenvoudiger huis; check of het zwembad eind september nog open is.",
           "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-732545486730973785/original/1c883b15-e3a4-4855-b450-48554b1b5421.jpeg",
-          "kosten_pp": 878
+          "kosten_pp": 878,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": false,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
+        },
+        {
+          "rol": "Luxe-variant",
+          "airbnb_id": "1162147051975956768",
+          "naam": "Casa da Recosta",
+          "plaats": "Porto Rei (Resende)",
+          "lat": 41.119,
+          "lng": -7.913,
+          "slaapkamers": 6,
+          "max_gasten": 12,
+          "beoordeling": 5.0,
+          "reviews": 22,
+          "prijs_totaal": 4799,
+          "zwembad": "Privé",
+          "waarom": "Landhuis met 6 slaapkamers aan de Douro, 1u30 van Porto en daarmee dichterbij dan Valadouro; wellness, airco, wieg en kinderstoel.",
+          "let_op": "Tuin niet omheind; 22 reviews.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-1162147051975956768/original/1ccb31ab-95ea-40e9-a8d5-a9ccad4baf36.jpeg",
+          "kosten_pp": 1313,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": false,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": false,
+            "wellness": true
+          }
         }
       ],
       "kosten_opbouw": {
@@ -1414,7 +1717,20 @@
           "waarom": "Het enige huis rond Tirana met 5 slaapkamers, veel reviews en alles erop: verwarmd zwembad, spa, tafeltennis, airhockey, barbecue, omheinde tuin, wieg.",
           "let_op": "Boven het budgetdoel van € 3.500 (€ 554 per persoon); locatiescore 4,35.",
           "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-1121870004199689834/original/cb65dbf4-93cc-4c5b-a428-df0283e1ac10.png",
-          "kosten_pp": 1246
+          "kosten_pp": 1246,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": true,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": true
+          }
         },
         {
           "rol": "Alternatief: goedkoper, 4 slaapkamers",
@@ -1432,7 +1748,51 @@
           "waarom": "Perfecte score, 10 minuten van het vliegveld, € 1.600 goedkoper.",
           "let_op": "4 slaapkamers: de twee singles delen dan een kamer.",
           "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-1456352605417698552/original/1b80a3d4-c065-431d-9d28-6e744a0ca24e.jpeg",
-          "kosten_pp": 1048
+          "kosten_pp": 1048,
+          "kenmerken": {
+            "wieg": false,
+            "kinderstoel": false,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
+        },
+        {
+          "rol": "Tip uit de groep",
+          "airbnb_id": "1670221392803009394",
+          "naam": "Luxe villa aan het meer van Paskuqan",
+          "plaats": "Kamëz (noordrand van Tirana)",
+          "lat": 41.359,
+          "lng": 19.79,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 5.0,
+          "reviews": 14,
+          "prijs_totaal": 5040,
+          "zwembad": "Privé buitenzwembad",
+          "waarom": "Perfecte score, aan het Paskuqan-meer, dichter bij Tirana-centrum, omheinde tuin, centrale airco.",
+          "let_op": "Duurste huis van de hele lijst (€ 630 per persoon voor het huis); geen wieg of kinderstoel vermeld; pas 14 reviews.",
+          "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-1670221392803009394/original/e4d7775c-c73c-4b92-8be3-9c314a70b52f.jpeg",
+          "kosten_pp": 1322,
+          "kenmerken": {
+            "wieg": false,
+            "kinderstoel": false,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": false,
+            "buiten_eten": true,
+            "wellness": false
+          }
         }
       ],
       "kosten_opbouw": {
@@ -1618,7 +1978,20 @@
           "waarom": "Direct aan het strand, 5 slaapkamers met elk een eigen badkamer, 3 verdiepingen, omheinde tuin, wieg, airco, zeezicht.",
           "let_op": "Locatiescore 4,44: drukke badplaats. Navragen of het zwembad eind september open is.",
           "foto": "https://a0.muscache.com/im/pictures/61d97158-f845-4973-b94b-30184cc81e01.jpg",
-          "kosten_pp": 1118
+          "kosten_pp": 1118,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": false,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": true,
+            "strand_loopafstand": true,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": true
+          }
         },
         {
           "rol": "Alternatief: rustiger",
@@ -1636,7 +2009,20 @@
           "waarom": "Rustig in de heuvels boven Durrës, hoogste waarderingsscore (4,97 voor prijs-kwaliteit).",
           "let_op": "Strand op een paar minuten rijden.",
           "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-1298432057050427019/original/1c4b17fe-ec4d-4fd7-9825-b7106856ac67.png",
-          "kosten_pp": 1135
+          "kosten_pp": 1135,
+          "kenmerken": {
+            "wieg": false,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         },
         {
           "rol": "Alternatief: 6 slaapkamers",
@@ -1654,7 +2040,20 @@
           "waarom": "Aan een rustiger stuk strand, 6 slaapkamers.",
           "let_op": "Geen wieg vermeld.",
           "foto": "https://a0.muscache.com/im/pictures/3688dc68-26fa-4cdb-9fb3-ae4f70b0f2bf.jpg",
-          "kosten_pp": 1151
+          "kosten_pp": 1151,
+          "kenmerken": {
+            "wieg": false,
+            "kinderstoel": false,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": true,
+            "strand_loopafstand": true,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         }
       ],
       "kosten_opbouw": {
@@ -1840,7 +2239,20 @@
           "waarom": "Op gezinnen ingericht: wieg, kinderstoel, omheinde tuin, zwembadspeelgoed, airco, zeezicht en balkon met uitzicht op de bergen.",
           "let_op": "Het enige sterke huis in deze regio. Zwembad eind september navragen.",
           "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-1364943/original/1a6544bd-60cb-4031-8d80-d92f70d2f9c2.jpeg",
-          "kosten_pp": 1147
+          "kosten_pp": 1147,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": true,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": true
+          }
         }
       ],
       "kosten_opbouw": {
@@ -1930,6 +2342,206 @@
         "soort": "wind",
         "naam": "Hooghouden op de bergpas",
         "regel": "Op de pas waait het hard: de wind neemt je bal mee."
+      }
+    },
+    {
+      "id": "shkoder",
+      "land": "Albanië",
+      "naam": "Albanië: meer van Shkodër",
+      "subregio": "Zogaj, aan het grootste meer van de Balkan",
+      "tagline": "Villa aan het water, de Albanese Alpen op de achtergrond en een veerboot over het Komani-meer.",
+      "sfeer": "Rustig en natuurlijk: zwemmen en kajakken vanaf je eigen oever, vis eten aan het meer en dagtochten de bergen in. Het minst toeristische plekje van de hele lijst.",
+      "lat": 42.07,
+      "lng": 19.4,
+      "luchthaven": {
+        "naam": "Tirana",
+        "code": "TIA",
+        "lat": 41.414,
+        "lng": 19.721
+      },
+      "vlucht": {
+        "maatschappijen": "Transavia, KLM",
+        "duur": "2u40",
+        "per_week": "ca. 10 direct",
+        "prijs_pp": 220
+      },
+      "carrier": "transavia",
+      "transfer": "ca. 1u45",
+      "klimaat": {
+        "lucht": 26,
+        "zee": null,
+        "regendagen": 6
+      },
+      "lokaal": {
+        "bier": 2.56,
+        "diner2": 38
+      },
+      "huurauto_per_stuk": 250,
+      "scores": {
+        "zon_zee": [
+          3,
+          "Warm, maar geen zee: je zwemt in het meer, en de regio is natter dan de kust."
+        ],
+        "value": [
+          3,
+          "Villa voor € 4.108, eten en drinken juist erg goedkoop."
+        ],
+        "eten": [
+          4,
+          "Verse meervis, Albanese grill en raki aan het water."
+        ],
+        "natuur": [
+          5,
+          "Het meer, de Albanese Alpen en de veerboot over het Komani-meer."
+        ],
+        "cultuur": [
+          4,
+          "Burcht Rozafa en de oude straten van Shkodër."
+        ],
+        "bier": [
+          5,
+          "€ 2,56 voor een halve liter."
+        ],
+        "reisgemak": [
+          3,
+          "Directe vlucht naar Tirana, daarna 1u45 rijden."
+        ],
+        "veiligheid": [
+          4,
+          "Groen reisadvies; let op met verkeer en bergwegen."
+        ],
+        "avontuur": [
+          5,
+          "Een onontdekte uithoek van Europa."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "Enige optie aan een meer, met water en bergen in één beeld.",
+          "Meest authentieke en onbekende bestemming van de lijst."
+        ],
+        "min": [
+          "Geen zee en meer kans op een regendag dan aan de kust.",
+          "Huis scoort lager op schoonmaak (4,51) en mist kindvoorzieningen."
+        ]
+      },
+      "mogelijkheden": {
+        "strand": [
+          "beperkt",
+          "Eigen oever en een gedeeld strandje aan het meer; geen zee."
+        ],
+        "restaurants": [
+          "beperkt",
+          "Een paar visrestaurants aan het meer; meer keuze in Shkodër (20 min)."
+        ],
+        "uitgaan": [
+          "beperkt",
+          "Terrassen en bars in de oude straten van Shkodër."
+        ],
+        "wijn": [
+          "beperkt",
+          "Kleinschalige wijnmakers in de regio."
+        ],
+        "boot": [
+          "ja",
+          "Bootjes op het meer en de veerboot over het Komani-meer (dagtrip)."
+        ],
+        "natuur": [
+          "ja",
+          "Meer, rivieren en de Albanese Alpen (Theth als lange dagtrip)."
+        ],
+        "stad": [
+          "beperkt",
+          "Shkodër is klein maar levendig; Tirana op 1u30."
+        ],
+        "padel": [
+          "onbekend",
+          "Geen baan in de buurt gevonden."
+        ],
+        "watersport": [
+          "beperkt",
+          "Kajakken en suppen op het meer."
+        ],
+        "kids": [
+          "beperkt",
+          "Rustig water, maar weinig specifieke uitjes."
+        ],
+        "hooghouden": [
+          "onbekend",
+          "Tuin aan het meer, grootte onbekend."
+        ]
+      },
+      "stempel": {
+        "vorm": "ovaal",
+        "motief": "burcht",
+        "tekst": "SHKODËR",
+        "code": "TIA",
+        "datum": "18 SEP 2027",
+        "kleur": "#B5121B"
+      },
+      "kidscheck": {
+        "transfer_min": 105,
+        "wieg": false,
+        "kinderstoel": false,
+        "omheind": false,
+        "zwembad": "Seizoensgebonden, navragen",
+        "water": "Rustige meeroever",
+        "warmte": "Aangenaam (26°C)",
+        "zorg": "Ziekenhuis in Shkodër",
+        "oordeel": 2
+      },
+      "huizen": [
+        {
+          "rol": "Tip uit de groep",
+          "airbnb_id": "739911308074906513",
+          "naam": "Vila Zogaj",
+          "plaats": "Zogaj, meer van Shkodër",
+          "lat": 42.07,
+          "lng": 19.403,
+          "slaapkamers": 5,
+          "max_gasten": 12,
+          "beoordeling": 4.87,
+          "reviews": 47,
+          "prijs_totaal": 4108,
+          "zwembad": "Privé buitenzwembad, seizoensgebonden, plus sauna",
+          "waarom": "Eerste rij aan het meer met volledige privacy, eigen zwembad, sauna, tafeltennis, barbecue en buiten eten. Het enige sterke huis in deze regio.",
+          "let_op": "Schoonmaakscore 4,51; geen wieg, kinderstoel of omheinde tuin vermeld; zwembad eind september navragen.",
+          "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-739911308074906513/original/5a0d8b90-4273-4a62-bc57-1f569c72f132.jpeg",
+          "kosten_pp": 1206,
+          "kenmerken": {
+            "wieg": false,
+            "kinderstoel": false,
+            "omheind": false,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": true,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": true
+          }
+        }
+      ],
+      "pils": {
+        "prijs": 2.56,
+        "rondje_mannen": 12.8,
+        "merken": [
+          "Birra Korça",
+          "Birra Tirana"
+        ]
+      },
+      "kosten_opbouw": {
+        "vlucht_bagage": 290,
+        "auto": 94,
+        "eten_uitjes": 308
+      },
+      "paklijst_extra": [],
+      "spel": {
+        "soort": "vliegers",
+        "naam": "Hooghouden tussen de pelikanen",
+        "regel": "Over het meer scheren pelikanen. Raak ze niet.",
+        "motief": "pelikaan"
       }
     },
     {
@@ -2075,7 +2687,20 @@
           "waarom": "Meeste reviews van de hele lijst, panoramisch uitzicht over de vallei, speelgoed 0 tot 2 jaar, kinderstoel, omheinde tuin, airco. 20 minuten van het vliegveld.",
           "let_op": "Strand op 20 minuten rijden.",
           "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-2359648/original/3b2e5142-4b90-4b3b-a464-74f0ed7502c1.jpeg",
-          "kosten_pp": 1197
+          "kosten_pp": 1197,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": true,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": true,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         },
         {
           "rol": "Alternatief: veel goedkoper",
@@ -2093,7 +2718,20 @@
           "waarom": "6 slaapkamers met uitzicht over bergen en zee, speeltuin en speelgoed, voor € 2.100.",
           "let_op": "Tuin niet volledig omheind; verder van het strand.",
           "foto": "https://a0.muscache.com/im/pictures/9c7333f7-3af8-48d5-a523-dcba12f94681.jpg",
-          "kosten_pp": 974
+          "kosten_pp": 974,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": true,
+            "strand_loopafstand": false,
+            "speeltuin": true,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         },
         {
           "rol": "Alternatief: Mijas",
@@ -2111,7 +2749,51 @@
           "waarom": "Ruime familievilla op een hectare grond aan de voet van de Sierra de Mijas, omheinde tuin, airco.",
           "let_op": "Minder reviews dan de sterkste keuze.",
           "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NjUxMjUyNDYwNDEzMTE0NTAx/original/ede32b7e-f625-44ef-b163-c8ef1a84f4f7.jpeg",
-          "kosten_pp": 1126
+          "kosten_pp": 1126,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": true,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
+        },
+        {
+          "rol": "Luxe-variant",
+          "airbnb_id": "13679418",
+          "naam": "Villa Monte Elviria",
+          "plaats": "Elviria (Marbella)",
+          "lat": 36.532,
+          "lng": -4.76,
+          "slaapkamers": 5,
+          "max_gasten": 8,
+          "beoordeling": 4.95,
+          "reviews": 142,
+          "prijs_totaal": 4842,
+          "zwembad": "Privé, verwarmd overloopzwembad",
+          "waarom": "Op een heuvel met uitzicht over zee tot Gibraltar, 8 minuten van de stranden van Marbella, 142 reviews, alle kindspullen, omheinde tuin.",
+          "let_op": "Max. 8 gasten: navragen of de baby's meetellen. Ca. 40 minuten van het vliegveld.",
+          "foto": "https://a0.muscache.com/im/pictures/de57cce4-fb30-4234-802e-ba151afcb59b.jpg",
+          "kosten_pp": 1317,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": true,
+            "zeezicht": true,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         }
       ],
       "kosten_opbouw": {
@@ -2298,7 +2980,20 @@
           "waarom": "Perfecte score over 130 reviews. Groot verwarmd zwembad, jacuzzi, infraroodsauna, tafeltennis, speelplek voor kinderen, wieg, kinderstoel, omheinde tuin, airco.",
           "let_op": "Zwembad is seizoensgebonden: navragen of het eind september verwarmd open is.",
           "foto": "https://a0.muscache.com/im/pictures/808ec4a8-2dee-4f4b-b5ad-d6a7e4f075ba.jpg",
-          "kosten_pp": 1171
+          "kosten_pp": 1171,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": true,
+            "zeezicht": true,
+            "strand_loopafstand": false,
+            "speeltuin": true,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": true
+          }
         },
         {
           "rol": "Alternatief: bij Trogir",
@@ -2316,7 +3011,51 @@
           "waarom": "Nieuwbouwvilla bij het UNESCO-stadje Trogir, speeltuin, omheinde tuin, centrale airco.",
           "let_op": "Geen wieg vermeld.",
           "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NTA4Njg3NDA%3D/original/18560edc-1d54-41b2-8b78-b8e9226cc683.jpeg",
-          "kosten_pp": 1210
+          "kosten_pp": 1210,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": false,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": true,
+            "zeezicht": true,
+            "strand_loopafstand": false,
+            "speeltuin": true,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
+        },
+        {
+          "rol": "Luxe-variant",
+          "airbnb_id": "704849642700589103",
+          "naam": "Villa Duje",
+          "plaats": "Kaštel Stari",
+          "lat": 43.563,
+          "lng": 16.344,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 5.0,
+          "reviews": 41,
+          "prijs_totaal": 4889,
+          "zwembad": "Privé, verwarmd overloopzwembad",
+          "waarom": "Moderne villa met zeezicht, sauna en fitnessruimte, speelplek, wieg en kinderstoel, omheinde tuin.",
+          "let_op": "€ 1.580 duurder dan Villa Tissa, die net zo sterk scoort.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-704849642700589103/original/14e370c6-b44a-44d9-a96c-13ba7a0c5110.jpeg",
+          "kosten_pp": 1368,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": true,
+            "zeezicht": true,
+            "strand_loopafstand": false,
+            "speeltuin": true,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": true
+          }
         }
       ],
       "kosten_opbouw": {
@@ -2457,7 +3196,20 @@
           "waarom": "Rustig met bergzicht, verwarmd zwembad, bubbelbad, sauna en hamam, speeltuin, omheinde tuin, wieg, airco. Voor € 2.060.",
           "let_op": "Strand op 15 tot 20 minuten rijden.",
           "foto": "https://a0.muscache.com/im/pictures/f970e6b4-f4fb-42a1-970e-214a1b39b9b0.jpg",
-          "kosten_pp": 1080
+          "kosten_pp": 1080,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": true,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": true,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": true
+          }
         },
         {
           "rol": "Alternatief: meeste reviews en zeezicht",
@@ -2475,7 +3227,20 @@
           "waarom": "5 suites met zeezicht boven Kaş, het mooiste stadje van de kust. 138 reviews.",
           "let_op": "2 uur rijden vanaf Dalaman; geen omheinde tuin vermeld.",
           "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-6373817/original/1d7b2630-1071-49c8-ae4d-863aa5dfce93.jpeg",
-          "kosten_pp": 1104
+          "kosten_pp": 1104,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": false,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": true,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": true
+          }
         },
         {
           "rol": "Alternatief: goedkoopst",
@@ -2493,7 +3258,20 @@
           "waarom": "Perfecte score, speeltuin en omheinde tuin, dicht bij restaurants.",
           "let_op": "Minder rustig dan de heuvels.",
           "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-51382651/original/7184e3b9-a6ed-40fc-8d05-916aee4afbfa.jpeg",
-          "kosten_pp": 1066
+          "kosten_pp": 1066,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": true,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         }
       ],
       "kosten_opbouw": {
@@ -2679,7 +3457,20 @@
           "waarom": "Grote stenen familieboerderij op 2 minuten lopen van het dorpsplein met restaurants. Wieg, kinderstoel, speelgoed, omheinde tuin, centrale airco.",
           "let_op": "Restaurants zijn hier duurder dan elders.",
           "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-656440171708352758/original/f7e7ba76-b12a-43b1-bc10-0c9824881588.jpeg",
-          "kosten_pp": 1285
+          "kosten_pp": 1285,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": true,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         },
         {
           "rol": "Alternatief: meeste reviews",
@@ -2697,7 +3488,51 @@
           "waarom": "Verbouwd karakterhuis, 5 slaapkamers met eigen badkamer, jacuzzi, omheinde tuin.",
           "let_op": "Bijna € 900 duurder.",
           "foto": "https://a0.muscache.com/im/pictures/cf5ab8d7-266c-43c0-b5ed-737228a5cbdc.jpg",
-          "kosten_pp": 1399
+          "kosten_pp": 1399,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": true
+          }
+        },
+        {
+          "rol": "Luxe-variant",
+          "airbnb_id": "7452183",
+          "naam": "Ta' Menzja Villa",
+          "plaats": "Xagħra",
+          "lat": 36.05,
+          "lng": 14.262,
+          "slaapkamers": 5,
+          "max_gasten": 12,
+          "beoordeling": 5.0,
+          "reviews": 72,
+          "prijs_totaal": 5390,
+          "zwembad": "Privé",
+          "waarom": "Perfecte score over 72 reviews, rustige straat in Xagħra (locatiescore 4,99), alle kindspullen, omheinde tuin.",
+          "let_op": "Bijna € 1.700 duurder dan Dar Ta Nina in hetzelfde dorp.",
+          "foto": "https://a0.muscache.com/im/pictures/c152e26c-fe6c-4d75-ba7a-9ad4717935b2.jpg",
+          "kosten_pp": 1494,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         }
       ],
       "kosten_opbouw": {
@@ -2882,7 +3717,20 @@
           "waarom": "Bijna perfecte score over 100 reviews, zeezicht, omheinde tuin, wieg en kinderstoel, centrale airco.",
           "let_op": "Dichtstbijzijnde strand met de auto.",
           "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-19616034/original/8ae34ff4-e9b0-4ebf-a26b-9f30bc3c466d.jpeg",
-          "kosten_pp": 1162
+          "kosten_pp": 1162,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": true,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         },
         {
           "rol": "Alternatief: aan zee",
@@ -2900,7 +3748,20 @@
           "waarom": "Directe toegang tot zee, uitzicht over het water, omheinde tuin.",
           "let_op": "Zwembad eind september navragen.",
           "foto": "https://a0.muscache.com/im/pictures/77951815/aa82018b_original.jpg",
-          "kosten_pp": 1251
+          "kosten_pp": 1251,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": true,
+            "strand_loopafstand": true,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": false,
+            "wellness": false
+          }
         }
       ],
       "kosten_opbouw": {
@@ -3089,7 +3950,20 @@
           "waarom": "Oud landgoed in de heuvels van Modica, alle slaapkamers met eigen badkamer, perfecte score over 56 reviews, wieg, omheinde tuin, airco.",
           "let_op": "Zwembad eind september navragen.",
           "foto": "https://a0.muscache.com/im/pictures/c1989050-28d1-4ca4-8492-fcd0ef8527cb.jpg",
-          "kosten_pp": 1335
+          "kosten_pp": 1335,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": false
+          }
         },
         {
           "rol": "Alternatief: aan zee",
@@ -3107,7 +3981,51 @@
           "waarom": "50 meter van het strand, 93 reviews met een 4,99.",
           "let_op": "Geen wieg of omheinde tuin vermeld; € 380 duurder.",
           "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MzIxMjkyNDI=/original/c83d1a8f-f6bf-4d3b-a77d-9588fde116af.jpeg",
-          "kosten_pp": 1382
+          "kosten_pp": 1382,
+          "kenmerken": {
+            "wieg": false,
+            "kinderstoel": false,
+            "omheind": false,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": true,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": false,
+            "wellness": false
+          }
+        },
+        {
+          "rol": "Luxe-variant",
+          "airbnb_id": "7536800",
+          "naam": "Villa Aia",
+          "plaats": "Scicli",
+          "lat": 36.76,
+          "lng": 14.725,
+          "slaapkamers": 6,
+          "max_gasten": 14,
+          "beoordeling": 4.94,
+          "reviews": 32,
+          "prijs_totaal": 4576,
+          "zwembad": "Privé zoutwaterzwembad plus verwarmd hydromassagebad",
+          "waarom": "Stenen boerderij met 6 suites, alle kindspullen, omheinde tuin, bij het barokstadje Scicli.",
+          "let_op": "Minder reviews dan Baglio Fasana.",
+          "foto": "https://a0.muscache.com/im/pictures/b4ec46e9-7dd2-4d78-896d-ae13c4c5e98d.jpg",
+          "kosten_pp": 1413,
+          "kenmerken": {
+            "wieg": true,
+            "kinderstoel": true,
+            "omheind": true,
+            "airco": true,
+            "zwembad_verwarmd": false,
+            "zeezicht": false,
+            "strand_loopafstand": false,
+            "speeltuin": false,
+            "bbq": true,
+            "buiten_eten": true,
+            "wellness": true
+          }
         }
       ],
       "kosten_opbouw": {

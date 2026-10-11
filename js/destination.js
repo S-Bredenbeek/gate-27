@@ -11,7 +11,7 @@ import { thema } from './patterns.js';
 import { pilsmeter, kostenverdeler, koppelKostenverdeler, voorbereiden, koppelVoorbereiden } from './extras.js';
 import { motief, heeftMotief } from './motifs.js';
 import { icoon } from './icons.js';
-import { statusLabel, hartKnop, bolletjes, beren, bronnenBlok, toast } from './ui.js';
+import { statusLabel, hartKnop, bolletjes, beren, bronnenBlok, toast, rolLabel, kenmerkChips, huisHart, luxeUitleg } from './ui.js';
 import * as kaart from './map.js';
 
 const TABS = [
@@ -191,22 +191,25 @@ function tabHuis(o) {
     const beoordeling = h.beoordeling
       ? `${nl(h.beoordeling, 2)} <span class="dim">(${nl(h.reviews)} reviews)</span>`
       : t('Nog geen beoordeling', 'No rating yet');
-    return `<article class="huis${i === 0 ? ' sterkste' : ''}${i === gekozen ? ' gekozen' : ''}" id="huis-${i}">
+    return `<article class="huis${i === 0 ? ' sterkste' : ''}${i === gekozen ? ' gekozen' : ''} soort-${esc(h.soort)}" id="huis-${i}">
       <div class="huisfoto">
         ${h.foto ? `<img src="${esc(fotoUrl(h.foto))}" alt="${t(`Foto van ${esc(h.naam)} in ${esc(h.plaats)}`, `Photo of ${esc(h.naam)} in ${esc(h.plaats)}`)}" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ''}
         <div class="fotoplaats"${h.foto ? ' hidden' : ''}>${icoon('huis')}<span>${t('Foto niet beschikbaar', 'Photo not available')}</span></div>
-        <span class="rol">${esc(h.rol)}</span>
+        ${rolLabel(h)}
         <span class="huisnr">${i + 1}</span>
+        ${huisHart(h)}
       </div>
       <div class="huis-tekst">
         <h2>${esc(h.naam)}</h2>
         <p class="plaats">${esc(h.plaats)}</p>
+        ${luxeUitleg(o, h)}
         <ul class="feiten">
           <li>${icoon('bed')}${t(`${esc(h.slaapkamers)} slaapkamers`, `${esc(h.slaapkamers)} bedrooms`)}</li>
           <li>${icoon('personen')}${t(`max. ${esc(h.max_gasten)} gasten`, `max. ${esc(h.max_gasten)} guests`)}</li>
           <li>${icoon('ster')}${beoordeling}</li>
           <li>${icoon('zwembad')}${esc(h.zwembad)}</li>
         </ul>
+        ${kenmerkChips(h)}
         <div class="waarom"><h3>${t('Waarom dit huis', 'Why this house')}</h3><p>${esc(h.waarom)}</p></div>
         <div class="letop"><h3>${t('Let op', 'Heads up')}</h3><p>${esc(h.let_op)}</p></div>
         <dl class="prijzen">
