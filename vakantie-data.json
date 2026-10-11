@@ -13,28 +13,6 @@
       1000,
       1500
     ],
-    "groepen": [
-      {
-        "id": "portugal",
-        "naam": "Portugal",
-        "intro": "Vier heel verschillende kanten van Portugal: klassieke kliffenkust, de authentieke oostkant, Sintra met Lissabon om de hoek, en de wijnoogst in de Douro."
-      },
-      {
-        "id": "albanie",
-        "naam": "Albanië",
-        "intro": "Drie varianten: stad en cultuur vanuit Tirana, strand bij Durrës, of de ruige zuidkust bij Vlorë. Het avontuurlijkste land van de lijst."
-      },
-      {
-        "id": "klassiek",
-        "naam": "Klassiekers",
-        "intro": "Twee bekende landen die sterk scoren op prijs, gemak en aanbod: Spanje voor padel en tapas, Kroatië voor eilanden en de kortste reistijd."
-      },
-      {
-        "id": "exoot",
-        "naam": "Exoten",
-        "intro": "Vier minder voor de hand liggende opties, waaronder een Grieks eiland."
-      }
-    ],
     "scorecriteria": {
       "zon_zee": "Kans op warm weer en warm zeewater eind september",
       "value": "Wat je krijgt voor je geld: kwaliteit van het huis per euro en het prijsniveau ter plekke",
@@ -44,7 +22,7 @@
       "bier": "Prijs van een biertje (0,5 l van de tap in een restaurant, Numbeo)",
       "reisgemak": "Vlucht, aantal vluchten en transfer met kinderen onder de 2",
       "veiligheid": "Reisadvies, verkeer en zorg",
-      "exotisch": "Hoe anders en avontuurlijk het voelt"
+      "avontuur": "Hoe anders en avontuurlijk het voelt"
     },
     "bronnen": {
       "huizen": "Airbnb.nl, opgehaald op 11 okt 2026. Filters: 18 t/m 25 sept 2027, 8 volwassenen en 2 baby's, minimaal 5 slaapkamers, zwembad. Prijzen zijn totaalprijzen inclusief kosten. Per gebied zijn 54 tot 90 resultaten gescand; de sterkste keuze is gekozen op beoordeling, aantal reviews, kindvoorzieningen (wieg, kinderstoel, omheinde tuin), airco, buiten eten en ligging.",
@@ -295,53 +273,6 @@
         "streep": "#D71920"
       }
     },
-    "profielen": {
-      "toelichting": "Startpunt: pas de wensen aan op wat jullie groep echt wil. Iedereen kan daarna zijn eigen koffer bijstellen.",
-      "lijst": [
-        {
-          "id": "guys",
-          "naam": "De guys",
-          "wensen": [
-            "padel",
-            "uitgaan",
-            "boot",
-            "watersport",
-            "stad",
-            "hooghouden"
-          ],
-          "gewichten": {
-            "bier": 3,
-            "zon_zee": 2,
-            "value": 2,
-            "natuur": 1,
-            "eten": 2
-          }
-        },
-        {
-          "id": "dames",
-          "naam": "De dames",
-          "wensen": [
-            "restaurants",
-            "strand",
-            "wijn",
-            "stad",
-            "natuur"
-          ],
-          "gewichten": {
-            "eten": 3,
-            "zon_zee": 3,
-            "cultuur": 2,
-            "value": 1
-          }
-        },
-        {
-          "id": "kids",
-          "naam": "De kids",
-          "type": "kidscheck",
-          "uitleg": "Geen wensenlijst maar een check: hoe makkelijk en veilig is dit met twee kinderen onder de 2?"
-        }
-      ]
-    },
     "kidscheck_criteria": [
       {
         "id": "transfer_min",
@@ -395,43 +326,48 @@
       "bier": "Bierscore",
       "reisgemak": "Reisgemak",
       "veiligheid": "Veiligheid",
-      "exotisch": "Avontuur"
+      "avontuur": "Avontuur"
     },
     "groep_figuren": {
-      "toelichting": "De cartoonversie van de groep, zonder namen. 'stel' koppelt twee figuren aan elkaar (voor de kamerverdeling), 'profiel' bepaalt met welke koffer iemand begint. Haar: kort, kuif, krul, lang, golvend, knot, staart of kaal. Shirtmotief: streep, zebra of ruit.",
+      "toelichting": "De cartoonversie van de groep, zonder namen. Namen reizen mee in de link (?wie=...) en staan dus niet in deze repo. Haar: kort, kuif, krul, krulkort, lang, golvend, knot, staart of kaal. Zonnebril: rond, kat of piloot. Mond: lach, glimlach of grijns.",
       "lijst": [
         {
           "id": "f1",
-          "profiel": "dames",
           "stel": 1,
           "huid": "#F6D3B8",
           "haar": "golvend",
           "haarkleur": "#B98A4E",
-          "shirt": "#F2F2EC",
-          "bril_op_hoofd": true
+          "shirt": "#F7F7F2",
+          "bril_op_hoofd": true,
+          "oorbellen": "ring",
+          "mond": "lach"
         },
         {
           "id": "f2",
-          "profiel": "dames",
           "stel": 2,
           "huid": "#EDBE98",
           "haar": "lang",
+          "scheiding": true,
           "haarkleur": "#2B1D14",
-          "shirt": "#6E7480"
+          "shirt": "#7A7F8A",
+          "kraag": true,
+          "oorbellen": "knop",
+          "mond": "lach"
         },
         {
           "id": "f3",
-          "profiel": "guys",
           "stel": 1,
           "huid": "#F6D3B8",
-          "haar": "kuif",
+          "haar": "krulkort",
           "haarkleur": "#3B2A1E",
           "shirt": "#EFE6D2",
+          "kraag": true,
+          "mond": "lach",
+          "gezicht": "lang",
           "groot": true
         },
         {
           "id": "f4",
-          "profiel": "guys",
           "stel": 2,
           "huid": "#EDBE98",
           "haar": "kuif",
@@ -439,50 +375,64 @@
           "shirt": "#F4EFE0",
           "shirtmotief": "streep",
           "shirtaccent": "#3F6FB5",
-          "stoppels": true
+          "kraag": true,
+          "stoppels": true,
+          "snor": true,
+          "bril_aan_kraag": true,
+          "mond": "glimlach"
         },
         {
           "id": "f5",
-          "profiel": "guys",
           "stel": 3,
           "huid": "#F6D3B8",
           "haar": "kort",
           "haarkleur": "#6B4A2F",
           "shirt": "#EFE6D2",
+          "kraag": true,
           "baard": true,
-          "zonnebril": true
+          "zonnebril": "rond",
+          "mond": "lach"
         },
         {
           "id": "f6",
-          "profiel": "guys",
           "huid": "#F6D3B8",
           "haar": "kuif",
           "haarkleur": "#2B1D14",
-          "shirt": "#5A5F68",
-          "shirtmotief": "ruit",
-          "shirtaccent": "#D9DCE0",
-          "bril_op_hoofd": true
+          "shirt": "#F7F7F2",
+          "kraag": true,
+          "jas": "#5A5F68",
+          "jasmotief": "ruit",
+          "jasaccent": "#D9DCE0",
+          "bril_op_hoofd": true,
+          "ogen": "dicht",
+          "mond": "grijns",
+          "gezicht": "lang",
+          "groot": true
         },
         {
           "id": "f7",
-          "profiel": "dames",
           "stel": 3,
           "huid": "#F6D3B8",
           "haar": "lang",
           "haarkleur": "#8A6A45",
-          "shirt": "#F2F2EC",
-          "shirtmotief": "zebra",
-          "shirtaccent": "#1A2233",
-          "zonnebril": true
+          "shirt": "#22262E",
+          "jas": "#F4F1EA",
+          "jasmotief": "zebra",
+          "jasaccent": "#1A2233",
+          "zonnebril": "kat",
+          "montuur": "#F7F7F2",
+          "mond": "glimlach"
         },
         {
           "id": "f8",
-          "profiel": "guys",
           "huid": "#EDBE98",
           "haar": "kort",
           "haarkleur": "#2B1D14",
           "shirt": "#EFE6D2",
-          "zonnebril": true
+          "kraag": true,
+          "trui_om": "#22313F",
+          "zonnebril": "piloot",
+          "mond": "lach"
         },
         {
           "id": "k1",
@@ -499,14 +449,24 @@
           "shirt": "#7FC8A9"
         }
       ]
-    }
+    },
+    "kidscheck_uitleg": "Geen wensenlijst maar een check: hoe makkelijk en veilig is dit met twee kinderen onder de 2?",
+    "rollen": [
+      "Geeft het eerste rondje",
+      "Grillmeester",
+      "DJ van de week",
+      "Bob op dag één",
+      "Haalt 's ochtends de broodjes",
+      "Regelt het uitje",
+      "Badmeester bij het zwembad",
+      "Kiest het restaurant"
+    ]
   },
   "opties": [
     {
       "id": "algarve-west",
-      "groep": "portugal",
       "land": "Portugal",
-      "naam": "Algarve klassiek",
+      "naam": "West-Algarve",
       "subregio": "Carvoeiro, Pêra en Albufeira",
       "tagline": "Gouden kliffen, grotten en piri piri kip, op 40 minuten van het vliegveld.",
       "lat": 37.12,
@@ -567,7 +527,7 @@
           5,
           "Groen reisadvies, goede wegen en ziekenhuizen."
         ],
-        "exotisch": [
+        "avontuur": [
           1,
           "Bekend terrein voor veel Nederlanders."
         ]
@@ -722,7 +682,6 @@
     },
     {
       "id": "algarve-oost",
-      "groep": "portugal",
       "land": "Portugal",
       "naam": "Oost-Algarve",
       "subregio": "Tavira, Olhão en de Ria Formosa",
@@ -785,7 +744,7 @@
           5,
           "Groen reisadvies, rustig gebied."
         ],
-        "exotisch": [
+        "avontuur": [
           2,
           "Portugal, maar het minst toeristische stuk kust."
         ]
@@ -940,7 +899,6 @@
     },
     {
       "id": "sintra",
-      "groep": "portugal",
       "land": "Portugal",
       "naam": "Sintra-kust en Lissabon",
       "subregio": "Colares, Sintra, Cascais en Lissabon",
@@ -1003,7 +961,7 @@
           5,
           "Groen reisadvies."
         ],
-        "exotisch": [
+        "avontuur": [
           2,
           "Stedentrip en strand in één, maar bekend terrein."
         ]
@@ -1140,7 +1098,6 @@
     },
     {
       "id": "douro",
-      "groep": "portugal",
       "land": "Portugal",
       "naam": "Douro-vallei",
       "subregio": "Wijnterrassen tussen Régua en Pinhão",
@@ -1203,7 +1160,7 @@
           5,
           "Groen reisadvies."
         ],
-        "exotisch": [
+        "avontuur": [
           3,
           "Geen strandvakantie maar een oogstervaring."
         ]
@@ -1340,7 +1297,6 @@
     },
     {
       "id": "tirana",
-      "groep": "albanie",
       "land": "Albanië",
       "naam": "Albanië: Tirana",
       "subregio": "Heuvels ten westen van Tirana",
@@ -1403,7 +1359,7 @@
           4,
           "Groen reisadvies, maar onrustig verkeer en beperkte zorg buiten Tirana."
         ],
-        "exotisch": [
+        "avontuur": [
           5,
           "Het meest onontdekte land van de lijst."
         ]
@@ -1540,7 +1496,6 @@
     },
     {
       "id": "durres",
-      "groep": "albanie",
       "land": "Albanië",
       "naam": "Albanië: strand bij Durrës",
       "subregio": "Golem en de baai van Durrës",
@@ -1603,7 +1558,7 @@
           4,
           "Groen reisadvies, verkeer vraagt aandacht."
         ],
-        "exotisch": [
+        "avontuur": [
           4,
           "Albanees badplaatsleven, nog weinig Nederlanders."
         ]
@@ -1758,7 +1713,6 @@
     },
     {
       "id": "vlore",
-      "groep": "albanie",
       "land": "Albanië",
       "naam": "Albanië: zuidkust bij Vlorë",
       "subregio": "Orikum, Karaburun en de poort naar de Rivièra",
@@ -1821,7 +1775,7 @@
           3,
           "Groen reisadvies, maar langste rit over Albanese wegen."
         ],
-        "exotisch": [
+        "avontuur": [
           5,
           "Het meest avontuurlijke stuk kust van de lijst."
         ]
@@ -1942,7 +1896,6 @@
     },
     {
       "id": "spanje",
-      "groep": "klassiek",
       "land": "Spanje",
       "naam": "Spanje: Málaga",
       "subregio": "Heuvels boven Málaga en de Costa del Sol",
@@ -2006,7 +1959,7 @@
           5,
           "Groen reisadvies."
         ],
-        "exotisch": [
+        "avontuur": [
           1,
           "Veel Nederlanders kennen het al."
         ]
@@ -2160,7 +2113,6 @@
     },
     {
       "id": "kroatie",
-      "groep": "klassiek",
       "land": "Kroatië",
       "naam": "Kroatië: Dalmatië",
       "subregio": "Kaštela tussen Split en Trogir",
@@ -2224,7 +2176,7 @@
           5,
           "Groen reisadvies."
         ],
-        "exotisch": [
+        "avontuur": [
           2,
           "Bekend, maar met eilanden die nog verrassen."
         ]
@@ -2362,7 +2314,6 @@
     },
     {
       "id": "fethiye",
-      "groep": "exoot",
       "land": "Turkije",
       "naam": "Turkije: Fethiye",
       "subregio": "Turquoise Kust tussen Fethiye en Kaş",
@@ -2425,7 +2376,7 @@
           3,
           "Geel reisadvies voor heel Turkije; de kust is rustig, dreiging zit vooral in grote steden."
         ],
-        "exotisch": [
+        "avontuur": [
           5,
           "Andere cultuur, andere keuken, ander landschap."
         ]
@@ -2501,7 +2452,7 @@
         "auto": 112,
         "eten_uitjes": 301
       },
-      "sfeer": "Warm, overvloedig en exotisch: lange ontbijten met meze, bootdagen langs eilandjes en avonden aan de haven. De zon is hier bijna gegarandeerd.",
+      "sfeer": "Warm, overvloedig en heel anders dan thuis: lange ontbijten met meze, bootdagen langs eilandjes en avonden aan de haven. De zon is hier bijna gegarandeerd.",
       "mogelijkheden": {
         "strand": [
           "beperkt",
@@ -2579,7 +2530,6 @@
     },
     {
       "id": "gozo",
-      "groep": "exoot",
       "land": "Malta",
       "naam": "Gozo",
       "subregio": "Xagħra en het platteland van Gozo",
@@ -2642,7 +2592,7 @@
           5,
           "Groen reisadvies, Engelstalig, goede zorg; links rijden."
         ],
-        "exotisch": [
+        "avontuur": [
           4,
           "Klein eiland met eigen taal en sfeer."
         ]
@@ -2778,7 +2728,6 @@
     },
     {
       "id": "kefalonia",
-      "groep": "exoot",
       "land": "Griekenland",
       "naam": "Kefalonia",
       "subregio": "Zuidkust bij Lourdata",
@@ -2841,7 +2790,7 @@
           5,
           "Groen reisadvies."
         ],
-        "exotisch": [
+        "avontuur": [
           4,
           "Minder bekend dan Kreta of Corfu."
         ]
@@ -2849,7 +2798,7 @@
       "onderscheid": {
         "plus": [
           "Hoogst beoordeelde huis van alle opties (4,99 uit 100 reviews).",
-          "Kortste transfer van alle exoten."
+          "Kortste transfer van alle eilanden en verre bestemmingen."
         ],
         "min": [
           "Duurste biertje van de lijst.",
@@ -2980,7 +2929,6 @@
     },
     {
       "id": "sicilie",
-      "groep": "exoot",
       "land": "Italië",
       "naam": "Sicilië: barokke zuidoosten",
       "subregio": "Modica, Noto en Ragusa",
@@ -3043,7 +2991,7 @@
           5,
           "Groen reisadvies."
         ],
-        "exotisch": [
+        "avontuur": [
           3,
           "Italië, maar met een eigen, ruige Siciliaanse sfeer."
         ]

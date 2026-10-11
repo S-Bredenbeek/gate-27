@@ -75,113 +75,73 @@ export function koppelKostenverdeler(wortel, perVolwassene) {
   reken();
 }
 
-// ---------- kamerverdeling ----------
+// ---------- wie doet wat ----------
+// Het lot verdeelt de vakantietaken uit meta.rollen over de volwassen poppetjes.
 
-function eenheden() {
-  const figuren = meta().groep_figuren?.lijst ?? [];
-  const lijst = [];
-  const stellen = new Map();
-  for (const f of figuren) {
-    if (f.kind) lijst.push({ id: f.id, soort: 'kind', figuren: [f], naam: 'Kleintje' });
-    else if (f.stel != null) {
-      if (!stellen.has(f.stel)) {
-        stellen.set(f.stel, { id: `stel-${f.stel}`, soort: 'stel', figuren: [], naam: `Stel ${f.stel}` });
-        lijst.push(stellen.get(f.stel));
-      }
-      stellen.get(f.stel).figuren.push(f);
-    } else lijst.push({ id: f.id, soort: 'single', figuren: [f], naam: 'Single' });
+const volwassenFiguren = () => (meta().groep_figuren?.lijst ?? []).filter((f) => !f.kind);
+export const figuurNaam = (index) => staat().namen?.[index] || '';
+
+function schud(n) {
+  const rij = Array.from({ length: n }, (_, i) => i);
+  for (let i = n - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [rij[i], rij[j]] = [rij[j], rij[i]];
   }
-  const volgorde = { stel: 0, single: 1, kind: 2 };
-  return lijst.sort((a, b) => volgorde[a.soort] - volgorde[b.soort]);
+  return rij;
 }
 
-// Startverdeling: elk stel een kamer, de singles daarna; zijn er te weinig kamers, dan delen de singles de laatste.
-function startverdeling(kamers) {
-  const plek = {};
-  let k = 0;
-  for (const e of eenheden()) {
-    if (e.soort === 'kind') plek[e.id] = null;
-    else plek[e.id] = Math.min(k++, kamers - 1);
-  }
-  return plek;
+function rolTekst(o, rolIndex) {
+  const rol = meta().rollen?.[rolIndex] ?? '';
+  return rolIndex === 0 && o.pils?.rondje_mannen != null ? `${rol} (${euro(o.pils.rondje_mannen, 2)})` : rol;
 }
 
-export function kamerverdeling(h) {
-  return `<details class="kamers" data-kamers="${esc(h.airbnb_id)}" data-n="${esc(h.slaapkamers)}">
-    <summary>${icoon('bed')}Wie slaapt waar?</summary>
-    <div class="kamers-in"></div>
-  </details>`;
+export function taakverdeling() {
+  return `<h2>Wie doet wat?</h2>
+    <p class="dim">Het lot verdeelt de taken. Niet blij met de uitkomst? Schud gewoon opnieuw.</p>
+    <ul class="rollen" id="rollen"></ul>
+    <div class="acties">
+      <button type="button" class="knop primair" id="rollen-schud">Schud de taken</button>
+      <button type="button" class="knop" id="rollen-kopieer" hidden>${icoon('kopieer')}Kopieer voor de groepsapp</button>
+    </div>`;
 }
 
-export function koppelKamers(wortel) {
-  for (const blok of wortel.querySelectorAll('[data-kamers]')) {
-    const sleutel = blok.dataset.kamers;
-    const n = Number(blok.dataset.n) || 1;
-    const lijst = eenheden();
-    const eigen = staat().figuur;
-    let gekozen = null;
-    const plekken = () => ({ ...startverdeling(n), ...(staat().kamers?.[sleutel] ?? {}) });
-    const bewaar = (plek) => wijzig({ kamers: { ...staat().kamers, [sleutel]: plek } });
+export function koppelTaakverdeling(wortel, o) {
+  const lijst = wortel.querySelector('#rollen');
+  if (!lijst) return;
+  const figuren = volwassenFiguren();
+  const eigen = staat().figuur;
+  const aantalRollen = meta().rollen?.length ?? 0;
+  const wie = (f, i) => (f.id === eigen ? staat().naam || figuurNaam(i) || 'Jij' : figuurNaam(i));
+  const teken = (verdeling) => {
+    lijst.innerHTML = figuren.map((f, i) => `<li class="${f.id === eigen ? 'ik' : ''}">
+      ${poppetje(f.id === eigen ? { ...f, ...staat().avatar } : f)}
+      <span>${wie(f, i) ? `<strong>${esc(wie(f, i))}</strong>` : ''}<span class="rol">${verdeling ? esc(rolTekst(o, verdeling[i] % aantalRollen)) : '?'}</span></span>
+    </li>`).join('');
+    wortel.querySelector('#rollen-kopieer').hidden = !verdeling;
+  };
+  teken(staat().rollen?.[o.id]);
 
-    const teken = () => {
-      const plek = plekken();
-      const chip = (e) => `<button type="button" class="bewoner${e.figuren.some((f) => f.id === eigen) ? ' ik' : ''}" draggable="true" data-eenheid="${e.id}" aria-pressed="${gekozen === e.id}" aria-label="${e.naam}${plek[e.id] == null ? ', nog geen kamer' : `, kamer ${plek[e.id] + 1}`}">${e.figuren.map((f) => poppetje(f.id === eigen ? { ...f, ...staat().avatar } : f)).join('')}</button>`;
-      const kamers = Array.from({ length: n }, (_, i) => {
-        const hier = lijst.filter((e) => plek[e.id] === i);
-        const groten = hier.reduce((t, e) => t + (e.soort === 'kind' ? 0 : e.figuren.length), 0);
-        return `<div class="kamer${groten > 2 ? ' vol' : ''}" data-kamer="${i}">
-          <p>Kamer ${i + 1}${groten > 2 ? ' <span>krap</span>' : ''}</p>
-          <div class="kamer-in">${hier.map(chip).join('')}</div>
-          ${gekozen ? `<button type="button" class="hierheen" data-naar="${i}">Hierheen</button>` : ''}
-        </div>`;
-      }).join('');
-      const los = lijst.filter((e) => plek[e.id] == null);
-      const groot = lijst.filter((e) => e.soort !== 'kind').length;
-      const meldingen = [];
-      if (n < groot) meldingen.push('De singles moeten dan een kamer delen.');
-      if (los.some((e) => e.soort === 'kind')) meldingen.push('Zet de kleintjes bij hun ouders op de kamer.');
-      blok.querySelector('.kamers-in').innerHTML = `
-        <p class="klein">Tik een poppetje aan en kies een kamer (of sleep). ${n} slaapkamers.</p>
-        <div class="plattegrond">${kamers}</div>
-        ${los.length ? `<div class="kamer los" data-kamer="los"><p>Nog geen kamer</p><div class="kamer-in">${los.map(chip).join('')}</div></div>` : ''}
-        ${meldingen.map((m) => `<p class="kamermelding">${icoon('vraag')}${esc(m)}</p>`).join('')}
-        <button type="button" class="linkknop" data-herstel>Begin opnieuw</button>`;
+  wortel.querySelector('#rollen-schud').addEventListener('click', () => {
+    const uitkomst = schud(Math.max(figuren.length, aantalRollen)).slice(0, figuren.length);
+    const klaar = () => {
+      wijzig({ rollen: { ...staat().rollen, [o.id]: uitkomst } });
+      teken(uitkomst);
     };
-
-    const zet = (id, naar) => {
-      bewaar({ ...plekken(), [id]: naar });
-      gekozen = null;
-      teken();
-    };
-    blok.addEventListener('click', (e) => {
-      const bewoner = e.target.closest('[data-eenheid]');
-      const naar = e.target.closest('[data-naar]');
-      if (bewoner) {
-        gekozen = gekozen === bewoner.dataset.eenheid ? null : bewoner.dataset.eenheid;
-        teken();
-      } else if (naar && gekozen) zet(gekozen, Number(naar.dataset.naar));
-      else if (e.target.closest('[data-herstel]')) {
-        bewaar(startverdeling(n));
-        gekozen = null;
-        teken();
-      }
-    });
-    blok.addEventListener('dragstart', (e) => {
-      const bewoner = e.target.closest?.('[data-eenheid]');
-      if (bewoner) e.dataTransfer.setData('text/plain', bewoner.dataset.eenheid);
-    });
-    blok.addEventListener('dragover', (e) => {
-      if (e.target.closest?.('[data-kamer]')) e.preventDefault();
-    });
-    blok.addEventListener('drop', (e) => {
-      const kamer = e.target.closest?.('[data-kamer]');
-      const id = e.dataTransfer.getData('text/plain');
-      if (!kamer || !lijst.some((x) => x.id === id)) return;
-      e.preventDefault();
-      zet(id, kamer.dataset.kamer === 'los' ? null : Number(kamer.dataset.kamer));
-    });
-    teken();
-  }
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return klaar();
+    let beurt = 0;
+    const timer = setInterval(() => {
+      if (!lijst.isConnected || ++beurt > 9) {
+        clearInterval(timer);
+        if (lijst.isConnected) klaar();
+      } else teken(schud(Math.max(figuren.length, aantalRollen)).slice(0, figuren.length));
+    }, 90);
+  });
+  wortel.querySelector('#rollen-kopieer').addEventListener('click', () => {
+    const verdeling = staat().rollen?.[o.id];
+    if (!verdeling) return;
+    const regels = figuren.map((f, i) => `- ${wie(f, i) || `Poppetje ${i + 1}`}: ${rolTekst(o, verdeling[i] % aantalRollen)}`);
+    kopieer(`Wie doet wat in ${o.naam}:\n${regels.join('\n')}`, 'Taakverdeling gekopieerd: plak hem in de groepsapp');
+  });
 }
 
 // ---------- vragen voor de host ----------
@@ -194,13 +154,13 @@ export function hostbericht(o, h) {
   const k = o.kidscheck ?? {};
   const bad = (h.zwembad ?? '').toLowerCase();
   const vragen = [];
-  if (bad.includes('seizoen')) vragen.push('Het zwembad is seizoensgebonden: is het in die week zeker open, en is het verwarmd?');
-  else if (bad.includes('verwarmd')) vragen.push('Is het zwembad in die week open en wordt het dan nog verwarmd?');
+  if (/seizoen|season/.test(bad)) vragen.push('Het zwembad is seizoensgebonden: is het in die week zeker open, en is het verwarmd?');
+  else if (/verwarmd|heated/.test(bad)) vragen.push('Is het zwembad in die week open en wordt het dan nog verwarmd?');
   else vragen.push('Is het zwembad in die week open, en is het verwarmd?');
   vragen.push(k.wieg && k.kinderstoel
     ? `Klopt het dat er een wieg en een kinderstoel zijn, en kunnen dat er ${kids} van elk worden?`
     : `Zijn er ${kids} wiegen (of kinderbedjes) en ${kids} kinderstoelen, of kunnen die geregeld worden?`);
-  vragen.push(bad.includes('dak')
+  vragen.push(/dak|roof/.test(bad)
     ? 'Het zwembad ligt op het dak: is de toegang voor kleine kinderen af te sluiten?'
     : 'Is het zwembad afgeschermd, bijvoorbeeld met een hek of een afdekzeil?');
   if (!k.omheind) vragen.push('Is de tuin omheind of kan een peuter zo de weg op?');
@@ -214,7 +174,7 @@ export function hostbericht(o, h) {
 export function paklijst(o) {
   const lijst = [...(o.paklijst_extra ?? [])];
   const kids = (meta().groep_indeling?.kids ?? 0) > 0;
-  const dak = o.huizen.some((h) => (h.zwembad ?? '').toLowerCase().includes('dak'));
+  const dak = o.huizen.some((h) => /dak|roof/.test((h.zwembad ?? '').toLowerCase()));
   if (kids && (dak || !o.kidscheck?.omheind)) lijst.push(dak ? 'Zwembandjes en een traphekje (zwembad op het dak)' : 'Zwembandjes en een zwembadhekje (tuin is niet omheind)');
   if ((o.klimaat?.lucht ?? 0) >= 28) lijst.push(`Zonnetentje voor de kleintjes (${o.klimaat.lucht}°C overdag)`);
   if (kids) lijst.push('Autostoeltjes: meenemen of bij de huurauto reserveren');
@@ -227,6 +187,8 @@ export function paklijst(o) {
 export function voorbereiden(o) {
   const afgevinkt = staat().paklijst?.[o.id] ?? [];
   return `
+    ${taakverdeling()}
+
     <h2>Vragen voor de host</h2>
     <p class="dim">Kant-en-klaar om via Airbnb te sturen, per huis.</p>
     ${o.huizen.map((h, i) => `<details class="hostvraag"${i === 0 ? ' open' : ''}>
@@ -242,6 +204,7 @@ export function voorbereiden(o) {
 }
 
 export function koppelVoorbereiden(wortel, o) {
+  koppelTaakverdeling(wortel, o);
   for (const knop of wortel.querySelectorAll('[data-kopieer-host]')) {
     knop.addEventListener('click', () => kopieer(hostbericht(o, o.huizen[Number(knop.dataset.kopieerHost)]), 'Bericht gekopieerd: plak het in Airbnb'));
   }

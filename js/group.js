@@ -6,8 +6,8 @@ import { staat } from './store.js';
 
 const MERK = 'VV1.';
 
-const naarCode = (tekst) => btoa(String.fromCharCode(...new TextEncoder().encode(tekst))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-const vanCode = (code) => new TextDecoder().decode(Uint8Array.from(atob(code.replace(/-/g, '+').replace(/_/g, '/')), (c) => c.charCodeAt(0)));
+export const naarCode = (tekst) => btoa(String.fromCharCode(...new TextEncoder().encode(tekst))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+export const vanCode = (code) => new TextDecoder().decode(Uint8Array.from(atob(code.replace(/-/g, '+').replace(/_/g, '/')), (c) => c.charCodeAt(0)));
 
 // Opties staan er met hun id in (kort en bestand tegen een andere volgorde in de JSON), de koffer als bitjes.
 export function mijnCode() {

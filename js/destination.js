@@ -1,13 +1,13 @@
 // De bestemmingspagina: onderste sheet op mobiel, zijpaneel op desktop, met tabbladen.
 
 import {
-  meta, categorieen, criteria, critNaam, profielen, gateLetter,
+  meta, opties, categorieen, criteria, critNaam, gateLetter, landNaam,
   koffermatch, kosten, airbnbUrl, euro, pct, esc, themaStijl, volwassenen,
 } from './data.js';
 import { staat, wijzig } from './store.js';
 import { land } from './data.js';
 import { thema } from './patterns.js';
-import { pilsmeter, kostenverdeler, koppelKostenverdeler, kamerverdeling, koppelKamers, voorbereiden, koppelVoorbereiden } from './extras.js';
+import { pilsmeter, kostenverdeler, koppelKostenverdeler, voorbereiden, koppelVoorbereiden } from './extras.js';
 import { motief, heeftMotief } from './motifs.js';
 import { icoon } from './icons.js';
 import { statusLabel, hartKnop, bolletjes, beren, bronnenBlok, toast } from './ui.js';
@@ -59,6 +59,7 @@ export function toonBestemming(paneel, o, tab, animeer) {
       ${TABS.map(([id, naam]) => `<button type="button" role="tab" id="tab-${id}" data-tab="${id}" aria-controls="tabinhoud">${naam}</button>`).join('')}
     </div>
     <div id="tabinhoud" class="tabinhoud" role="tabpanel"></div>
+    ${verder(o)}
     ${bronnenBlok()}`;
 
   const lijst = paneel.querySelector('.tabs');
@@ -91,7 +92,6 @@ export function toonBestemming(paneel, o, tab, animeer) {
   }
 
   function koppel(id) {
-    koppelKamers(inhoud);
     koppelVoorbereiden(inhoud, o);
     koppelKostenverdeler(inhoud, kosten(o, o.huizen[huisIndex(o)]).totaal);
     for (const foto of inhoud.querySelectorAll('.huisfoto img')) {
@@ -218,7 +218,6 @@ function tabHuis(o) {
           <button type="button" class="knop" data-rit="${i}">${icoon('auto')}Rij erheen</button>
           <button type="button" class="knop" data-kieshuis="${i}" aria-pressed="${i === gekozen}">${i === gekozen ? `${icoon('check')}Kosten met dit huis` : 'Reken met dit huis'}</button>
         </div>
-        ${kamerverdeling(h)}
       </div>
     </article>`;
   }).join('');
@@ -226,7 +225,7 @@ function tabHuis(o) {
 
 function tabKids(o) {
   const k = o.kidscheck ?? {};
-  const uitleg = profielen().find((p) => p.type === 'kidscheck')?.uitleg ?? '';
+  const uitleg = meta().kidscheck_uitleg ?? '';
   const rijen = (meta().kidscheck_criteria ?? []).map((c) => {
     const v = k[c.id];
     if (typeof v === 'number') {
@@ -322,6 +321,19 @@ function tabKosten(o) {
       <div><dt>${icoon('restaurants')}Diner voor 2</dt><dd>${o.lokaal?.diner2 == null ? 'onbekend' : euro(o.lokaal.diner2)}</dd></div>
     </dl>
     <p class="klein">${esc(meta().bronnen?.pils)}</p>`;
+}
+
+// Onderaan elke bestemming staat de logische volgende stap: nog een geheime plek in dit land, of een ander land.
+function verder(o) {
+  const bezocht = staat().bezocht;
+  const open = opties().filter((x) => x.land === o.land && !bezocht.includes(x.id)).length;
+  return `<nav class="verder" aria-label="Verder">
+    <p class="hand">${open ? (open === 1 ? `nog één geheime plek in ${esc(landNaam(o.land))}` : `nog ${open} geheime plekken in ${esc(landNaam(o.land))}`) : `${esc(landNaam(o.land))} heb je helemaal gezien`}</p>
+    <div class="acties">
+      ${open ? `<a class="knop primair" href="#/gate/${encodeURIComponent(o.land)}">Volgende mysterievlucht</a>` : ''}
+      <a class="knop${open ? '' : ' primair'}" href="#/hal">Kies een ander land</a>
+    </div>
+  </nav>`;
 }
 
 // De scorekaart staat bovenaan elke bestemming: alle scores in één oogopslag.

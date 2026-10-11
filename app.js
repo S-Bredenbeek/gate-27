@@ -2,11 +2,12 @@
 // zoals de instapkaart, de vlucht, de aankomst, het paspoort en de top 3.
 
 import {
-  laadData, meta, opties, optie, landNamen, optiesIn, categorieen, criteria, land,
-  profiel, kiesbareProfielen, profielGewichten, koffermatch, kosten, gateLetter, gateCode,
+  laadData, kiesDataTaal, meta, opties, optie, landNamen, landNaam, optiesIn, categorieen, criteria, land,
+  koffermatch, kosten, gateLetter, gateCode,
   euro, pct, esc, themaStijl,
 } from './js/data.js';
 import { laadStaat, staat, wijzig } from './js/store.js';
+import { t, zetTaal, huidigeTaal, voorkeurstaal, locale } from './js/i18n.js';
 import { icoon } from './js/icons.js';
 import { toast, kopieer, hartKnop, bronnenBlok } from './js/ui.js';
 import * as kaart from './js/map.js';
@@ -16,7 +17,8 @@ import { poppetje, KEUZES, UITERLIJK } from './js/avatar.js';
 import { thema } from './js/patterns.js';
 import { motief, heeftMotief } from './js/motifs.js';
 import { speel, stopSpel } from './js/game.js';
-import { mijnCode, leesCodes, uitslag } from './js/group.js';
+import { mijnCode, leesCodes, uitslag, vanCode } from './js/group.js';
+import { figuurNaam } from './js/extras.js';
 import { tekenAnsichtkaart, kaartNaam } from './js/postcard.js';
 import { stempel, kanteling } from './js/stamps.js';
 import { toestelZij } from './js/plane.js';
@@ -62,13 +64,15 @@ async function begin() {
     $('#inhoud').innerHTML = '<p class="laadfout">De reisgegevens konden niet worden geladen. Ververs de pagina om het opnieuw te proberen.</p>';
     return;
   }
+  zetTaal(staat().taal ?? voorkeurstaal());
+  await kiesDataTaal(huidigeTaal());
   ruimStaatOp();
-  document.title = meta().titel;
-  el.titel.textContent = meta().titel;
+  leesNamenUitLink();
   $('#btn-top3').insertAdjacentHTML('afterbegin', icoon('hart'));
   $('#btn-paspoort').insertAdjacentHTML('afterbegin', icoon('paspoort'));
   $('#btn-koffer').innerHTML = icoon('koffer');
-  el.terug.innerHTML = `${icoon('terug')}<span>Vertrekhal</span>`;
+  tekenVast();
+  $('#btn-taal').addEventListener('click', wisselTaal);
 
   kaartOk = kaart.maakKaart({ opPin: instappen, opWolk: (landNaam) => (location.hash = `#/gate/${encodeURIComponent(landNaam)}`) });
   window.addEventListener('hashchange', route);
@@ -89,12 +93,53 @@ function ruimStaatOp() {
   const bestaat = (id) => !!optie(id);
   const cats = new Set(categorieen().map((c) => c.id));
   wijzig({
-    profiel: profiel(s.profiel) ? s.profiel : null,
     top3: s.top3.filter(bestaat).slice(0, 3),
     bezocht: s.bezocht.filter(bestaat),
     koffer: s.koffer.filter((id) => cats.has(id)),
-    gewichten: Object.fromEntries(criteria().map((c) => [c, s.gewichten[c] ?? 0])),
+    gewichten: Object.fromEntries(criteria().map((c) => [c, s.gewichten[c] ?? 1])),
   });
+}
+
+// De vaste teksten buiten de schermen: opnieuw gezet bij het wisselen van taal.
+function tekenVast() {
+  document.documentElement.lang = huidigeTaal();
+  document.title = meta().titel;
+  el.titel.textContent = meta().titel;
+  el.terug.innerHTML = `${icoon('terug')}<span>${t('Vertrekhal', 'Departures')}</span>`;
+  el.overslaan.textContent = t('Overslaan', 'Skip');
+  $('.skip').textContent = t('Naar de inhoud', 'Skip to content');
+  $('#kaart').setAttribute('aria-label', t('Kaart met Schiphol en alle bestemmingen', 'Map with Schiphol and all destinations'));
+  for (const knop of [$('#btn-koffer')]) {
+    knop.setAttribute('aria-label', t('Koffer en poppetje aanpassen', 'Change suitcase and character'));
+    knop.title = knop.getAttribute('aria-label');
+  }
+  const taalknop = $('#btn-taal');
+  taalknop.textContent = huidigeTaal() === 'nl' ? 'EN' : 'NL';
+  taalknop.setAttribute('aria-label', huidigeTaal() === 'nl' ? 'Switch to English' : 'Wissel naar Nederlands');
+  taalknop.lang = huidigeTaal() === 'nl' ? 'en' : 'nl';
+  werkTellersBij();
+  tekenAftelklok();
+}
+
+async function wisselTaal() {
+  const nieuw = huidigeTaal() === 'nl' ? 'en' : 'nl';
+  wijzig({ taal: nieuw });
+  zetTaal(nieuw);
+  await kiesDataTaal(nieuw);
+  tekenVast();
+  route();
+}
+
+// De namen van de groep staan niet in de repo: ze reizen mee in de link (?wie=...) en blijven daarna lokaal bewaard.
+function leesNamenUitLink() {
+  const wie = new URLSearchParams(location.search).get('wie');
+  if (!wie) return;
+  try {
+    const lijst = JSON.parse(vanCode(wie));
+    if (Array.isArray(lijst)) wijzig({ namen: lijst.slice(0, 12).map((naam) => String(naam ?? '').trim().slice(0, 20)) });
+  } catch {
+    // geen leesbare namen in de link: de poppetjes blijven naamloos
+  }
 }
 
 function tekenAftelklok() {
@@ -121,7 +166,7 @@ function route() {
   sluitWelkom();
   stopSpel();
 
-  if (!staat().profiel || !staat().avatar) scherm = 'start';
+  if (!staat().figuur || !staat().avatar) scherm = 'start';
   else if (!SCHERMEN.includes(scherm)) scherm = 'hal';
   if ((scherm === 'gate' && !landNamen().includes(a)) || (scherm === 'b' && !optie(a))) scherm = 'hal';
 
@@ -130,7 +175,7 @@ function route() {
   el.start.hidden = !['start', 'koffer'].includes(scherm);
   el.podium.hidden = !opPodium;
   el.vergelijk.hidden = !['vergelijk', 'uitslag'].includes(scherm);
-  el.top.hidden = scherm === 'start';
+  el.top.hidden = false;
   el.terug.hidden = scherm === 'hal';
   // in een land kleurt ook de bovenbalk mee
   const themaLand = scherm === 'b' ? optie(a) : scherm === 'gate' ? { land: a } : null;
@@ -161,25 +206,27 @@ function route() {
 // --- wie ben jij ---
 
 function kiesFiguur(id) {
-  const f = figuren().find((x) => x.id === id);
+  const lijst = figuren().filter((x) => !x.kind);
+  const f = lijst.find((x) => x.id === id);
   if (!f) return;
   const s = staat();
-  const deel = { figuur: id, avatar: Object.fromEntries(UITERLIJK.map((k) => [k, f[k]])) };
-  const p = profiel(f.profiel) ?? kiesbareProfielen()[0];
-  if (p && p.id !== s.profiel) Object.assign(deel, { profiel: p.id, koffer: [...(p.wensen ?? [])], gewichten: profielGewichten(p) });
-  wijzig(deel);
+  // de naam uit de link invullen, tenzij iemand zelf al iets anders heeft getypt
+  const vorigeNaam = figuurNaam(lijst.findIndex((x) => x.id === s.figuur));
+  const naam = !s.naam || s.naam === vorigeNaam ? figuurNaam(lijst.indexOf(f)) || s.naam : s.naam;
+  wijzig({ figuur: id, naam, avatar: Object.fromEntries(UITERLIJK.filter((k) => f[k] != null).map((k) => [k, f[k]])) });
 }
 
 function bouwer() {
   const a = staat().avatar ?? {};
+  const kies = (lijst) => lijst.map(([id, nl, en]) => [id, t(nl, en)]);
   const staal = (soort, kleur) => `<button type="button" class="staal" data-av="${soort}" data-w="${kleur}" aria-pressed="${a[soort] === kleur}" aria-label="${soort} ${kleur}" style="--k:${kleur}"></button>`;
   const aanuit = (soort, naam) => `<button type="button" class="keuze" data-av="${soort}" data-w="${!a[soort]}" aria-pressed="${!!a[soort]}">${naam}</button>`;
   return `
-    <div class="bouwrij"><span>Haar</span><div>${KEUZES.haar.map(([id, naam]) => `<button type="button" class="keuze" data-av="haar" data-w="${id}" aria-pressed="${a.haar === id}">${naam}</button>`).join('')}</div></div>
+    <div class="bouwrij"><span>Haar</span><div>${kies(KEUZES.haar).map(([id, naam]) => `<button type="button" class="keuze" data-av="haar" data-w="${id}" aria-pressed="${a.haar === id}">${naam}</button>`).join('')}</div></div>
     <div class="bouwrij"><span>Haarkleur</span><div>${KEUZES.haarkleur.map((k) => staal('haarkleur', k)).join('')}</div></div>
     <div class="bouwrij"><span>Huid</span><div>${KEUZES.huid.map((k) => staal('huid', k)).join('')}</div></div>
     <div class="bouwrij"><span>Shirt</span><div>${KEUZES.shirt.map((k) => staal('shirt', k)).join('')}</div></div>
-    <div class="bouwrij"><span>Extra</span><div>${KEUZES.extra.map(([id, naam]) => aanuit(id, naam)).join('')}</div></div>`;
+    <div class="bouwrij"><span>Extra</span><div>${kies(KEUZES.extra).map(([id, naam]) => aanuit(id, naam)).join('')}</div></div>`;
 }
 
 function toonStart() {
@@ -195,8 +242,9 @@ function toonStart() {
     <h2 id="wie">Wie van ons ben jij?</h2>
     <div class="wie" role="radiogroup" aria-labelledby="wie">
       ${groot.map((f, i) => `<label class="figuur">
-        <input type="radio" name="figuur" value="${esc(f.id)}"${s.figuur === f.id ? ' checked' : ''} aria-label="Poppetje ${i + 1}">
-        <span class="figuur-in">${poppetje(s.figuur === f.id ? s.avatar : f)}</span>
+        <input type="radio" name="figuur" value="${esc(f.id)}"${s.figuur === f.id ? ' checked' : ''} aria-label="${esc(figuurNaam(i) || `Poppetje ${i + 1}`)}">
+        <span class="figuur-in">${poppetje(s.figuur === f.id ? { ...f, ...s.avatar } : f)}</span>
+        ${figuurNaam(i) ? `<span class="figuur-naam">${esc(figuurNaam(i))}</span>` : ''}
       </label>`).join('')}
     </div>
     ${klein.length ? `<p class="kleintjes">${klein.map((f) => poppetje(f)).join('')}<span class="hand">en de kleintjes gaan ook mee</span></p>` : ''}
@@ -218,6 +266,7 @@ function toonStart() {
   const tekenGekozen = () => {
     const gekozen = el.start.querySelector('input[name=figuur]:checked');
     if (gekozen) gekozen.nextElementSibling.innerHTML = poppetje(staat().avatar);
+    if ($('#naam').value !== staat().naam) $('#naam').value = staat().naam;
     $('#bouwer').innerHTML = bouwer();
   };
   el.start.querySelector('.wie').addEventListener('change', (e) => {
@@ -235,7 +284,11 @@ function toonStart() {
     const knop = e.target.closest('[data-av]');
     if (!knop) return;
     const waarde = { true: true, false: false }[knop.dataset.w] ?? knop.dataset.w;
-    wijzig({ avatar: { ...staat().avatar, [knop.dataset.av]: waarde } });
+    const nieuw = { ...staat().avatar, [knop.dataset.av]: waarde };
+    if (knop.dataset.av === 'zonnebril' && waarde) nieuw.bril = false;
+    if (knop.dataset.av === 'bril' && waarde) nieuw.zonnebril = false;
+    if (knop.dataset.av === 'baard' && waarde) nieuw.stoppels = false;
+    wijzig({ avatar: nieuw });
     tekenGekozen();
   });
   $('#naam').addEventListener('input', (e) => wijzig({ naam: e.target.value.trim() }));
@@ -250,18 +303,12 @@ function toonKoffer() {
   };
   el.start.innerHTML = `<div class="intro">
     <div class="kop-met-pop">${poppetje(s.avatar)}<div>
-      <p class="kicker">Koffer van ${esc(s.naam || 'jou')}</p>
+      <p class="kicker">Stap 2 van 2</p>
       <h1>Wat wil jij kunnen deze week?</h1>
     </div></div>
     <p class="lead">Tik iets aan om het in of uit je koffer te doen. Hoe meer er op een plek van kan, hoe hoger je koffermatch.</p>
 
-    <fieldset class="segment" id="profielkeuze">
-      <legend>Begin met de koffer van</legend>
-      ${kiesbareProfielen().map((p) => `<label><input type="radio" name="profiel" value="${esc(p.id)}"${p.id === s.profiel ? ' checked' : ''}><span>${esc(p.naam)}</span></label>`).join('')}
-    </fieldset>
-
     <div class="wensen" id="wensen"></div>
-    <p class="klein">${esc(meta().profielen.toelichting)}</p>
     <div class="kofferbalk">
       <span class="koffertel">${icoon('koffer')}<span id="koffer-n" aria-live="polite">${tel()}</span></span>
       <a class="knop primair" href="#/hal">Naar de vertrekhal${icoon('verder')}</a>
@@ -289,12 +336,6 @@ function toonKoffer() {
     wijzig({ koffer: erin ? [...koffer, id] : koffer.filter((x) => x !== id) });
     knop.setAttribute('aria-pressed', erin);
     $('#koffer-n').textContent = tel();
-  });
-  $('#profielkeuze').addEventListener('change', (e) => {
-    const p = profiel(e.target.value);
-    if (!p) return;
-    wijzig({ profiel: p.id, koffer: [...(p.wensen ?? [])], gewichten: profielGewichten(p) });
-    teken();
   });
 }
 

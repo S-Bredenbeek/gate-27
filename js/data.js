@@ -1,13 +1,60 @@
 // Laadt vakantie-data.json en rekent alles uit wat daarvan is afgeleid.
 // Inhoud (teksten, prijzen, scores, kleuren, huizen) komt uitsluitend uit de JSON.
 
+import { locale } from './i18n.js';
+
+let NL = null;
+let EN = null;
 let D = null;
 
+async function haal(bestand) {
+  const antwoord = await fetch(bestand, { cache: 'no-cache' });
+  if (!antwoord.ok) throw new Error(`${bestand}: ${antwoord.status}`);
+  return antwoord.json();
+}
+
 export async function laadData() {
-  const antwoord = await fetch('vakantie-data.json', { cache: 'no-cache' });
-  if (!antwoord.ok) throw new Error(`vakantie-data.json: ${antwoord.status}`);
-  D = await antwoord.json();
+  NL = await haal('vakantie-data.json');
+  D = NL;
   return D;
+}
+
+// De Engelse versie is de Nederlandse data met vertaalde teksten eroverheen. Het vertaalbestand is een platte
+// lijst van pad naar tekst, bijvoorbeeld "opties.sintra.tagline". Lijsten met een id (opties, huizen, categorieën)
+// worden op dat id gezocht, zodat de volgorde in de JSON vrij blijft. Wat niet vertaald is, blijft Nederlands.
+function legErover(doel, vertaling) {
+  for (const [pad, tekst] of Object.entries(vertaling)) {
+    const delen = pad.split('.');
+    const laatste = delen.pop();
+    let plek = doel;
+    for (const deel of delen) {
+      if (plek == null) break;
+      plek = Array.isArray(plek)
+        ? plek.find((x) => x && (x.id === deel || String(x.airbnb_id) === deel)) ?? plek[Number(deel)]
+        : plek[deel];
+    }
+    if (plek == null || typeof plek !== 'object') continue;
+    if (Array.isArray(plek)) {
+      if (Number(laatste) < plek.length) plek[Number(laatste)] = tekst;
+    } else plek[laatste] = tekst;
+  }
+}
+
+export async function kiesDataTaal(taal) {
+  if (taal !== 'en') {
+    D = NL;
+    return;
+  }
+  if (!EN) {
+    try {
+      const vertaling = await haal('vakantie-data.en.json');
+      EN = structuredClone(NL);
+      legErover(EN, vertaling);
+    } catch {
+      EN = NL; // geen vertaling beschikbaar: de inhoud blijft Nederlands
+    }
+  }
+  D = EN;
 }
 
 export const meta = () => D.meta;
@@ -17,9 +64,8 @@ export const landNamen = () => [...new Set(D.opties.map((o) => o.land))];
 export const optiesIn = (landNaam) => D.opties.filter((o) => o.land === landNaam);
 export const categorieen = () => D.meta.mogelijkheden.categorieen;
 export const criteria = () => Object.keys(D.meta.scorecriteria);
-export const profielen = () => D.meta.profielen.lijst;
-export const profiel = (id) => profielen().find((p) => p.id === id);
-export const kiesbareProfielen = () => profielen().filter((p) => p.type !== 'kidscheck');
+// De naam van een land zoals je hem toont; de sleutel (o.land) blijft in beide talen gelijk.
+export const landNaam = (sleutel) => D.meta.landen[sleutel]?.naam ?? sleutel;
 
 const netjes = (id) => id.charAt(0).toUpperCase() + id.slice(1).replace(/_/g, ' ');
 export const critNaam = (id) => D.meta.scorecriteria_namen?.[id] ?? netjes(id);
@@ -39,11 +85,6 @@ export const land = (o) => D.meta.landen[o.land] ?? { welkom: '', kleuren: NEUTR
 
 // ---------- koffer en scores ----------
 
-export function profielGewichten(p) {
-  const g = {};
-  for (const c of criteria()) g[c] = p?.gewichten?.[c] ?? 0;
-  return g;
-}
 
 // ja telt 1, beperkt 0,5, nee en onbekend 0; gedeeld door het aantal ingepakte wensen.
 export function koffermatch(o, koffer) {
@@ -106,7 +147,7 @@ export function airbnbUrl(huis) {
 // ---------- opmaak ----------
 
 export const euro = (n, decimalen = 0) =>
-  '€ ' + Number(n).toLocaleString('nl-NL', { minimumFractionDigits: decimalen, maximumFractionDigits: decimalen });
+  (locale() === 'nl-NL' ? '€ ' : '€') + Number(n).toLocaleString(locale(), { minimumFractionDigits: decimalen, maximumFractionDigits: decimalen });
 export const pct = (x) => Math.round(x * 100) + '%';
 export const graden = (n) => (n == null ? null : `${n}°C`);
 

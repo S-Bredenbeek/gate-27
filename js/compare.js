@@ -1,8 +1,8 @@
-// Vergelijk alles: drie weergaven (scores, mogelijkheden, kids), schuifjes voor de weging en de profielbril.
+// Vergelijk alles: drie weergaven (scores, mogelijkheden, kids), schuifjes voor de weging en de blik van de kids.
 // Eén tabel die op smalle schermen als kaartjes wordt getoond (zie style.css).
 
 import {
-  meta, opties, categorieen, criteria, critNaam, profielen, profiel, profielGewichten,
+  meta, opties, categorieen, criteria, critNaam, landNaam,
   koffermatch, persoonlijkeScore, kosten, gateCode, landKleur, euro, pct, esc,
 } from './data.js';
 import { staat, wijzig } from './store.js';
@@ -19,12 +19,10 @@ let bril = 'ik';
 let weergave = 'scores';
 let sortering = 'score'; // of 'rondje'
 
-// Door wiens ogen kijken we: eigen keuzes, of de standaard van een profiel.
+// Door wiens ogen kijken we: je eigen keuzes, of die van de kids.
 function blik() {
-  if (bril === 'ik') return { gewichten: staat().gewichten, koffer: staat().koffer };
-  const p = profiel(bril);
-  if (p?.type === 'kidscheck') return { kids: true, gewichten: {}, koffer: [] };
-  return { gewichten: profielGewichten(p), koffer: p?.wensen ?? [] };
+  if (bril === 'kids') return { kids: true, gewichten: {}, koffer: [] };
+  return { gewichten: staat().gewichten, koffer: staat().koffer };
 }
 
 const bekend = () => opties().filter((o) => staat().bezocht.includes(o.id));
@@ -44,8 +42,7 @@ function gesorteerd(b) {
 
 export function toonVergelijk(el, gevraagd) {
   if (WEERGAVEN.some(([id]) => id === gevraagd)) weergave = gevraagd;
-  if (bril !== 'ik' && !profiel(bril)) bril = 'ik';
-  const brillen = [['ik', 'Mijn keuzes'], ...profielen().map((p) => [p.id, p.naam])];
+  const brillen = [['ik', 'Mijn keuzes'], ['kids', 'De kids']];
   const geheim = opties().length - bekend().length;
   const onthul = () => {
     if (!confirm('Alle bestemmingen in één keer onthullen? Dan is de verrassing eraf.')) return;
@@ -70,7 +67,7 @@ export function toonVergelijk(el, gevraagd) {
     ${geheim ? `<p class="geheimbalk"><span><strong>${geheim === 1 ? 'Nog 1 bestemming is geheim.' : `Nog ${geheim} bestemmingen zijn geheim.`}</strong> <a href="#/hal">Ga ze ontdekken</a></span><button type="button" class="linkknop" id="onthul">of onthul alles</button></p>` : ''}
 
     <fieldset class="segment" id="bril">
-      <legend>Profielbril</legend>
+      <legend>Door wiens ogen</legend>
       ${brillen.map(([id, naam]) => `<label><input type="radio" name="bril" value="${esc(id)}"${id === bril ? ' checked' : ''}><span>${esc(naam)}</span></label>`).join('')}
     </fieldset>
 
@@ -125,9 +122,7 @@ export function toonVergelijk(el, gevraagd) {
     el.querySelector('#vgl-paneel').setAttribute('aria-labelledby', `vgl-tab-${weergave}`);
     uitleg.textContent = b.kids
       ? 'Door de ogen van de kids: gesorteerd op het kids-oordeel, bij gelijke stand op de kortste reistijd.'
-      : bril === 'ik'
-        ? 'Gesorteerd op jouw score. Kosten per persoon gelden voor de sterkste huiskeuze en zijn een indicatie.'
-        : `Door de ogen van ${profiel(bril).naam}: de standaardwensen en standaardweging van dit profiel.`;
+      : 'Gesorteerd op jouw score. Kosten per persoon gelden voor de sterkste huiskeuze en zijn een indicatie.';
 
     el.querySelector('#sortering').hidden = weergave !== 'scores';
     if (sortering === 'rondje' && weergave === 'scores') uitleg.textContent = 'Gesorteerd op de prijs van een rondje voor de mannen, goedkoopste bovenaan.';
