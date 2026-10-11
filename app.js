@@ -504,19 +504,13 @@ function reisStappen() {
   </section>`;
 }
 
-// Het lot kiest een plek die je nog niet kent, en vliegt kriskras: liefst naar een land waar je nog
-// helemaal niet bent geweest, anders in elk geval naar een ander land dan waar je net was.
-function verrassingsvlucht(vorigLand) {
+// Het lot kiest willekeurig een plek die je nog niet kent.
+function verrassingsvlucht() {
   const open = opties().filter((o) => !ontdekt(o.id));
   if (!open.length) return toast(t('Je hebt alle plekken al gezien', "You've already seen every place"));
-  vorigLand ??= optie(staat().bezocht.at(-1))?.land;
-  const bezochteLanden = new Set(opties().filter((o) => ontdekt(o.id)).map((o) => o.land));
-  const elders = open.filter((o) => o.land !== vorigLand);
-  const nieuwLand = elders.filter((o) => !bezochteLanden.has(o.land));
-  const lijst = nieuwLand.length ? nieuwLand : elders.length ? elders : open;
-  instappen(lijst[Math.floor(Math.random() * lijst.length)].id);
+  instappen(open[Math.floor(Math.random() * open.length)].id);
 }
-document.addEventListener('verrasvlucht', (e) => verrassingsvlucht(e.detail?.land));
+document.addEventListener('verrasvlucht', () => verrassingsvlucht());
 
 // --- gate ---
 
@@ -979,7 +973,7 @@ function klik(e) {
   if (e.target.closest('[data-reset]')) return opnieuwBeginnen();
   if (e.target.closest('[data-onthul]')) return onthulAlles();
   const verras = e.target.closest('[data-verras]');
-  if (verras) return verrassingsvlucht(verras.dataset.verras || null);
+  if (verras) return verrassingsvlucht();
   const huishart = e.target.closest('[data-huishart]');
   if (huishart) return wisselHuisHart(huishart.dataset.huishart);
   const open = e.target.closest('[data-open]');
