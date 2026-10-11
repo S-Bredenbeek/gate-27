@@ -401,29 +401,14 @@ function toonHal() {
   el.paneel.innerHTML = `
     <div class="kop-met-pop"><a class="pop-link" href="#/start" aria-label="${t('Poppetje en naam aanpassen', 'Change character and name')}">${poppetje(s.avatar)}</a><div>
       <p class="kicker">${t(`Vertrekhal ${esc(m.vertrek.naam)}`, `${esc(m.vertrek.naam)} Departures`)}</p>
-      <h1>${s.naam ? t(`Hoi ${esc(s.naam)}. `, `Hi ${esc(s.naam)}. `) : ''}${t('Wat wil je doen?', 'What would you like to do?')}</h1>
+      <h1>${s.naam ? t(`Hoi ${esc(s.naam)}. `, `Hi ${esc(s.naam)}. `) : ''}${t('Kies een land.', 'Pick a country.')}</h1>
     </div></div>
+    <p class="lead">${gezien === 0
+      ? t(`Achter elk land liggen geheime plekken: ${totaal} in totaal. Vlieg erheen en verzamel de stempels.`, `Behind every country are secret places: ${totaal} in total. Fly there and collect the stamps.`)
+      : gezien === totaal
+        ? t('Je hebt alle plekken gezien. Tijd om te kiezen!', "You've seen every place. Time to choose!")
+        : t(`Je hebt ${gezien} van de ${totaal} geheime plekken gezien. Waar vlieg je nu heen?`, `You've seen ${gezien} of the ${totaal} secret places. Where to next?`)}</p>
 
-    <div class="keuzes">
-      <button type="button" class="keuzekaart" data-scroll="landen">
-        ${icoon('vliegtuig')}
-        <span><strong>${t('Ontdek de plekken', 'Discover the places')}</strong><span>${t(`Kies een land en vlieg erheen. ${gezien} van de ${totaal} gezien.`, `Pick a country and fly there. ${gezien} of ${totaal} seen.`)}</span></span>
-        ${icoon('neer')}
-      </button>
-      <a class="keuzekaart" href="#/huizen">
-        ${icoon('huis')}
-        <span><strong>${t('Bekijk alle huizen', 'Browse all houses')}</strong><span>${t(`${huizen} huizen naast elkaar, met filters.`, `${huizen} houses side by side, with filters.`)}</span></span>
-        ${icoon('verder')}
-      </a>
-      <a class="keuzekaart" href="#/vergelijk">
-        ${icoon('weging')}
-        <span><strong>${t('Vergelijk en kies', 'Compare and choose')}</strong><span>${s.top3.length ? t(`${s.top3.length} van 3 favorieten gekozen. Deel je top 3.`, `${s.top3.length} of 3 favourites picked. Share your top 3.`) : t('Zet je favorieten in je top 3 en deel hem met de groep.', 'Put your favourites in your top 3 and share it with the group.')}</span></span>
-        ${icoon('verder')}
-      </a>
-    </div>
-
-    <h2 id="landen">${t('Kies een land', 'Pick a country')}</h2>
-    <p class="dim">${t('Elk land heeft geheime plekken. Waar je precies landt, zie je als je er bent.', "Every country has secret places. You'll see exactly where you land once you're there.")}</p>
     <div class="gates">
       ${landNamen().map((naam) => {
         const lijst = optiesIn(naam);
@@ -440,6 +425,20 @@ function toonHal() {
     <div class="voortgang">
       <button type="button" class="knop" data-open="paspoort">${icoon('paspoort')}${t(`Paspoort: ${gezien} van ${totaal} stempels`, `Passport: ${gezien} of ${totaal} stamps`)}</button>
       ${gezien < totaal ? `<button type="button" class="linkknop" data-onthul>${t('Geen zin in geheimen? Toon alle plekken', 'Not into secrets? Show all places')}</button>` : ''}
+    </div>
+
+    <h2>${t('Liever meteen kiezen?', 'Rather choose straight away?')}</h2>
+    <div class="keuzes klein">
+      <a class="keuzekaart" href="#/huizen">
+        ${icoon('huis')}
+        <span><strong>${t('Alle huizen', 'All houses')}</strong><span>${t(`${huizen} huizen, met filters`, `${huizen} houses, with filters`)}</span></span>
+        ${icoon('verder')}
+      </a>
+      <a class="keuzekaart" href="#/vergelijk">
+        ${icoon('weging')}
+        <span><strong>${t('Vergelijk en kies', 'Compare and choose')}</strong><span>${s.top3.length ? t(`${s.top3.length} van 3 favorieten gekozen`, `${s.top3.length} of 3 favourites picked`) : t('Zet je top 3 en deel hem', 'Set your top 3 and share it')}</span></span>
+        ${icoon('verder')}
+      </a>
     </div>
 
     <h2>${t('Voor de lol', 'Just for fun')}</h2>
@@ -462,7 +461,6 @@ function toonHal() {
     ${bronnenBlok()}
     ${resetKnop()}`;
   $('#bordvak').addEventListener('toggle', (e) => e.target.open && draai($('#bord')));
-  el.paneel.querySelector('[data-scroll]').addEventListener('click', () => $('#landen').scrollIntoView({ block: 'start', behavior: 'smooth' }));
   kaart.toonHal(s.bezocht);
 }
 

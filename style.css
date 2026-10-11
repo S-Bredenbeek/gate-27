@@ -862,6 +862,12 @@ button.matchbalk div span { text-decoration: underline; text-underline-offset: 3
 .kortknoppen { margin-top: 16px; }
 .kortknoppen .knop { flex: 1 1 30%; }
 
+.keuzes.klein { margin-top: 0; }
+.keuzes.klein .keuzekaart { min-height: 60px; padding: 9px 12px; border-width: 1.5px; border-color: var(--lijn); box-shadow: none; border-radius: 14px; }
+.keuzes.klein .keuzekaart > .ico:first-child { width: 36px; height: 36px; padding: 7px; background: var(--zand); border: 0; }
+.keuzes.klein strong { font: 600 1rem/1.2 var(--tekst); }
+.paneel > .lead + .gates { margin-top: 18px; }
+
 /* ---------- brede schermen ---------- */
 
 @media (min-width: 900px) {
