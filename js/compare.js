@@ -26,8 +26,10 @@ function blik() {
   return { gewichten: profielGewichten(p), koffer: p?.wensen ?? [] };
 }
 
+const bekend = () => opties().filter((o) => staat().bezocht.includes(o.id));
+
 function gesorteerd(b) {
-  const lijst = opties().map((o) => ({ o, score: b.kids ? null : persoonlijkeScore(o, b.gewichten, b.koffer) }));
+  const lijst = bekend().map((o) => ({ o, score: b.kids ? null : persoonlijkeScore(o, b.gewichten, b.koffer) }));
   if (b.kids) {
     lijst.sort((x, y) => y.o.kidscheck.oordeel - x.o.kidscheck.oordeel || x.o.kidscheck.transfer_min - y.o.kidscheck.transfer_min);
   } else {
@@ -40,11 +42,28 @@ export function toonVergelijk(el, gevraagd) {
   if (WEERGAVEN.some(([id]) => id === gevraagd)) weergave = gevraagd;
   if (bril !== 'ik' && !profiel(bril)) bril = 'ik';
   const brillen = [['ik', 'Mijn keuzes'], ...profielen().map((p) => [p.id, p.naam])];
+  const geheim = opties().length - bekend().length;
+  const onthul = () => {
+    if (!confirm('Alle bestemmingen in één keer onthullen? Dan is de verrassing eraf.')) return;
+    wijzig({ bezocht: opties().map((o) => o.id) });
+    document.dispatchEvent(new Event('staatgewijzigd'));
+    toonVergelijk(el, weergave);
+  };
+
+  if (!bekend().length) {
+    el.innerHTML = `<div class="vgl"><h1>Nog niks te vergelijken</h1>
+      <p class="lead">Je vergelijkt hier de bestemmingen die je hebt ontdekt. Stap eerst in een paar mysterievluchten.</p>
+      <a class="knop primair groot" href="#/hal">Naar de vertrekhal</a>
+      <p class="klein midden"><button type="button" class="linkknop" id="onthul">Geen geduld? Onthul alles</button></p></div>`;
+    el.querySelector('#onthul').addEventListener('click', onthul);
+    return;
+  }
 
   el.innerHTML = `<div class="vgl">
     <p class="kicker">${esc(meta().reisdata)}</p>
-    <h1>Vergelijk alles</h1>
-    <p class="lead">Er is geen officiële ranglijst. De volgorde komt uit jouw weging en jouw koffer, en schuift mee als je iets verandert.</p>
+    <h1>Vergelijk wat je kent</h1>
+    <p class="lead">Geen officiële ranglijst: de volgorde komt uit jouw weging en jouw koffer, en schuift mee als je iets verandert.</p>
+    ${geheim ? `<p class="geheimbalk"><span><strong>${geheim === 1 ? 'Nog 1 bestemming is geheim.' : `Nog ${geheim} bestemmingen zijn geheim.`}</strong> <a href="#/hal">Ga ze ontdekken</a></span><button type="button" class="linkknop" id="onthul">of onthul alles</button></p>` : ''}
 
     <fieldset class="segment" id="bril">
       <legend>Profielbril</legend>
@@ -67,6 +86,7 @@ export function toonVergelijk(el, gevraagd) {
     ${bronnenBlok()}
   </div>`;
 
+  el.querySelector('#onthul')?.addEventListener('click', onthul);
   const tabel = el.querySelector('#vgl-tabel');
   const uitleg = el.querySelector('#vgl-uitleg');
   const raster = el.querySelector('#schuifraster');

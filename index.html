@@ -9,7 +9,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312305A'/%3E%3Cpath d='M16 5c1.300 0 2 1.600 2 4v5l9 5.500v2.500l-9-2.800v4.800l2.800 2v2L16 26.700 11.200 28v-2l2.800-2v-4.800L5 22v-2.500l9-5.500V9c0-2.400.7-4 2-4z' fill='%23FFC53D'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -20,6 +20,8 @@
     <a class="topknop" id="btn-terug" href="#/hal" hidden></a>
     <p class="top-titel" id="top-titel"></p>
     <div class="top-acties">
+      <span class="aftel" id="aftel" hidden></span>
+      <button type="button" class="topknop" id="btn-paspoort" aria-label="Paspoort"><span class="teller" id="stempel-teller" hidden>0</span></button>
       <button type="button" class="topknop" id="btn-top3" aria-label="Mijn top 3"><span class="teller" id="top3-teller" hidden>0</span></button>
       <a class="topknop" id="btn-koffer" href="#/koffer" aria-label="Profiel en koffer aanpassen" title="Profiel en koffer aanpassen"></a>
     </div>
@@ -41,6 +43,18 @@
   </main>
 
   <dialog id="dialoog" class="dialoog"></dialog>
+  <div id="welkom" class="welkom" role="dialog" aria-modal="true" aria-label="Aangekomen" hidden></div>
+
+  <!-- inktfilter voor de stempels: onregelmatige randen en vlekkerige inkt -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <filter id="inkt" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="4" result="grof"/>
+      <feDisplacementMap in="SourceGraphic" in2="grof" scale="3.5" result="verschoven"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="9" result="fijn"/>
+      <feColorMatrix in="fijn" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.5 1.5" result="vlekken"/>
+      <feComposite in="verschoven" in2="vlekken" operator="in"/>
+    </filter>
+  </svg>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <noscript><p class="laadfout">Deze site heeft JavaScript nodig om de bestemmingen te tonen.</p></noscript>
 

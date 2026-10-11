@@ -46,6 +46,7 @@ const TEKENING = {
   bier: '<path d="M6 8h10v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"/><path d="M16 10h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2M6 8a2.5 2.5 0 0 1 1-4.5 3 3 0 0 1 5.5-.5A2.5 2.5 0 0 1 16 5.5V8"/>',
   huis: '<path d="M3 11.5L12 4l9 7.5M5.5 10v10h13V10M10 20v-6h4v6"/>',
   weging: '<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',
+  paspoort: '<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M9 16.5h6"/>',
   bord: '<rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M7 8.5h6M7 12.5h10M9 21l1-4M15 21l-1-4"/>',
 };
 

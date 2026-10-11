@@ -388,6 +388,105 @@
       "reisgemak": "Reisgemak",
       "veiligheid": "Veiligheid",
       "exotisch": "Avontuur"
+    },
+    "groep_figuren": {
+      "toelichting": "De cartoonversie van de groep, zonder namen. Pas haar, huid, bril en baard aan tot het klopt; 'profiel' bepaalt met welke koffer iemand begint.",
+      "lijst": [
+        {
+          "id": "f1",
+          "profiel": "guys",
+          "huid": "#EDBE98",
+          "haar": "kort",
+          "haarkleur": "#5A3A22",
+          "shirt": "#2E86AB",
+          "baard": true,
+          "bril": false
+        },
+        {
+          "id": "f2",
+          "profiel": "dames",
+          "huid": "#F6D3B8",
+          "haar": "lang",
+          "haarkleur": "#C99A4B",
+          "shirt": "#E4572E",
+          "baard": false,
+          "bril": false
+        },
+        {
+          "id": "f3",
+          "profiel": "guys",
+          "huid": "#F6D3B8",
+          "haar": "kort",
+          "haarkleur": "#C99A4B",
+          "shirt": "#3D9970",
+          "baard": false,
+          "bril": true
+        },
+        {
+          "id": "f4",
+          "profiel": "dames",
+          "huid": "#EDBE98",
+          "haar": "knot",
+          "haarkleur": "#2B1D14",
+          "shirt": "#F2B134",
+          "baard": false,
+          "bril": false
+        },
+        {
+          "id": "f5",
+          "profiel": "guys",
+          "huid": "#D49B6E",
+          "haar": "krul",
+          "haarkleur": "#2B1D14",
+          "shirt": "#F2B134",
+          "baard": false,
+          "bril": false
+        },
+        {
+          "id": "f6",
+          "profiel": "dames",
+          "huid": "#F6D3B8",
+          "haar": "staart",
+          "haarkleur": "#8A5A2B",
+          "shirt": "#8E5572",
+          "baard": false,
+          "bril": true
+        },
+        {
+          "id": "f7",
+          "profiel": "guys",
+          "huid": "#EDBE98",
+          "haar": "kaal",
+          "haarkleur": "#5A3A22",
+          "shirt": "#22313F",
+          "baard": true,
+          "bril": false
+        },
+        {
+          "id": "f8",
+          "profiel": "dames",
+          "huid": "#D49B6E",
+          "haar": "lang",
+          "haarkleur": "#2B1D14",
+          "shirt": "#2E86AB",
+          "baard": false,
+          "bril": false
+        },
+        {
+          "id": "k1",
+          "kind": true,
+          "huid": "#F6D3B8",
+          "haarkleur": "#C99A4B",
+          "shirt": "#F2B134"
+        },
+        {
+          "id": "k2",
+          "kind": true,
+          "huid": "#EDBE98",
+          "haarkleur": "#5A3A22",
+          "shirt": "#7FC8A9"
+        }
+      ]
     }
   },
   "opties": [

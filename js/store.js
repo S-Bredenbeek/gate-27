@@ -5,6 +5,8 @@ const SLEUTEL = 'vriendenvakantie-v1';
 
 const standaard = () => ({
   naam: '',
+  figuur: null,
+  avatar: null,
   profiel: null,
   koffer: [],
   gewichten: {},

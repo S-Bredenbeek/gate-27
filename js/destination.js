@@ -5,6 +5,9 @@ import {
   koffermatch, kosten, airbnbUrl, euro, pct, esc, themaStijl, volwassenen,
 } from './data.js';
 import { staat, wijzig } from './store.js';
+import { land } from './data.js';
+import { patroon } from './patterns.js';
+import { motief, heeftMotief } from './motifs.js';
 import { icoon } from './icons.js';
 import { statusLabel, hartKnop, bolletjes, beren, bronnenBlok, toast } from './ui.js';
 import * as kaart from './map.js';
@@ -24,17 +27,22 @@ const nl = (n, d = 0) => Number(n).toLocaleString('nl-NL', { minimumFractionDigi
 export function toonBestemming(paneel, o, tab, animeer) {
   if (!TABS.some(([id]) => id === tab)) tab = 'kan';
   paneel.className = 'paneel thema';
-  paneel.style.cssText = themaStijl(o);
+  const l = land(o);
+  paneel.style.cssText = `${themaStijl(o)};--patroon:${patroon(l.patroon, l.kleuren?.licht ?? '#FFFFFF')}`;
+  const motieven = (l.motieven ?? []).filter(heeftMotief).map((m) => motief(m)).join('');
   const k = o.klimaat ?? {};
   paneel.innerHTML = `
     <header class="best-kop">
       <a class="teruglink" href="#/gate/${esc(o.groep)}">${icoon('terug')}Gate ${gateLetter(o.groep)} · ${esc(groep(o.groep)?.naam)}</a>
-      <div class="best-titel">
-        <div>
-          <p class="kicker">${esc(o.land)} · ${esc(o.subregio)}</p>
-          <h1>${esc(o.naam)}</h1>
+      <div class="best-band">
+        <div class="best-titel">
+          <div>
+            <p class="kicker">${esc(o.land)} · ${esc(o.subregio)}</p>
+            <h1>${esc(o.naam)}</h1>
+          </div>
+          ${hartKnop(o.id, o.naam)}
         </div>
-        ${hartKnop(o.id, o.naam)}
+        <p class="best-groet"><span class="hand">${esc(l.welkom)}</span><span class="motieven" aria-hidden="true">${motieven}</span></p>
       </div>
       <ul class="feiten">
         <li>${icoon('vliegtuig')}${esc(o.vlucht.duur)} vliegen</li>
@@ -93,6 +101,15 @@ export function toonBestemming(paneel, o, tab, animeer) {
         toonTab(id);
       });
     }
+    for (const knop of inhoud.querySelectorAll('[data-rit]')) {
+      knop.addEventListener('click', () => {
+        const i = Number(knop.dataset.rit);
+        kaart.markeerHuis(i);
+        kaart.rij(o, i);
+        paneel.scrollTo?.({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
     inhoud.querySelector('#huiskeuze')?.addEventListener('change', (e) => {
       kiesHuis(Number(e.target.value), false);
       toonTab(id);
@@ -113,9 +130,9 @@ export function toonBestemming(paneel, o, tab, animeer) {
 
   toonTab(tab);
   kaart.toonBestemming(o, huisIndex(o), (i) => {
-    kiesHuis(i);
+    kiesHuis(i, false);
+    kaart.rij(o, i);
     toonTab('huis');
-    inhoud.querySelector(`#huis-${i}`)?.scrollIntoView({ block: 'start', behavior: 'smooth' });
   }, animeer);
 }
 
@@ -187,6 +204,7 @@ function tabHuis(o) {
         </dl>
         <div class="acties">
           <a class="knop primair" href="${esc(airbnbUrl(h))}" target="_blank" rel="noopener">Bekijk op Airbnb${icoon('extern')}</a>
+          <button type="button" class="knop" data-rit="${i}">${icoon('auto')}Rij erheen</button>
           <button type="button" class="knop" data-kieshuis="${i}" aria-pressed="${i === gekozen}">${i === gekozen ? `${icoon('check')}Kosten met dit huis` : 'Reken met dit huis'}</button>
         </div>
       </div>
