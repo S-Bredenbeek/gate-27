@@ -729,7 +729,9 @@ input[type="number"], textarea { width: 100%; min-height: 48px; padding: 10px 14
 .taalknop::before { content: ''; position: absolute; inset: 8px 4px; border: 1.5px solid currentColor; border-radius: 8px; opacity: .7; }
 body[data-scherm="start"] .top { background: transparent; color: var(--inkt); position: absolute; left: 0; right: 0; }
 body[data-scherm="start"] .topknop { color: var(--inkt); }
-body[data-scherm="start"] .top-acties > :not(.taalknop), body[data-scherm="start"] #btn-terug, body[data-scherm="start"] .top-titel { display: none; }
+body[data-scherm="start"] .top-acties > :not(.taalknop), body[data-scherm="start"] .top-titel { display: none; }
+.reset { margin-top: 28px; text-align: center; }
+.reset .linkknop { font-weight: 400; font-size: .88rem; color: var(--dim); }
 body[data-scherm="start"] .scherm { padding-top: calc(var(--top-h) + 8px); }
 .figuur-naam { display: block; margin-top: 4px; font-size: .78rem; font-weight: 600; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 

@@ -6,7 +6,7 @@ import {
   koffermatch, kosten, gateLetter, gateCode,
   euro, pct, esc, themaStijl,
 } from './js/data.js';
-import { laadStaat, staat, wijzig } from './js/store.js';
+import { laadStaat, staat, wijzig, wisStaat } from './js/store.js';
 import { t, zetTaal, huidigeTaal, voorkeurstaal, locale } from './js/i18n.js';
 import { icoon } from './js/icons.js';
 import { toast, kopieer, hartKnop, bronnenBlok } from './js/ui.js';
@@ -105,7 +105,6 @@ function tekenVast() {
   document.documentElement.lang = huidigeTaal();
   document.title = meta().titel;
   el.titel.textContent = meta().titel;
-  el.terug.innerHTML = `${icoon('terug')}<span>${t('Vertrekhal', 'Departures')}</span>`;
   el.overslaan.textContent = t('Overslaan', 'Skip');
   $('.skip').textContent = t('Naar de inhoud', 'Skip to content');
   $('#kaart').setAttribute('aria-label', t('Kaart met Schiphol en alle bestemmingen', 'Map with Schiphol and all destinations'));
@@ -182,7 +181,18 @@ function route() {
   el.podium.hidden = !opPodium;
   el.vergelijk.hidden = !['vergelijk', 'uitslag'].includes(scherm);
   el.top.hidden = false;
-  el.terug.hidden = scherm === 'hal';
+  // de knop linksboven gaat altijd één stap terug
+  const stapTerug = {
+    start: staat().figuur ? '#/hal' : null,
+    koffer: '#/start',
+    gate: '#/hal',
+    b: `#/gate/${encodeURIComponent(optie(a)?.land ?? '')}`,
+    vergelijk: '#/hal',
+    uitslag: '#/hal',
+  }[scherm];
+  el.terug.hidden = !stapTerug;
+  el.terug.href = stapTerug ?? '#/hal';
+  el.terug.innerHTML = `${icoon('terug')}<span>${stapTerug === '#/hal' ? t('Vertrekhal', 'Departures') : t('Terug', 'Back')}</span>`;
   // in een land kleurt ook de bovenbalk mee
   const themaLand = scherm === 'b' ? optie(a) : scherm === 'gate' ? { land: a } : null;
   el.top.style.cssText = themaLand ? themaStijl(themaLand) : '';
@@ -267,6 +277,7 @@ function toonStart() {
     </div>
 
     <button type="button" class="knop primair groot" id="start-verder"${s.figuur ? '' : ' disabled'}>${t('Koffer pakken', 'Pack your suitcase')}${icoon('verder')}</button>
+    ${s.figuur ? resetKnop() : ''}
   </div>`;
 
   const verder = $('#start-verder');
@@ -406,7 +417,8 @@ function toonHal() {
 
     <div class="groepje" aria-hidden="true">${figuren().map((f) => poppetje(f.id === s.figuur ? { ...f, ...s.avatar } : f, `${f.id === s.figuur ? 'ik' : ''}${f.groot ? ' groot' : ''}`)).join('')}</div>
     <p class="hand midden">${esc(m.groep)}</p>
-    ${bronnenBlok()}`;
+    ${bronnenBlok()}
+    ${resetKnop()}`;
   draai($('#bord'));
   kaart.toonHal(s.bezocht);
 }
@@ -801,11 +813,24 @@ async function toonAnsichtkaart() {
   }
 }
 
+// ---------- opnieuw beginnen ----------
+
+const resetKnop = () => `<p class="reset"><button type="button" class="linkknop" data-reset>${t('Alles wissen en opnieuw beginnen', 'Clear everything and start over')}</button></p>`;
+
+function opnieuwBeginnen() {
+  if (!confirm(t('Opnieuw beginnen? Je poppetje, koffer, stempels, top 3 en records op dit apparaat worden gewist.', 'Start over? Your character, suitcase, stamps, top 3 and bests on this device will be cleared.'))) return;
+  wisStaat();
+  leesNamen();
+  if (location.hash === '#/start') route();
+  else location.hash = '#/start';
+}
+
 // ---------- klikken ----------
 
 function klik(e) {
   const hart = e.target.closest('[data-hart]');
   if (hart) return wisselHart(hart.dataset.hart);
+  if (e.target.closest('[data-reset]')) return opnieuwBeginnen();
   const spel = e.target.closest('[data-spel]');
   if (spel) return speel(optie(spel.dataset.spel) ?? optie(staat().bezocht.at(-1)) ?? null);
   const instap = e.target.closest('[data-instappen]');

@@ -44,3 +44,13 @@ export function wijzig(deel) {
     // opslag niet beschikbaar: de keuze geldt dan alleen voor deze sessie
   }
 }
+
+// Alles wissen en opnieuw beginnen. De gekozen taal blijft staan.
+export function wisStaat() {
+  geheugen = { ...standaard(), taal: geheugen.taal };
+  try {
+    localStorage.setItem(SLEUTEL, JSON.stringify(geheugen));
+  } catch {
+    // opslag niet beschikbaar: het geheugen is hoe dan ook leeg
+  }
+}
