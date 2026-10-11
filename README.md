@@ -62,6 +62,10 @@ git push
 
 GitHub Pages zet de nieuwe versie binnen een paar minuten online.
 
+## Link-voorvertoning en icoon
+
+`og.jpg` is het plaatje dat WhatsApp en andere apps bij de link tonen; `apple-touch-icon.png` en de twee `icoon-*.png` zijn het icoon op het beginscherm. De titel en tekst van de voorvertoning staan bovenin `index.html` (de `og:`-regels), samen met het volledige adres van de site. Verhuist de site naar een ander adres, pas dat adres daar dan aan.
+
 ## Goed om te weten
 
 - De kaart gebruikt de tegels van OpenStreetMap. CartoDB Voyager vraagt tegenwoordig een API-sleutel.
