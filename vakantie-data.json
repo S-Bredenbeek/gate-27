@@ -329,7 +329,8 @@
       "avontuur": "Avontuur"
     },
     "groep_figuren": {
-      "toelichting": "De cartoonversie van de groep, zonder namen. Namen reizen mee in de link (?wie=...) en staan dus niet in deze repo. Haar: kort, kuif, krul, krulkort, lang, golvend, knot, staart of kaal. Zonnebril: rond, kat of piloot. Mond: lach, glimlach of grijns.",
+      "toelichting": "De cartoonversie van de groep. De voornamen staan gecodeerd in 'namen_code' (in de volgorde van de lijst), zodat ze niet als leesbare tekst in de repo staan; de README legt uit hoe je de code maakt. Haar: kort, kuif, krul, krulkort, lang, golvend, knot, staart of kaal. Zonnebril: rond, kat of piloot. Mond: lach, glimlach of grijns.",
+      "namen_code": "WyJSYWNoZWwiLCJBbmEiLCJKaXAiLCJTZWJhc3RpYWFuIiwiU2FuZGVyIiwiSmVyZW15IiwiUmF2ZW5uYSIsIkV2b24iXQ",
       "lijst": [
         {
           "id": "f1",

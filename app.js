@@ -67,7 +67,7 @@ async function begin() {
   }
   await kiesDataTaal(huidigeTaal());
   ruimStaatOp();
-  leesNamenUitLink();
+  leesNamen();
   $('#btn-top3').insertAdjacentHTML('afterbegin', icoon('hart'));
   $('#btn-paspoort').insertAdjacentHTML('afterbegin', icoon('paspoort'));
   $('#btn-koffer').innerHTML = icoon('koffer');
@@ -135,15 +135,16 @@ async function wisselTaal() {
   route();
 }
 
-// De namen van de groep staan niet in de repo: ze reizen mee in de link (?wie=...) en blijven daarna lokaal bewaard.
-function leesNamenUitLink() {
-  const wie = new URLSearchParams(location.search).get('wie');
-  if (!wie) return;
+// De voornamen staan gecodeerd in de JSON (meta.groep_figuren.namen_code), zodat ze niet als leesbare tekst
+// in de openbare repo staan. Een link met ?wie=... gaat voor, bijvoorbeeld voor een andere groep.
+function leesNamen() {
+  const code = new URLSearchParams(location.search).get('wie') ?? meta().groep_figuren?.namen_code;
+  if (!code) return;
   try {
-    const lijst = JSON.parse(vanCode(wie));
+    const lijst = JSON.parse(vanCode(code));
     if (Array.isArray(lijst)) wijzig({ namen: lijst.slice(0, 12).map((naam) => String(naam ?? '').trim().slice(0, 20)) });
   } catch {
-    // geen leesbare namen in de link: de poppetjes blijven naamloos
+    // geen leesbare namen: de poppetjes blijven naamloos
   }
 }
 

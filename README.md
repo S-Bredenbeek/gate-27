@@ -34,13 +34,15 @@ De site is in het Nederlands en het Engels, te wisselen met de knop rechtsboven.
 
 ## Namen
 
-De repository is openbaar, dus er staan geen namen in. De namen onder de poppetjes reizen mee in de link die je deelt: `https://.../?wie=CODE`. De code maak je in de console van de browser, met de namen in de volgorde van `meta.groep_figuren.lijst`:
+De voornamen onder de poppetjes staan in `meta.groep_figuren.namen_code`, in de volgorde van `meta.groep_figuren.lijst`. Ze zijn gecodeerd, zodat ze niet als leesbare tekst in deze openbare repository staan en dus niet via een zoekmachine te vinden zijn. Het is geen beveiliging: wie de site opent, ziet de namen gewoon.
+
+Een nieuwe code maak je in de console van de browser:
 
 ```js
 btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(['Naam 1', 'Naam 2'])))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
 ```
 
-Wie de link opent, ziet de namen; ze worden daarna alleen in de eigen browser bewaard. Alles wat iemand kiest (poppetje, koffer, top 3, records) blijft ook lokaal.
+Zet de uitkomst in `namen_code`. Dezelfde code achter de link (`?wie=CODE`) gaat voor op wat in de JSON staat. Alles wat iemand kiest (poppetje, koffer, top 3, records) blijft in de eigen browser.
 
 ## Opnieuw publiceren
 
