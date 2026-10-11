@@ -573,7 +573,6 @@ function instappen(id) {
         <div class="breed"><dt>${t('Vluchtprijs', 'Flight price')} <span class="indicatie">${t('indicatie', 'estimate')}</span></dt><dd>${euro(o.vlucht.prijs_pp)} ${t('p.p.', 'pp')}</dd></div>
       </dl>
       <div class="ik-streepjes" aria-hidden="true">${streepjes}</div>
-      <p class="ik-noot">${esc(meta().carriers?.toelichting)}</p>
     </div>
     <div class="dialoog-acties">
       <button type="button" class="knop" data-sluit>${t('Toch niet', 'Never mind')}</button>

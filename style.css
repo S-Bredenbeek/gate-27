@@ -463,9 +463,8 @@ body.vliegt .paneel { display: none; }
 .ik-velden .breed { grid-column: 1 / -1; }
 .ik-velden dd { font-weight: 700; font-size: .95rem; overflow-wrap: anywhere; }
 .ik-velden div:not(.breed) dd { white-space: nowrap; }
-.ik-streepjes { display: flex; align-items: stretch; gap: 2px; height: 34px; margin: 0 16px 10px; }
+.ik-streepjes { display: flex; align-items: stretch; gap: 2px; height: 34px; margin: 0 16px; padding-bottom: 16px; box-sizing: content-box; }
 .ik-streepjes i { background: var(--inkt); }
-.ik-noot { padding: 0 16px 14px; font: 400 .72rem/1.4 var(--tekst); color: var(--dim); }
 
 .top3 { display: grid; gap: 8px; margin-top: 12px; }
 .top3 li { display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 14px; background: var(--zand); }
