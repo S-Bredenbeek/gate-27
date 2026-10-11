@@ -72,7 +72,7 @@ function kaartje({ o, h, i }) {
         <div class="allin"><dt>${t('Hele week per persoon', 'Full week per person')} <span class="indicatie">${t('indicatie', 'estimate')}</span></dt><dd>${euro(kosten(o, h).totaal)}</dd></div>
       </dl>
       <div class="acties">
-        <button type="button" class="knop primair" data-naar-huis="${esc(o.id)}" data-index="${i}">${bekend(o) ? t('Bekijk dit huis', 'View this house') : `${icoon('vliegtuig')}${t('Vlieg erheen', 'Fly there')}`}</button>
+        <button type="button" class="knop primair" data-naar-huis="${esc(o.id)}" data-index="${i}">${t('Bekijk dit huis', 'View this house')}</button>
         <a class="knop" href="${esc(airbnbUrl(h))}" target="_blank" rel="noopener">Airbnb${icoon('extern')}</a>
       </div>
       <label class="vinkje naast"><input type="checkbox" data-kies="${esc(id)}"${gekozen.has(id) ? ' checked' : ''}><span>${t('Naast elkaar zetten', 'Compare side by side')}</span></label>
@@ -92,7 +92,7 @@ export function toonHuizen(paneel) {
   paneel.innerHTML = `
     <p class="kicker">${esc(meta().reisdata)}</p>
     <h1>${t('Alle huizen', 'All houses')}</h1>
-    <p class="lead">${t(`${alle.length} huizen in ${landNamen().length} landen. Kies puur op het huis; waar het precies ligt, zie je als je er bent geweest.`, `${alle.length} houses in ${landNamen().length} countries. Choose purely on the house; you'll see exactly where it is once you've been there.`)}</p>
+    <p class="lead">${t(`${alle.length} huizen in ${landNamen().length} landen. Kies puur op het huis; waar het precies ligt, zie je als je het opent.`, `${alle.length} houses in ${landNamen().length} countries. Choose purely on the house; you'll see exactly where it is when you open it.`)}</p>
 
     <details class="filters" id="filters">
       <summary>${icoon('filter')}<span>${t('Filters', 'Filters')}</span><span class="filter-aantal" id="filter-aantal"></span></summary>

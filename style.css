@@ -836,6 +836,32 @@ body.kaart-groot .kaartvak { height: 72vh; height: 72svh; }
 .luxe-uitleg .ico { flex: none; width: 16px; height: 16px; margin-top: 2px; fill: #C9A227; stroke: #C9A227; }
 .luxe-uitleg.los { margin: 0 0 14px; }
 
+/* ---------- duidelijke keuzes in de vertrekhal en 'in het kort' ---------- */
+
+.keuzes { display: grid; gap: 10px; margin-top: 18px; }
+.keuzekaart { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 72px; padding: 12px 14px; border: 2.5px solid var(--inkt); border-radius: 6px 18px 18px 18px; background: var(--papier); box-shadow: 4px 4px 0 var(--inkt); color: var(--inkt); text-align: left; text-decoration: none; cursor: pointer; transition: transform .12s, box-shadow .12s; }
+.keuzekaart:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--inkt); }
+.keuzekaart > .ico:first-child { flex: none; width: 44px; height: 44px; padding: 9px; border-radius: 12px; background: var(--amber); border: 2px solid var(--inkt); }
+.keuzekaart > .ico:last-child { flex: none; color: var(--dim); }
+.keuzekaart > span { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.keuzekaart strong { font: 700 1.15rem/1.2 var(--display); }
+.keuzekaart span span { font-size: .85rem; color: var(--dim); }
+.voortgang { display: grid; justify-items: start; gap: 4px; }
+.bordvak { margin-top: 24px; border-radius: 12px; background: var(--bord); color: #F4F1E8; }
+.bordvak summary { display: flex; align-items: center; gap: 8px; min-height: 50px; padding: 12px 14px; font: 700 .85rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.bordvak .bord { box-shadow: none; border-radius: 0 0 12px 12px; }
+
+.kortfoto { position: relative; display: block; width: 100%; margin-top: 14px; padding: 0; border: 0; border-radius: 6px 18px 18px 18px; overflow: hidden; background: var(--zand-2); aspect-ratio: 16 / 10; cursor: pointer; box-shadow: var(--schaduw); }
+.kortfoto img { width: 100%; height: 100%; object-fit: cover; }
+.kortfoto-tekst { position: absolute; left: 0; right: 0; bottom: 0; display: grid; gap: 2px; padding: 28px 14px 12px; background: linear-gradient(transparent, rgba(12, 20, 36, .82)); color: #fff; text-align: left; }
+.kortfoto-tekst strong { font: 700 1.2rem/1.2 var(--display); }
+.kortfoto-tekst span { font-size: .85rem; }
+button.matchbalk { width: 100%; border: 0; text-align: left; cursor: pointer; font: inherit; }
+button.matchbalk div span { text-decoration: underline; text-underline-offset: 3px; }
+.tabinhoud > .onderscheid { margin-top: 14px; }
+.kortknoppen { margin-top: 16px; }
+.kortknoppen .knop { flex: 1 1 30%; }
+
 /* ---------- brede schermen ---------- */
 
 @media (min-width: 900px) {

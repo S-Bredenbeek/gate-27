@@ -121,13 +121,13 @@ function tekenVast() {
 function tekenOnderbalk() {
   const s = staat();
   const scherm = document.body.dataset.scherm;
-  const hier = { hal: 'hal', gate: 'hal', b: 'hal', huizen: 'hal', vergelijk: 'vergelijk', uitslag: 'vergelijk', start: 'ik', koffer: 'ik' }[scherm];
+  const hier = { hal: 'hal', gate: 'hal', b: 'hal', huizen: 'huizen', vergelijk: 'vergelijk', uitslag: 'vergelijk', start: 'ik', koffer: 'ik' }[scherm];
   const aan = (naam) => (naam === hier ? ' aria-current="page"' : '');
   const balk = $('#onderbalk');
   balk.setAttribute('aria-label', t('Hoofdmenu', 'Main menu'));
   balk.innerHTML = `
     <a href="#/hal"${aan('hal')}>${icoon('vliegtuig')}<span>${t('Landen', 'Countries')}</span></a>
-    <button type="button" data-open="paspoort">${icoon('paspoort')}<span>${t('Paspoort', 'Passport')}</span><i class="teller" id="stempel-teller" hidden></i></button>
+    <a href="#/huizen"${aan('huizen')}>${icoon('huis')}<span>${t('Huizen', 'Houses')}</span></a>
     <button type="button" data-open="top3">${icoon('hart')}<span>Top 3</span><i class="teller" id="top3-teller" hidden></i></button>
     <a href="#/vergelijk"${aan('vergelijk')}>${icoon('weging')}<span>${t('Vergelijk', 'Compare')}</span></a>
     <a href="#/start" class="nav-ik"${aan('ik')}>${poppetje(s.avatar ?? {})}<span>${esc(s.naam) || t('Ik', 'Me')}</span></a>`;
@@ -397,13 +397,33 @@ function toonHal() {
     .sort((a, b) => a.pils.rondje_mannen - b.pils.rondje_mannen)
     .slice(0, 3);
   if (!s.klaar) wijzig({ klaar: true });
+  const huizen = opties().reduce((n, o) => n + o.huizen.length, 0);
   el.paneel.innerHTML = `
     <div class="kop-met-pop"><a class="pop-link" href="#/start" aria-label="${t('Poppetje en naam aanpassen', 'Change character and name')}">${poppetje(s.avatar)}</a><div>
       <p class="kicker">${t(`Vertrekhal ${esc(m.vertrek.naam)}`, `${esc(m.vertrek.naam)} Departures`)}</p>
-      <h1>${s.naam ? t(`Hoi ${esc(s.naam)}. `, `Hi ${esc(s.naam)}. `) : ''}${t('Kies een land.', 'Pick a country.')}</h1>
+      <h1>${s.naam ? t(`Hoi ${esc(s.naam)}. `, `Hi ${esc(s.naam)}. `) : ''}${t('Wat wil je doen?', 'What would you like to do?')}</h1>
     </div></div>
-    <p class="lead">${t('Elk land heeft zijn eigen geheime plekken. Waar je precies landt, zie je pas als je er bent.', "Every country has its own secret places. You'll only see exactly where you land once you're there.")}</p>
 
+    <div class="keuzes">
+      <button type="button" class="keuzekaart" data-scroll="landen">
+        ${icoon('vliegtuig')}
+        <span><strong>${t('Ontdek de plekken', 'Discover the places')}</strong><span>${t(`Kies een land en vlieg erheen. ${gezien} van de ${totaal} gezien.`, `Pick a country and fly there. ${gezien} of ${totaal} seen.`)}</span></span>
+        ${icoon('neer')}
+      </button>
+      <a class="keuzekaart" href="#/huizen">
+        ${icoon('huis')}
+        <span><strong>${t('Bekijk alle huizen', 'Browse all houses')}</strong><span>${t(`${huizen} huizen naast elkaar, met filters.`, `${huizen} houses side by side, with filters.`)}</span></span>
+        ${icoon('verder')}
+      </a>
+      <a class="keuzekaart" href="#/vergelijk">
+        ${icoon('weging')}
+        <span><strong>${t('Vergelijk en kies', 'Compare and choose')}</strong><span>${s.top3.length ? t(`${s.top3.length} van 3 favorieten gekozen. Deel je top 3.`, `${s.top3.length} of 3 favourites picked. Share your top 3.`) : t('Zet je favorieten in je top 3 en deel hem met de groep.', 'Put your favourites in your top 3 and share it with the group.')}</span></span>
+        ${icoon('verder')}
+      </a>
+    </div>
+
+    <h2 id="landen">${t('Kies een land', 'Pick a country')}</h2>
+    <p class="dim">${t('Elk land heeft geheime plekken. Waar je precies landt, zie je als je er bent.', "Every country has secret places. You'll see exactly where you land once you're there.")}</p>
     <div class="gates">
       ${landNamen().map((naam) => {
         const lijst = optiesIn(naam);
@@ -417,27 +437,32 @@ function toonHal() {
       }).join('')}
     </div>
 
-    <p class="voortgang"><span class="hand">${gezien === 0 ? t('nog niks ontdekt, ga maar vliegen', 'nothing discovered yet, off you fly') : gezien === totaal ? t('alles gezien!', 'seen it all!') : t(`${gezien} van de ${totaal} plekken ontdekt`, `${gezien} of the ${totaal} places discovered`)}</span></p>
-    <div class="acties">
-      <a class="knop" href="#/huizen">${icoon('huis')}${t('Alle huizen', 'All houses')}</a>
-      <button type="button" class="knop" data-spel>${icoon('hooghouden')}${t('Hooghouden', 'Keepy-uppies')}${totaalHooghouden() ? ` · ${totaalHooghouden()}` : ''}</button>
-      ${gezien >= 2 ? `<a class="knop" href="#/vergelijk">${t('Vergelijk wat je kent', "Compare what you've found")}</a>` : ''}
+    <div class="voortgang">
+      <button type="button" class="knop" data-open="paspoort">${icoon('paspoort')}${t(`Paspoort: ${gezien} van ${totaal} stempels`, `Passport: ${gezien} of ${totaal} stamps`)}</button>
+      ${gezien < totaal ? `<button type="button" class="linkknop" data-onthul>${t('Geen zin in geheimen? Toon alle plekken', 'Not into secrets? Show all places')}</button>` : ''}
     </div>
 
+    <h2>${t('Voor de lol', 'Just for fun')}</h2>
+    <div class="acties">
+      <button type="button" class="knop" data-spel>${icoon('hooghouden')}${t('Hooghouden', 'Keepy-uppies')}${totaalHooghouden() ? ` · ${totaalHooghouden()}` : ''}</button>
+    </div>
     ${rondjes.length ? `<div class="rondjes">
       <h2>${icoon('bier')}${t('Goedkoopste rondje', 'Cheapest round')}</h2>
       <ol>${rondjes.map((o) => `<li><span>${esc(o.naam)}</span><strong>${euro(o.pils.rondje_mannen, 2)}</strong></li>`).join('')}</ol>
       <p class="klein">${t('Van de plekken die je al kent.', "Out of the places you've found so far.")}</p>
     </div>` : ''}
 
-    <h2>${t('Vertrekbord', 'Departure board')}</h2>
-    <div class="bord" id="bord"><ul>${opties().map(bordRij).join('')}</ul></div>
+    <details class="bordvak" id="bordvak">
+      <summary>${icoon('bord')}${t('Vertrekbord', 'Departure board')}</summary>
+      <div class="bord" id="bord"><ul>${opties().map(bordRij).join('')}</ul></div>
+    </details>
 
     <div class="groepje" aria-hidden="true">${figuren().map((f) => poppetje(f.id === s.figuur ? { ...f, ...s.avatar } : f, `${f.id === s.figuur ? 'ik' : ''}${f.groot ? ' groot' : ''}`)).join('')}</div>
     <p class="hand midden">${esc(m.groep)}</p>
     ${bronnenBlok()}
     ${resetKnop()}`;
-  draai($('#bord'));
+  $('#bordvak').addEventListener('toggle', (e) => e.target.open && draai($('#bord')));
+  el.paneel.querySelector('[data-scroll]').addEventListener('click', () => $('#landen').scrollIntoView({ block: 'start', behavior: 'smooth' }));
   kaart.toonHal(s.bezocht);
 }
 
@@ -852,12 +877,21 @@ function wisselHuisHart(id) {
   toast(aan ? t('Bewaard als favoriet huis', 'Saved as a favourite house') : t('Geen favoriet huis meer', 'No longer a favourite house'));
 }
 
-// Vanuit Alle huizen: naar het huistabblad van de plek, met een vlucht als je er nog niet bent geweest.
+// Vanuit Alle huizen ga je rechtstreeks naar het huis. Was de plek nog geheim, dan krijg je bij aankomst de stempel.
 document.addEventListener('naarhuis', (e) => {
   const { id } = e.detail;
-  if (ontdekt(id)) location.hash = `#/b/${id}/huis`;
-  else instappen(id, 'huis');
+  const doel = `#/b/${id}/huis`;
+  if (location.hash === doel) route();
+  else location.hash = doel;
 });
+
+// ---------- alles onthullen ----------
+
+function onthulAlles() {
+  if (!confirm(t('Alle plekken in één keer tonen? Je krijgt meteen alle stempels en de verrassing is eraf.', 'Show all places at once? You get every stamp straight away and the surprise is gone.'))) return;
+  wijzig({ bezocht: opties().map((o) => o.id) });
+  route();
+}
 
 // ---------- opnieuw beginnen ----------
 
@@ -877,6 +911,7 @@ function klik(e) {
   const hart = e.target.closest('[data-hart]');
   if (hart) return wisselHart(hart.dataset.hart);
   if (e.target.closest('[data-reset]')) return opnieuwBeginnen();
+  if (e.target.closest('[data-onthul]')) return onthulAlles();
   const huishart = e.target.closest('[data-huishart]');
   if (huishart) return wisselHuisHart(huishart.dataset.huishart);
   const open = e.target.closest('[data-open]');

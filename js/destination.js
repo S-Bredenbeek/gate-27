@@ -15,6 +15,7 @@ import { statusLabel, hartKnop, bolletjes, beren, bronnenBlok, toast, rolLabel, 
 import * as kaart from './map.js';
 
 const TABS = [
+  ['kort', 'In het kort', 'At a glance'],
   ['kan', 'Wat kan hier', 'What you can do here'],
   ['huis', 'Het huis', 'The house'],
   ['kids', 'Voor de kids', 'For the kids'],
@@ -27,7 +28,7 @@ const huisIndex = (o) => Math.min(staat().huis[o.id] ?? 0, o.huizen.length - 1);
 const nl = (n, d = 0) => Number(n).toLocaleString(locale(), { minimumFractionDigits: d, maximumFractionDigits: d });
 
 export function toonBestemming(paneel, o, tab, animeer) {
-  if (!TABS.some(([id]) => id === tab)) tab = 'kan';
+  if (!TABS.some(([id]) => id === tab)) tab = 'kort';
   paneel.className = 'paneel thema';
   const l = land(o);
   paneel.style.cssText = thema(o);
@@ -53,8 +54,6 @@ export function toonBestemming(paneel, o, tab, animeer) {
         <li>${icoon('zon')}${esc(k.lucht)}°C</li>
         <li>${icoon('golf')}${k.zee == null ? t('geen zee', 'no sea') : t(`zee ${esc(k.zee)}°C`, `sea ${esc(k.zee)}°C`)}</li>
       </ul>
-      ${scorekaart(o)}
-      <button type="button" class="knop spelknop" data-spel="${esc(o.id)}">${icoon('hooghouden')}${esc(o.spel?.naam ?? t('Hooghouden', 'Keepy-uppies'))}</button>
     </header>
     <div class="tabs" role="tablist" aria-label="${t(`Onderdelen van ${esc(o.naam)}`, `Sections of ${esc(o.naam)}`)}">
       ${TABS.map(([id, naam, en]) => `<button type="button" role="tab" id="tab-${id}" data-tab="${id}" aria-controls="tabinhoud">${t(naam, en)}</button>`).join('')}
@@ -93,6 +92,12 @@ export function toonBestemming(paneel, o, tab, animeer) {
   }
 
   function koppel(id) {
+    for (const knop of inhoud.querySelectorAll('[data-naartab]')) {
+      knop.addEventListener('click', () => {
+        toonTab(knop.dataset.naartab);
+        lijst.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      });
+    }
     koppelVoorbereiden(inhoud, o);
     koppelKostenverdeler(inhoud, kosten(o, o.huizen[huisIndex(o)]).totaal);
     for (const foto of inhoud.querySelectorAll('.huisfoto img')) {
@@ -124,10 +129,6 @@ export function toonBestemming(paneel, o, tab, animeer) {
     });
   }
 
-  paneel.querySelector('.scorekaart')?.addEventListener('click', () => {
-    toonTab('scores');
-    lijst.scrollIntoView({ block: 'start', behavior: 'smooth' });
-  });
   lijst.addEventListener('click', (e) => {
     const knop = e.target.closest('[data-tab]');
     if (knop) toonTab(knop.dataset.tab);
@@ -150,6 +151,35 @@ export function toonBestemming(paneel, o, tab, animeer) {
 
 // ---------- tabbladen ----------
 
+// In het kort: het hele beeld op één scherm, met doorklik naar de details.
+function tabKort(o) {
+  const h = o.huizen[huisIndex(o)];
+  const m = koffermatch(o, staat().koffer);
+  const punten = (lijst, soort) => (lijst ?? []).slice(0, 2).map((p) => `<li class="${soort}">${icoon(soort === 'plus' ? 'plus' : 'beperkt')}<span>${esc(p)}</span></li>`).join('');
+  return `
+    <p class="tagline">${esc(o.tagline)}</p>
+    <button type="button" class="kortfoto" data-naartab="huis">
+      ${h.foto ? `<img src="${esc(fotoUrl(h.foto))}" alt="${t(`Foto van ${esc(h.naam)}`, `Photo of ${esc(h.naam)}`)}" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ''}
+      <span class="kortfoto-tekst">
+        <strong>${esc(h.naam)}</strong>
+        <span>${euro(kosten(o, h).totaal)} ${t('per persoon, alles erbij', 'per person, all in')}${o.huizen.length > 1 ? t(` · ${o.huizen.length} huizen om uit te kiezen`, ` · ${o.huizen.length} houses to choose from`) : ''}</span>
+      </span>
+    </button>
+    ${m ? `<button type="button" class="matchbalk" data-naartab="kan">
+        <div><strong>${t(`${m.ja + m.beperkt} van je ${m.n} wensen kunnen hier`, `${m.ja + m.beperkt} of your ${m.n} wishes work here`)}</strong><span>${t('Bekijk wat er kan', 'See what you can do')}</span></div>
+        <span class="matchpct">${pct(m.score)}<small>${t('koffermatch', 'suitcase match')}</small></span>
+      </button>` : ''}
+    ${scorekaart(o)}
+    <ul class="onderscheid">${punten(o.onderscheid?.plus, 'plus')}${punten(o.onderscheid?.min, 'min')}</ul>
+    <p class="sfeer">${esc(o.sfeer)}</p>
+    <div class="acties kortknoppen">
+      <button type="button" class="knop primair" data-naartab="huis">${icoon('huis')}${o.huizen.length > 1 ? t('De huizen', 'The houses') : t('Het huis', 'The house')}</button>
+      <button type="button" class="knop" data-naartab="kan">${t('Wat kan hier?', 'What can you do?')}</button>
+      <button type="button" class="knop" data-naartab="kosten">${t('Kosten', 'Costs')}</button>
+    </div>
+    <button type="button" class="knop spelknop" data-spel="${esc(o.id)}">${icoon('hooghouden')}${esc(o.spel?.naam ?? t('Hooghouden', 'Keepy-uppies'))}</button>`;
+}
+
 function tabKan(o) {
   const koffer = staat().koffer;
   const m = koffermatch(o, koffer);
@@ -161,8 +191,6 @@ function tabKan(o) {
       </div>`
     : `<p class="leeg">${t('Je koffer is nog leeg.', 'Your suitcase is still empty.')} <a href="#/koffer">${t('Pak je koffer in', 'Pack your suitcase')}</a> ${t('om te zien hoeveel van je wensen hier kunnen.', 'to see how many of your wishes work here.')}</p>`;
   return `
-    <p class="tagline">${esc(o.tagline)}</p>
-    <p class="sfeer">${esc(o.sfeer)}</p>
     ${match}
     <ul class="kanlijst">
       ${cats.map((c) => {
@@ -341,15 +369,15 @@ function verder(o) {
 }
 
 // De scorekaart staat bovenaan elke bestemming: alle scores in één oogopslag.
-// Criteria die in jouw weging meetellen zijn gemarkeerd.
+// Criteria die je in de vergelijking zwaarder hebt gezet (2 of 3) krijgen een ster.
 function scorekaart(o) {
   const gewichten = staat().gewichten ?? {};
-  return `<button type="button" class="scorekaart" aria-label="${t(`Scores van ${esc(o.naam)}: bekijk de toelichting`, `Scores for ${esc(o.naam)}: view the explanation`)}">
+  return `<button type="button" class="scorekaart" data-naartab="scores" aria-label="${t(`Scores van ${esc(o.naam)}: bekijk de toelichting`, `Scores for ${esc(o.naam)}: view the explanation`)}">
     ${criteria().map((c) => {
       const score = o.scores?.[c]?.[0] ?? 0;
-      return `<span class="sk${gewichten[c] > 0 ? ' telt' : ''}"><b>${score}</b><span class="sk-balk"><i style="width:${score * 20}%"></i></span><span class="sk-naam">${esc(critNaam(c))}</span></span>`;
+      return `<span class="sk${gewichten[c] >= 2 ? ' telt' : ''}"><b>${score}</b><span class="sk-balk"><i style="width:${score * 20}%"></i></span><span class="sk-naam">${esc(critNaam(c))}</span></span>`;
     }).join('')}
   </button>`;
 }
 
-const TABINHOUD = { kan: tabKan, huis: tabHuis, kids: tabKids, scores: tabScores, kosten: tabKosten, voorbereiden };
+const TABINHOUD = { kort: tabKort, kan: tabKan, huis: tabHuis, kids: tabKids, scores: tabScores, kosten: tabKosten, voorbereiden };
