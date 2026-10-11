@@ -54,7 +54,7 @@ export function toonBestemming(paneel, o, tab, animeer) {
         <li>${icoon('golf')}${k.zee == null ? t('geen zee', 'no sea') : t(`zee ${esc(k.zee)}°C`, `sea ${esc(k.zee)}°C`)}</li>
       </ul>
       ${scorekaart(o)}
-      <button type="button" class="knop spelknop" data-spel="${esc(o.id)}">${icoon('hooghouden')}${t(`Hooghouden in ${esc(landNaam(o.land))}`, `Keepy-uppies in ${esc(landNaam(o.land))}`)}</button>
+      <button type="button" class="knop spelknop" data-spel="${esc(o.id)}">${icoon('hooghouden')}${esc(o.spel?.naam ?? t('Hooghouden', 'Keepy-uppies'))}</button>
     </header>
     <div class="tabs" role="tablist" aria-label="${t(`Onderdelen van ${esc(o.naam)}`, `Sections of ${esc(o.naam)}`)}">
       ${TABS.map(([id, naam, en]) => `<button type="button" role="tab" id="tab-${id}" data-tab="${id}" aria-controls="tabinhoud">${t(naam, en)}</button>`).join('')}

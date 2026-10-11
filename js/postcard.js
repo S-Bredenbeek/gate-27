@@ -93,7 +93,7 @@ export async function tekenAnsichtkaart(canvas) {
   ctx.font = '600 46px Caveat, cursive';
   ctx.fillStyle = '#1A2233';
   ctx.fillText(t(`Groetjes, ${s.naam || 'een van ons'}`, `Cheers, ${s.naam || 'one of us'}`), 96, H - 120);
-  const beste = Math.max(0, ...Object.values(s.hooghoud ?? {}));
+  const beste = Object.values(s.hooghoud ?? {}).reduce((som, n) => som + n, 0);
   ctx.font = '700 18px "JetBrains Mono", monospace';
   ctx.fillStyle = '#566074';
   ctx.fillText(String(meta().reisdata).toUpperCase().slice(0, 46), 96, H - 84);

@@ -16,7 +16,7 @@ import { toonVergelijk } from './js/compare.js';
 import { poppetje, KEUZES, UITERLIJK } from './js/avatar.js';
 import { thema } from './js/patterns.js';
 import { motief, heeftMotief } from './js/motifs.js';
-import { speel, stopSpel } from './js/game.js';
+import { speel, stopSpel, totaalHooghouden } from './js/game.js';
 import { mijnCode, leesCodes, uitslag, vanCode } from './js/group.js';
 import { figuurNaam } from './js/extras.js';
 import { tekenAnsichtkaart, kaartNaam } from './js/postcard.js';
@@ -30,8 +30,6 @@ const el = {
   top: $('#top'),
   terug: $('#btn-terug'),
   titel: $('#top-titel'),
-  teller: $('#top3-teller'),
-  stempelteller: $('#stempel-teller'),
   aftel: $('#aftel'),
   start: $('#scherm-start'),
   podium: $('#podium'),
@@ -68,17 +66,12 @@ async function begin() {
   await kiesDataTaal(huidigeTaal());
   ruimStaatOp();
   leesNamen();
-  $('#btn-top3').insertAdjacentHTML('afterbegin', icoon('hart'));
-  $('#btn-paspoort').insertAdjacentHTML('afterbegin', icoon('paspoort'));
-  $('#btn-koffer').innerHTML = icoon('koffer');
   tekenVast();
   $('#btn-taal').addEventListener('click', wisselTaal);
 
   kaartOk = kaart.maakKaart({ opPin: instappen, opWolk: (landNaam) => (location.hash = `#/gate/${encodeURIComponent(landNaam)}`) });
   window.addEventListener('hashchange', route);
   document.addEventListener('click', klik);
-  $('#btn-top3').addEventListener('click', toonTop3);
-  $('#btn-paspoort').addEventListener('click', toonPaspoort);
   el.overslaan.addEventListener('click', () => stopVlucht?.());
   document.addEventListener('staatgewijzigd', werkTellersBij);
   werkTellersBij();
@@ -108,10 +101,6 @@ function tekenVast() {
   el.overslaan.textContent = t('Overslaan', 'Skip');
   $('.skip').textContent = t('Naar de inhoud', 'Skip to content');
   $('#kaart').setAttribute('aria-label', t('Kaart met Schiphol en alle bestemmingen', 'Map with Schiphol and all destinations'));
-  for (const knop of [$('#btn-koffer')]) {
-    knop.setAttribute('aria-label', t('Koffer en poppetje aanpassen', 'Change suitcase and character'));
-    knop.title = knop.getAttribute('aria-label');
-  }
   const taalknop = $('#btn-taal');
   taalknop.textContent = huidigeTaal() === 'nl' ? 'EN' : 'NL';
   taalknop.setAttribute('aria-label', huidigeTaal() === 'nl' ? 'Switch to English' : 'Wissel naar Nederlands');
@@ -121,8 +110,28 @@ function tekenVast() {
   $('#toast').textContent = '';
   $('.leaflet-control-zoom-in')?.setAttribute('title', t('Inzoomen', 'Zoom in'));
   $('.leaflet-control-zoom-out')?.setAttribute('title', t('Uitzoomen', 'Zoom out'));
-  werkTellersBij();
+  tekenOnderbalk();
   tekenAftelklok();
+}
+
+// De vaste navigatie onderin: landen, paspoort, top 3, vergelijken en je eigen poppetje.
+// Zichtbaar zodra je voor het eerst in de vertrekhal bent geweest.
+function tekenOnderbalk() {
+  const s = staat();
+  const scherm = document.body.dataset.scherm;
+  const hier = { hal: 'hal', gate: 'hal', b: 'hal', vergelijk: 'vergelijk', uitslag: 'vergelijk', start: 'ik', koffer: 'ik' }[scherm];
+  const aan = (naam) => (naam === hier ? ' aria-current="page"' : '');
+  const balk = $('#onderbalk');
+  balk.setAttribute('aria-label', t('Hoofdmenu', 'Main menu'));
+  balk.innerHTML = `
+    <a href="#/hal"${aan('hal')}>${icoon('vliegtuig')}<span>${t('Landen', 'Countries')}</span></a>
+    <button type="button" data-open="paspoort">${icoon('paspoort')}<span>${t('Paspoort', 'Passport')}</span><i class="teller" id="stempel-teller" hidden></i></button>
+    <button type="button" data-open="top3">${icoon('hart')}<span>Top 3</span><i class="teller" id="top3-teller" hidden></i></button>
+    <a href="#/vergelijk"${aan('vergelijk')}>${icoon('weging')}<span>${t('Vergelijk', 'Compare')}</span></a>
+    <a href="#/start" class="nav-ik"${aan('ik')}>${poppetje(s.avatar ?? {})}<span>${esc(s.naam) || t('Ik', 'Me')}</span></a>`;
+  balk.hidden = !s.klaar;
+  document.body.classList.toggle('met-onderbalk', !!s.klaar);
+  werkTellersBij();
 }
 
 async function wisselTaal() {
@@ -210,6 +219,7 @@ function route() {
   else if (scherm === 'uitslag') toonUitslag();
   else toonVergelijk(el.vergelijk, a);
 
+  tekenOnderbalk();
   window.scrollTo(0, 0);
   el.paneel.scrollTop = 0;
   const kop = $('main h1');
@@ -269,14 +279,15 @@ function toonStart() {
     <div id="ikzelf"${s.figuur ? '' : ' hidden'}>
       <label class="veld" for="naam">${t('Je voornaam', 'Your first name')}</label>
       <input id="naam" type="text" autocomplete="given-name" maxlength="20" value="${esc(s.naam)}" placeholder="${t('Voor op je instapkaart', 'For your boarding pass')}">
-      <details class="pasaan">
+      <details class="pasaan"${s.klaar ? ' open' : ''}>
         <summary>${t('Lijkt het niet? Pas je poppetje aan', "Doesn't look like you? Tweak your character")}</summary>
         <div id="bouwer">${s.avatar ? bouwer() : ''}</div>
       </details>
       <p class="klein">${t('Je naam en je poppetje blijven alleen op dit apparaat staan.', 'Your name and your character stay on this device only.')}</p>
     </div>
 
-    <button type="button" class="knop primair groot" id="start-verder"${s.figuur ? '' : ' disabled'}>${t('Koffer pakken', 'Pack your suitcase')}${icoon('verder')}</button>
+    <button type="button" class="knop primair groot" id="start-verder"${s.figuur ? '' : ' disabled'}>${s.klaar ? t('Klaar', 'Done') : `${t('Koffer pakken', 'Pack your suitcase')}${icoon('verder')}`}</button>
+    ${s.klaar ? `<a class="knop groot" href="#/koffer">${icoon('koffer')}${t('Mijn koffer aanpassen', 'Change my suitcase')}</a>` : ''}
     ${s.figuur ? resetKnop() : ''}
   </div>`;
 
@@ -310,7 +321,7 @@ function toonStart() {
     tekenGekozen();
   });
   $('#naam').addEventListener('input', (e) => wijzig({ naam: e.target.value.trim() }));
-  verder.addEventListener('click', () => (location.hash = '#/koffer'));
+  verder.addEventListener('click', () => (location.hash = staat().klaar ? '#/hal' : '#/koffer'));
 }
 
 function toonKoffer() {
@@ -380,8 +391,9 @@ function toonHal() {
     .filter((o) => s.bezocht.includes(o.id) && o.pils?.rondje_mannen != null)
     .sort((a, b) => a.pils.rondje_mannen - b.pils.rondje_mannen)
     .slice(0, 3);
+  if (!s.klaar) wijzig({ klaar: true });
   el.paneel.innerHTML = `
-    <div class="kop-met-pop">${poppetje(s.avatar)}<div>
+    <div class="kop-met-pop"><a class="pop-link" href="#/start" aria-label="${t('Poppetje en naam aanpassen', 'Change character and name')}">${poppetje(s.avatar)}</a><div>
       <p class="kicker">${t(`Vertrekhal ${esc(m.vertrek.naam)}`, `${esc(m.vertrek.naam)} Departures`)}</p>
       <h1>${s.naam ? t(`Hoi ${esc(s.naam)}. `, `Hi ${esc(s.naam)}. `) : ''}${t('Kies een land.', 'Pick a country.')}</h1>
     </div></div>
@@ -402,7 +414,7 @@ function toonHal() {
 
     <p class="voortgang"><span class="hand">${gezien === 0 ? t('nog niks ontdekt, ga maar vliegen', 'nothing discovered yet, off you fly') : gezien === totaal ? t('alles gezien!', 'seen it all!') : t(`${gezien} van de ${totaal} plekken ontdekt`, `${gezien} of the ${totaal} places discovered`)}</span></p>
     <div class="acties">
-      <button type="button" class="knop" data-spel>${icoon('hooghouden')}${t('Hooghouden', 'Keepy-uppies')}</button>
+      <button type="button" class="knop" data-spel>${icoon('hooghouden')}${t('Hooghouden', 'Keepy-uppies')}${totaalHooghouden() ? ` · ${totaalHooghouden()}` : ''}</button>
       ${gezien >= 2 ? `<a class="knop" href="#/vergelijk">${t('Vergelijk wat je kent', "Compare what you've found")}</a>` : ''}
     </div>
 
@@ -625,12 +637,15 @@ function werkTellersBij() {
   for (const knop of document.querySelectorAll('[data-hart]')) {
     knop.setAttribute('aria-pressed', s.top3.includes(knop.dataset.hart));
   }
-  el.teller.textContent = s.top3.length;
-  el.teller.hidden = s.top3.length === 0;
-  $('#btn-top3').setAttribute('aria-label', t(`Mijn top 3 (${s.top3.length} gekozen)`, `My top 3 (${s.top3.length} picked)`));
-  el.stempelteller.textContent = s.bezocht.length;
-  el.stempelteller.hidden = s.bezocht.length === 0;
-  $('#btn-paspoort').setAttribute('aria-label', t(`Paspoort (${s.bezocht.length} van ${opties().length} stempels)`, `Passport (${s.bezocht.length} of ${opties().length} stamps)`));
+  const zet = (id, n, label) => {
+    const teller = $(id);
+    if (!teller) return;
+    teller.textContent = n;
+    teller.hidden = n === 0;
+    teller.parentElement.setAttribute('aria-label', label);
+  };
+  zet('#top3-teller', s.top3.length, t(`Mijn top 3 (${s.top3.length} gekozen)`, `My top 3 (${s.top3.length} picked)`));
+  zet('#stempel-teller', s.bezocht.length, t(`Paspoort (${s.bezocht.length} van ${opties().length} stempels)`, `Passport (${s.bezocht.length} of ${opties().length} stamps)`));
 }
 
 function toonPaspoort() {
@@ -830,6 +845,8 @@ function klik(e) {
   const hart = e.target.closest('[data-hart]');
   if (hart) return wisselHart(hart.dataset.hart);
   if (e.target.closest('[data-reset]')) return opnieuwBeginnen();
+  const open = e.target.closest('[data-open]');
+  if (open) return open.dataset.open === 'top3' ? toonTop3() : toonPaspoort();
   const spel = e.target.closest('[data-spel]');
   if (spel) return speel(optie(spel.dataset.spel) ?? optie(staat().bezocht.at(-1)) ?? null);
   const instap = e.target.closest('[data-instappen]');

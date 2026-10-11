@@ -17,6 +17,7 @@ const standaard = () => ({
   rollen: {},
   namen: [],
   taal: null,
+  klaar: false,
   paklijst: {},
   kv: {},
   codes: '',

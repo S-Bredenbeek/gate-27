@@ -426,7 +426,7 @@
         },
         {
           "id": "f8",
-          "huid": "#EDBE98",
+          "huid": "#7A4A2E",
           "haar": "kort",
           "haarkleur": "#2B1D14",
           "shirt": "#EFE6D2",
@@ -679,7 +679,12 @@
         ],
         "rondje_mannen": 12.5
       },
-      "paklijst_extra": []
+      "paklijst_extra": [],
+      "spel": {
+        "soort": "zee",
+        "naam": "Hooghouden bij vloed",
+        "regel": "Het water komt op. Raakt de bal de zee, dan spoelt hij weg."
+      }
     },
     {
       "id": "algarve-oost",
@@ -896,7 +901,13 @@
         ],
         "rondje_mannen": 12.5
       },
-      "paklijst_extra": []
+      "paklijst_extra": [],
+      "spel": {
+        "soort": "vliegers",
+        "naam": "Hooghouden tussen de flamingo's",
+        "regel": "Er vliegen flamingo's over de lagune. Raak ze niet.",
+        "motief": "flamingo"
+      }
     },
     {
       "id": "sintra",
@@ -1095,7 +1106,12 @@
         ],
         "rondje_mannen": 12.5
       },
-      "paklijst_extra": []
+      "paklijst_extra": [],
+      "spel": {
+        "soort": "wind",
+        "naam": "Hooghouden in de Atlantische wind",
+        "regel": "Windvlagen van zee duwen de bal opzij."
+      }
     },
     {
       "id": "douro",
@@ -1294,7 +1310,13 @@
         ],
         "rondje_mannen": 12.5
       },
-      "paklijst_extra": []
+      "paklijst_extra": [],
+      "spel": {
+        "soort": "takken",
+        "naam": "Hooghouden tussen de wijnranken",
+        "regel": "Het is oogsttijd: raak de wijnranken in de hoeken niet.",
+        "motief": "druiventros"
+      }
     },
     {
       "id": "tirana",
@@ -1493,7 +1515,12 @@
         ],
         "rondje_mannen": 12.8
       },
-      "paklijst_extra": []
+      "paklijst_extra": [],
+      "spel": {
+        "soort": "smal",
+        "naam": "Hooghouden in een steegje",
+        "regel": "Weinig ruimte tussen de huizen: de bal stuitert van muur tot muur."
+      }
     },
     {
       "id": "durres",
@@ -1710,7 +1737,12 @@
         ],
         "rondje_mannen": 12.8
       },
-      "paklijst_extra": []
+      "paklijst_extra": [],
+      "spel": {
+        "soort": "zee",
+        "naam": "Hooghouden op het strand",
+        "regel": "De golven rollen het strand op. Raakt de bal het water, dan is hij weg."
+      }
     },
     {
       "id": "vlore",
@@ -1893,7 +1925,12 @@
       },
       "paklijst_extra": [
         "Waterschoentjes (kiezelstranden)"
-      ]
+      ],
+      "spel": {
+        "soort": "wind",
+        "naam": "Hooghouden op de bergpas",
+        "regel": "Op de pas waait het hard: de wind neemt je bal mee."
+      }
     },
     {
       "id": "spanje",
@@ -2110,7 +2147,13 @@
         ],
         "rondje_mannen": 15.0
       },
-      "paklijst_extra": []
+      "paklijst_extra": [],
+      "spel": {
+        "soort": "bonus",
+        "naam": "Hooghouden met padelbonus",
+        "regel": "Raak met de bal een padelracket voor 2 extra punten.",
+        "motief": "padelracket"
+      }
     },
     {
       "id": "kroatie",
@@ -2311,7 +2354,12 @@
       },
       "paklijst_extra": [
         "Waterschoentjes (kiezelstrandjes)"
-      ]
+      ],
+      "spel": {
+        "soort": "zee",
+        "naam": "Hooghouden op de kade",
+        "regel": "De zee klotst tegen de kade. Bal in het water is bal weg."
+      }
     },
     {
       "id": "fethiye",
@@ -2527,7 +2575,13 @@
         ],
         "rondje_mannen": 16.25
       },
-      "paklijst_extra": []
+      "paklijst_extra": [],
+      "spel": {
+        "soort": "vliegers",
+        "naam": "Hooghouden onder de paragliders",
+        "regel": "Boven de baai zweven paragliders. Raak ze niet.",
+        "motief": "paraglider"
+      }
     },
     {
       "id": "gozo",
@@ -2725,7 +2779,12 @@
         ],
         "rondje_mannen": 20.0
       },
-      "paklijst_extra": []
+      "paklijst_extra": [],
+      "spel": {
+        "soort": "smal",
+        "naam": "Hooghouden in een dorpsstraatje",
+        "regel": "Smalle straatjes van kalksteen: de muren kaatsen alles terug."
+      }
     },
     {
       "id": "kefalonia",
@@ -2926,7 +2985,13 @@
       },
       "paklijst_extra": [
         "Waterschoentjes (deels kiezel)"
-      ]
+      ],
+      "spel": {
+        "soort": "bonus",
+        "naam": "Hooghouden in de olijfgaard",
+        "regel": "Raak met de bal een olijftak voor 2 extra punten.",
+        "motief": "olijftak"
+      }
     },
     {
       "id": "sicilie",
@@ -3124,7 +3189,13 @@
         ],
         "rondje_mannen": 25.0
       },
-      "paklijst_extra": []
+      "paklijst_extra": [],
+      "spel": {
+        "soort": "bonus",
+        "naam": "Hooghouden met citroenen",
+        "regel": "Raak met de bal een citroen voor 2 extra punten.",
+        "motief": "citroen"
+      }
     }
   ]
 }

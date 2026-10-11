@@ -752,10 +752,30 @@ body[data-scherm="start"] .scherm { padding-top: calc(var(--top-h) + 8px); }
   .wie { gap: 6px; }
 }
 
+/* ---------- navigatie onderin ---------- */
+
+:root { --onder-h: 0px; }
+body.met-onderbalk { --onder-h: 62px; padding-bottom: calc(var(--onder-h) + env(safe-area-inset-bottom)); }
+.onderbalk { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: grid; grid-template-columns: repeat(5, 1fr); height: calc(62px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: var(--papier); border-top: 2px solid var(--inkt); }
+.onderbalk > * { position: relative; display: grid; justify-items: center; align-content: center; gap: 2px; min-width: 0; padding: 4px 2px; border: 0; background: none; color: var(--dim); font: 600 .68rem/1.1 var(--tekst); text-decoration: none; cursor: pointer; }
+.onderbalk span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.onderbalk .ico { width: 24px; height: 24px; }
+.onderbalk [aria-current] { color: var(--blauw); }
+.onderbalk [aria-current]::before { content: ''; position: absolute; top: -2px; left: 22%; right: 22%; height: 4px; border-radius: 0 0 4px 4px; background: var(--amber); }
+.onderbalk .teller { top: 5px; right: calc(50% - 22px); font-style: normal; }
+.nav-ik .poppetje { width: 28px; height: 28px; border-radius: 50%; background: var(--amber); border: 1.5px solid var(--inkt); }
+body.vliegt .onderbalk { display: none; }
+.toast { bottom: calc(20px + var(--onder-h) + env(safe-area-inset-bottom)); }
+.kofferbalk { bottom: calc(var(--onder-h) + env(safe-area-inset-bottom)); }
+.pop-link { flex: none; position: relative; display: block; width: 72px; }
+.pop-link .poppetje { width: 72px; padding: 4px 4px 0; border-radius: 50%; background: var(--amber); border: 2.5px solid var(--inkt); transform: rotate(-4deg); }
+.spel-totaal { margin: -8px 0 14px; font-size: .9rem; color: var(--dim); }
+.knop.groot + .knop.groot { margin-top: 10px; }
+
 /* ---------- brede schermen ---------- */
 
 @media (min-width: 900px) {
-  .podium { display: grid; grid-template-columns: minmax(0, 1fr) minmax(440px, 520px); height: calc(100vh - var(--top-h)); }
+  .podium { display: grid; grid-template-columns: minmax(0, 1fr) minmax(440px, 520px); height: calc(100vh - var(--top-h) - var(--onder-h)); }
   .kaartvak, body[data-scherm="b"] .kaartvak { position: relative; top: 0; height: auto; }
   .paneel { margin: 0; padding: 32px 28px 56px; min-height: 0; border-radius: 0; overflow-y: auto; box-shadow: -8px 0 24px rgba(26, 34, 51, .12); }
   .paneel::before { display: none; }
