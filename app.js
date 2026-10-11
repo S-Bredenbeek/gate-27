@@ -504,12 +504,16 @@ function reisStappen() {
   </section>`;
 }
 
-// Het lot kiest een plek die je nog niet kent, bij voorkeur in het land waar je net was.
-function verrassingsvlucht(landNaam) {
+// Het lot kiest een plek die je nog niet kent, en vliegt kriskras: liefst naar een land waar je nog
+// helemaal niet bent geweest, anders in elk geval naar een ander land dan waar je net was.
+function verrassingsvlucht(vorigLand) {
   const open = opties().filter((o) => !ontdekt(o.id));
-  const dichtbij = open.filter((o) => o.land === landNaam);
-  const lijst = dichtbij.length ? dichtbij : open;
-  if (!lijst.length) return toast(t('Je hebt alle plekken al gezien', "You've already seen every place"));
+  if (!open.length) return toast(t('Je hebt alle plekken al gezien', "You've already seen every place"));
+  vorigLand ??= optie(staat().bezocht.at(-1))?.land;
+  const bezochteLanden = new Set(opties().filter((o) => ontdekt(o.id)).map((o) => o.land));
+  const elders = open.filter((o) => o.land !== vorigLand);
+  const nieuwLand = elders.filter((o) => !bezochteLanden.has(o.land));
+  const lijst = nieuwLand.length ? nieuwLand : elders.length ? elders : open;
   instappen(lijst[Math.floor(Math.random() * lijst.length)].id);
 }
 document.addEventListener('verrasvlucht', (e) => verrassingsvlucht(e.detail?.land));
