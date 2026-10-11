@@ -5,6 +5,7 @@ import { meta, land, esc, themaStijl } from './data.js';
 import { staat, wijzig } from './store.js';
 import { patroon } from './patterns.js';
 import { kopieer } from './ui.js';
+import { t } from './i18n.js';
 
 const rustig = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 let stop = null;
@@ -15,18 +16,18 @@ export function speel(o) {
   const l = o ? land(o) : null;
   const kleuren = l ? [l.kleuren.basis, l.kleuren.accent, l.kleuren.licht] : ['#12305A', '#FFC53D', '#FFFDF8'];
   const sleutel = o?.id ?? 'vertrekhal';
-  const plek = o?.naam ?? `de vertrekhal van ${meta().vertrek.naam}`;
+  const plek = o?.naam ?? t(`de vertrekhal van ${meta().vertrek.naam}`, `Departures at ${meta().vertrek.naam}`);
   const veld = o?.mogelijkheden?.hooghouden;
   const record = () => staat().hooghoud?.[sleutel] ?? 0;
 
   el.style.cssText = o ? `${themaStijl(o)};--patroon:${patroon(l.patroon, l.kleuren.basis)}` : '';
   el.innerHTML = `
     <div class="spel-kop">
-      <button type="button" class="knop licht" id="spel-sluit">Stoppen</button>
-      <p class="spel-stand"><b id="spel-score">0</b><span>record <i id="spel-record">${record()}</i></span></p>
+      <button type="button" class="knop licht" id="spel-sluit">${t('Stoppen', 'Stop')}</button>
+      <p class="spel-stand"><b id="spel-score">0</b><span>${t('record', 'best')} <i id="spel-record">${record()}</i></span></p>
     </div>
-    <p class="spel-veld">${veld ? `<strong>${veld[0] === 'nee' ? 'Hier kan het alleen digitaal' : 'Speel hier echt'}:</strong> ${esc(veld[1])}` : 'Warm alvast op in de vertrekhal'}</p>
-    <canvas id="spel-canvas" aria-label="Hooghoudspel: tik op de bal om hem in de lucht te houden"></canvas>
+    <p class="spel-veld">${veld ? `<strong>${veld[0] === 'nee' ? t('Hier kan het alleen digitaal', 'Digital only here') : t('Speel hier echt', 'Play here for real')}:</strong> ${esc(veld[1])}` : t('Warm alvast op in de vertrekhal', 'Warm up in Departures')}</p>
+    <canvas id="spel-canvas" aria-label="${t('Hooghoudspel: tik op de bal om hem in de lucht te houden', 'Keepy-uppies game: tap the ball to keep it in the air')}"></canvas>
     <p class="spel-melding" id="spel-melding" role="status" aria-live="polite"></p>
     <div class="spel-einde" id="spel-einde" hidden></div>`;
   el.hidden = false;
@@ -79,7 +80,7 @@ export function speel(o) {
   function mijlpaal() {
     if (score % 10 === 0) zwaarte *= 1.07;
     if (score === 10) {
-      meld('Tien! Lekker bezig.');
+      meld(t('Tien! Lekker bezig.', 'Ten! Nice going.'));
       if (!rustig()) {
         confetti = Array.from({ length: 70 }, () => ({
           x: Math.random() * B, y: -20 - Math.random() * H * 0.4, vx: (Math.random() - 0.5) * 120, vy: 120 + Math.random() * 220,
@@ -87,7 +88,7 @@ export function speel(o) {
         }));
       }
     }
-    for (const [grens, tekst] of [[25, 'Stempel verdiend: Jogo bonito!'], [50, 'Vijftig! De gouden stempel is van jou.']]) {
+    for (const [grens, tekst] of [[25, t('Stempel verdiend: Jogo bonito!', 'Stamp earned: Jogo bonito!')], [50, t('Vijftig! De gouden stempel is van jou.', 'Fifty! The golden stamp is yours.')]]) {
       if (score === grens) {
         if ((staat().jogo ?? 0) < grens) {
           wijzig({ jogo: grens });
@@ -189,7 +190,7 @@ export function speel(o) {
       ctx.fillStyle = '#1A2233';
       ctx.font = `600 18px Inter, system-ui, sans-serif`;
       ctx.textAlign = 'center';
-      ctx.fillText('Tik op de bal om te beginnen', B / 2, bal.y + bal.r + 44);
+      ctx.fillText(t('Tik op de bal om te beginnen', 'Tap the ball to start'), B / 2, bal.y + bal.r + 44);
     }
   }
 
@@ -199,17 +200,17 @@ export function speel(o) {
     const nieuwRecord = score > oud;
     if (nieuwRecord) wijzig({ hooghoud: { ...staat().hooghoud, [sleutel]: score } });
     el.querySelector('#spel-record').textContent = record();
-    const naam = staat().naam || 'Ik';
+    const naam = staat().naam || t('Ik', 'I');
     eindeEl.innerHTML = `
-      <p class="hand">${nieuwRecord && score > 0 ? 'nieuw record!' : score === 0 ? 'oeps' : 'bal op de grond'}</p>
-      <p class="spel-eindscore"><b>${score}</b> keer hooggehouden</p>
+      <p class="hand">${nieuwRecord && score > 0 ? t('nieuw record!', 'new best!') : score === 0 ? t('oeps', 'oops') : t('bal op de grond', 'ball on the ground')}</p>
+      <p class="spel-eindscore"><b>${score}</b> ${t('keer hooggehouden', score === 1 ? 'keepy-uppie' : 'keepy-uppies')}</p>
       <div class="acties">
-        <button type="button" class="knop primair" id="spel-opnieuw">Nog een keer</button>
-        <button type="button" class="knop" id="spel-deel"${score ? '' : ' disabled'}>Deel je score</button>
+        <button type="button" class="knop primair" id="spel-opnieuw">${t('Nog een keer', 'Again')}</button>
+        <button type="button" class="knop" id="spel-deel"${score ? '' : ' disabled'}>${t('Deel je score', 'Share your score')}</button>
       </div>`;
     eindeEl.hidden = false;
     eindeEl.querySelector('#spel-opnieuw').addEventListener('click', opnieuw);
-    eindeEl.querySelector('#spel-deel').addEventListener('click', () => kopieer(`${naam} hield ${score} keer hoog in ${plek}`, 'Score gekopieerd: plak hem in de groepsapp'));
+    eindeEl.querySelector('#spel-deel').addEventListener('click', () => kopieer(t(`${naam} hield ${score} keer hoog in ${plek}`, `${naam} did ${score} ${score === 1 ? 'keepy-uppie' : 'keepy-uppies'} in ${plek}`), t('Score gekopieerd: plak hem in de groepsapp', 'Score copied: paste it in the group chat')));
     eindeEl.querySelector('#spel-opnieuw').focus({ preventScroll: true });
   }
 

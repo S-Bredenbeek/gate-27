@@ -8,11 +8,12 @@ import {
 import { staat, wijzig } from './store.js';
 import { icoon } from './icons.js';
 import { statusLabel, hartKnop, bolletjes, beren, bronnenBlok } from './ui.js';
+import { t } from './i18n.js';
 
 const WEERGAVEN = [
-  ['scores', 'Scores'],
-  ['mogelijkheden', 'Mogelijkheden'],
-  ['kids', 'Kids'],
+  ['scores', 'Scores', 'Scores'],
+  ['mogelijkheden', 'Mogelijkheden', 'Options'],
+  ['kids', 'Kids', 'Kids'],
 ];
 
 let bril = 'ik';
@@ -42,49 +43,49 @@ function gesorteerd(b) {
 
 export function toonVergelijk(el, gevraagd) {
   if (WEERGAVEN.some(([id]) => id === gevraagd)) weergave = gevraagd;
-  const brillen = [['ik', 'Mijn keuzes'], ['kids', 'De kids']];
+  const brillen = [['ik', t('Mijn keuzes', 'My picks')], ['kids', t('De kids', 'The kids')]];
   const geheim = opties().length - bekend().length;
   const onthul = () => {
-    if (!confirm('Alle bestemmingen in één keer onthullen? Dan is de verrassing eraf.')) return;
+    if (!confirm(t('Alle bestemmingen in één keer onthullen? Dan is de verrassing eraf.', 'Reveal all destinations in one go? That takes the surprise out of it.'))) return;
     wijzig({ bezocht: opties().map((o) => o.id) });
     document.dispatchEvent(new Event('staatgewijzigd'));
     toonVergelijk(el, weergave);
   };
 
   if (!bekend().length) {
-    el.innerHTML = `<div class="vgl"><h1>Nog niks te vergelijken</h1>
-      <p class="lead">Je vergelijkt hier de bestemmingen die je hebt ontdekt. Stap eerst in een paar mysterievluchten.</p>
-      <a class="knop primair groot" href="#/hal">Naar de vertrekhal</a>
-      <p class="klein midden"><button type="button" class="linkknop" id="onthul">Geen geduld? Onthul alles</button></p></div>`;
+    el.innerHTML = `<div class="vgl"><h1>${t('Nog niks te vergelijken', 'Nothing to compare yet')}</h1>
+      <p class="lead">${t('Je vergelijkt hier de bestemmingen die je hebt ontdekt. Stap eerst in een paar mysterievluchten.', 'This is where you compare the destinations you have discovered. Hop on a few mystery flights first.')}</p>
+      <a class="knop primair groot" href="#/hal">${t('Naar de vertrekhal', 'To Departures')}</a>
+      <p class="klein midden"><button type="button" class="linkknop" id="onthul">${t('Geen geduld? Onthul alles', 'No patience? Reveal everything')}</button></p></div>`;
     el.querySelector('#onthul').addEventListener('click', onthul);
     return;
   }
 
   el.innerHTML = `<div class="vgl">
     <p class="kicker">${esc(meta().reisdata)}</p>
-    <h1>Vergelijk wat je kent</h1>
-    <p class="lead">Geen officiële ranglijst: de volgorde komt uit jouw weging en jouw koffer, en schuift mee als je iets verandert.</p>
-    ${geheim ? `<p class="geheimbalk"><span><strong>${geheim === 1 ? 'Nog 1 bestemming is geheim.' : `Nog ${geheim} bestemmingen zijn geheim.`}</strong> <a href="#/hal">Ga ze ontdekken</a></span><button type="button" class="linkknop" id="onthul">of onthul alles</button></p>` : ''}
+    <h1>${t('Vergelijk wat je kent', "Compare what you've found")}</h1>
+    <p class="lead">${t('Geen officiële ranglijst: de volgorde komt uit jouw weging en jouw koffer, en schuift mee als je iets verandert.', 'Not an official ranking: the order comes from your weighting and your suitcase, and shifts when you change something.')}</p>
+    ${geheim ? `<p class="geheimbalk"><span><strong>${geheim === 1 ? t('Nog 1 bestemming is geheim.', '1 destination is still secret.') : t(`Nog ${geheim} bestemmingen zijn geheim.`, `${geheim} destinations are still secret.`)}</strong> <a href="#/hal">${t('Ga ze ontdekken', 'Go discover them')}</a></span><button type="button" class="linkknop" id="onthul">${t('of onthul alles', 'or reveal everything')}</button></p>` : ''}
 
     <fieldset class="segment" id="bril">
-      <legend>Door wiens ogen</legend>
+      <legend>${t('Door wiens ogen', 'Through whose eyes')}</legend>
       ${brillen.map(([id, naam]) => `<label><input type="radio" name="bril" value="${esc(id)}"${id === bril ? ' checked' : ''}><span>${esc(naam)}</span></label>`).join('')}
     </fieldset>
 
     <details class="schuifjes" id="schuifjes"${matchMedia('(min-width: 900px)').matches ? ' open' : ''}>
-      <summary>${icoon('weging')}<span>Weging van de scores</span></summary>
+      <summary>${icoon('weging')}<span>${t('Weging van de scores', 'Score weighting')}</span></summary>
       <div id="schuifraster" class="schuifraster"></div>
-      <p class="klein">0 telt niet mee, 3 telt zwaar. Jouw score is voor de helft de gewogen scores en voor de helft je koffermatch.</p>
+      <p class="klein">${t('0 telt niet mee, 3 telt zwaar. Jouw score is voor de helft de gewogen scores en voor de helft je koffermatch.', "0 doesn't count, 3 counts heavily. Your score is half the weighted scores and half your suitcase match.")}</p>
     </details>
 
-    <div class="tabs" role="tablist" aria-label="Weergave">
-      ${WEERGAVEN.map(([id, naam]) => `<button type="button" role="tab" id="vgl-tab-${id}" data-weergave="${id}" aria-controls="vgl-paneel">${naam}</button>`).join('')}
+    <div class="tabs" role="tablist" aria-label="${t('Weergave', 'View')}">
+      ${WEERGAVEN.map(([id, nl, en]) => `<button type="button" role="tab" id="vgl-tab-${id}" data-weergave="${id}" aria-controls="vgl-paneel">${t(nl, en)}</button>`).join('')}
     </div>
     <div id="vgl-paneel" role="tabpanel">
       <fieldset class="segment klein" id="sortering">
-        <legend>Sorteer op</legend>
-        <label><input type="radio" name="sortering" value="score"${sortering === 'score' ? ' checked' : ''}><span>Jouw score</span></label>
-        <label><input type="radio" name="sortering" value="rondje"${sortering === 'rondje' ? ' checked' : ''}><span>Goedkoopste rondje</span></label>
+        <legend>${t('Sorteer op', 'Sort by')}</legend>
+        <label><input type="radio" name="sortering" value="score"${sortering === 'score' ? ' checked' : ''}><span>${t('Jouw score', 'Your score')}</span></label>
+        <label><input type="radio" name="sortering" value="rondje"${sortering === 'rondje' ? ' checked' : ''}><span>${t('Goedkoopste rondje', 'Cheapest round')}</span></label>
       </fieldset>
       <p class="klein" id="vgl-uitleg"></p>
       <div class="tabelwrap"><table class="vgl-tabel" id="vgl-tabel"></table></div>
@@ -121,23 +122,23 @@ export function toonVergelijk(el, gevraagd) {
     }
     el.querySelector('#vgl-paneel').setAttribute('aria-labelledby', `vgl-tab-${weergave}`);
     uitleg.textContent = b.kids
-      ? 'Door de ogen van de kids: gesorteerd op het kids-oordeel, bij gelijke stand op de kortste reistijd.'
-      : 'Gesorteerd op jouw score. Kosten per persoon gelden voor de sterkste huiskeuze en zijn een indicatie.';
+      ? t('Door de ogen van de kids: gesorteerd op het kids-oordeel, bij gelijke stand op de kortste reistijd.', "Through the kids' eyes: sorted by the kids' verdict, and by shortest travel time in case of a tie.")
+      : t('Gesorteerd op jouw score. Kosten per persoon gelden voor de sterkste huiskeuze en zijn een indicatie.', 'Sorted by your score. Cost per person is for the strongest house pick and is an estimate.');
 
     el.querySelector('#sortering').hidden = weergave !== 'scores';
-    if (sortering === 'rondje' && weergave === 'scores') uitleg.textContent = 'Gesorteerd op de prijs van een rondje voor de mannen, goedkoopste bovenaan.';
+    if (sortering === 'rondje' && weergave === 'scores') uitleg.textContent = t('Gesorteerd op de prijs van een rondje voor de mannen, goedkoopste bovenaan.', 'Sorted by the price of a round for the guys, cheapest on top.');
     const { kop, cellen } = KOLOMMEN[weergave](b);
     tabel.className = `vgl-tabel vgl-${weergave}`;
     tabel.innerHTML = `
-      <thead><tr><th scope="col">Bestemming</th>${kop}</tr></thead>
+      <thead><tr><th scope="col">${t('Bestemming', 'Destination')}</th>${kop}</tr></thead>
       <tbody>${rijen.map(({ o, score }, i) => `<tr>
         <th scope="row" class="rijkop" style="--k:${esc(landKleur(o))}">
-          <span class="plek" aria-label="Plek ${i + 1} in deze volgorde">${i + 1}</span>
+          <span class="plek" aria-label="${t(`Plek ${i + 1} in deze volgorde`, `Number ${i + 1} in this order`)}">${i + 1}</span>
           <span class="rijnaam">
             <button type="button" class="linkknop" data-instappen="${esc(o.id)}">${esc(o.naam)}</button>
-            <span class="dim">${esc(o.land)} · gate ${gateCode(o)}</span>
+            <span class="dim">${esc(landNaam(o.land))} · gate ${gateCode(o)}</span>
           </span>
-          <span class="rijscore">${b.kids ? beren(o.kidscheck.oordeel) : score == null ? '' : `${pct(score)}<small>${bril === 'ik' ? 'jouw score' : 'score'}</small>`}</span>
+          <span class="rijscore">${b.kids ? beren(o.kidscheck.oordeel) : score == null ? '' : `${pct(score)}<small>${bril === 'ik' ? t('jouw score', 'your score') : 'score'}</small>`}</span>
           ${hartKnop(o.id, o.naam)}
         </th>${cellen(o)}</tr>`).join('')}
       </tbody>`;
@@ -190,23 +191,23 @@ const KOLOMMEN = {
   scores(b) {
     const telt = (c) => (b.gewichten[c] ?? 0) > 0;
     return {
-      kop: criteria().map((c) => `<th scope="col" class="${telt(c) ? 'telt' : ''}" title="${esc(meta().scorecriteria[c])}">${esc(critNaam(c))}${telt(c) ? `<small>weegt ${b.gewichten[c]}×</small>` : ''}</th>`).join('')
-        + '<th scope="col">Rondje</th><th scope="col">Kosten p.p.<small>indicatie</small></th>',
+      kop: criteria().map((c) => `<th scope="col" class="${telt(c) ? 'telt' : ''}" title="${esc(meta().scorecriteria[c])}">${esc(critNaam(c))}${telt(c) ? `<small>${t(`weegt ${b.gewichten[c]}×`, `weighs ${b.gewichten[c]}×`)}</small>` : ''}</th>`).join('')
+        + `<th scope="col">${t('Rondje', 'Round')}</th><th scope="col">${t('Kosten p.p.', 'Cost p.p.')}<small>${t('indicatie', 'estimate')}</small></th>`,
       cellen: (o) => criteria().map((c) => {
         const [s, tekst] = o.scores?.[c] ?? [0, ''];
         return `<td data-label="${esc(critNaam(c))}" class="${telt(c) ? 'telt' : ''}" title="${esc(tekst)}">${bolletjes(s)}</td>`;
-      }).join('') + `<td data-label="Rondje voor de mannen" class="getal">${o.pils?.rondje_mannen == null ? '?' : euro(o.pils.rondje_mannen, 2)}</td><td data-label="Kosten p.p. (indicatie)" class="getal">${euro(kosten(o, o.huizen[0]).totaal)}</td>`,
+      }).join('') + `<td data-label="${t('Rondje voor de mannen', 'Round for the guys')}" class="getal">${o.pils?.rondje_mannen == null ? '?' : euro(o.pils.rondje_mannen, 2)}</td><td data-label="${t('Kosten p.p. (indicatie)', 'Cost p.p. (estimate)')}" class="getal">${euro(kosten(o, o.huizen[0]).totaal)}</td>`,
     };
   },
 
   mogelijkheden(b) {
     const ingepakt = (id) => b.koffer.includes(id);
     return {
-      kop: '<th scope="col">Koffermatch</th>'
-        + categorieen().map((c) => `<th scope="col" class="${ingepakt(c.id) ? 'telt' : ''}">${icoon(c.id)}${esc(c.naam)}${ingepakt(c.id) ? '<small>in de koffer</small>' : ''}</th>`).join(''),
+      kop: `<th scope="col">${t('Koffermatch', 'Suitcase match')}</th>`
+        + categorieen().map((c) => `<th scope="col" class="${ingepakt(c.id) ? 'telt' : ''}">${icoon(c.id)}${esc(c.naam)}${ingepakt(c.id) ? `<small>${t('in de koffer', 'in the suitcase')}</small>` : ''}</th>`).join(''),
       cellen: (o) => {
         const m = koffermatch(o, b.koffer);
-        return `<td data-label="Koffermatch" class="getal">${m ? pct(m.score) : 'n.v.t.'}</td>`
+        return `<td data-label="${t('Koffermatch', 'Suitcase match')}" class="getal">${m ? pct(m.score) : t('n.v.t.', 'n/a')}</td>`
           + categorieen().map((c) => {
             const [status, tekst] = o.mogelijkheden?.[c.id] ?? ['onbekend', ''];
             return `<td data-label="${esc(c.naam)}" class="${ingepakt(c.id) ? 'telt' : ''}" title="${esc(tekst)}">${statusLabel(status, true)}</td>`;
@@ -226,9 +227,9 @@ const KOLOMMEN = {
           return `<td data-label="${esc(c.naam)}"><span class="minuten ${kleur}">${v} min</span></td>`;
         }
         if (typeof v === 'boolean') {
-          return `<td data-label="${esc(c.naam)}"><span class="status status-${v ? 'ja' : 'nee'} kaal">${icoon(v ? 'check' : 'kruis')}<span>${v ? 'Ja' : 'Nee'}</span></span></td>`;
+          return `<td data-label="${esc(c.naam)}"><span class="status status-${v ? 'ja' : 'nee'} kaal">${icoon(v ? 'check' : 'kruis')}<span>${v ? t('Ja', 'Yes') : t('Nee', 'No')}</span></span></td>`;
         }
-        return `<td data-label="${esc(c.naam)}" class="breed">${esc(v ?? 'Onbekend')}</td>`;
+        return `<td data-label="${esc(c.naam)}" class="breed">${esc(v ?? t('Onbekend', 'Unknown'))}</td>`;
       }).join(''),
     };
   },

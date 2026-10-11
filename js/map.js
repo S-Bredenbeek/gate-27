@@ -2,9 +2,10 @@
 // Bestemmingen die je nog niet hebt ontdekt staan niet als pin op de kaart: per land hangt er een wolk
 // met een vraagteken, bewust een eind naast de echte plek.
 
-import { meta, opties, landKleur, esc } from './data.js';
+import { meta, opties, landKleur, landNaam, esc } from './data.js';
 import { icoon } from './icons.js';
 import { toestelBoven } from './plane.js';
+import { t } from './i18n.js';
 
 let kaart = null;
 let laagWolken;
@@ -29,14 +30,14 @@ const pinHtml = (kleur) =>
 export function maakKaart({ opPin, opWolk }) {
   const el = document.getElementById('kaart');
   if (!window.L) {
-    el.innerHTML = '<p class="kaart-fout">De kaart kon niet laden. De rest van de site werkt gewoon.</p>';
+    el.innerHTML = `<p class="kaart-fout">${t('De kaart kon niet laden. De rest van de site werkt gewoon.', "The map couldn't load. The rest of the site works just fine.")}</p>`;
     return false;
   }
   terug = { opPin, opWolk };
   kaart = L.map(el, { zoomControl: false, zoomSnap: 0.25, minZoom: 3, maxZoom: 15 });
   kaart.setView([46, 8], 4);
   kaart.attributionControl.setPrefix(false);
-  L.control.zoom({ position: 'topright', zoomInTitle: 'Inzoomen', zoomOutTitle: 'Uitzoomen' }).addTo(kaart);
+  L.control.zoom({ position: 'topright', zoomInTitle: t('Inzoomen', 'Zoom in'), zoomOutTitle: t('Uitzoomen', 'Zoom out') }).addTo(kaart);
   // CartoDB Voyager vraagt sinds kort een API-sleutel; de standaardtegels van OpenStreetMap werken zonder.
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -83,7 +84,7 @@ function tekenOverzicht(bezocht, actiefLand) {
       const pin = L.marker([o.lat, o.lng], {
         icon: L.divIcon({ className: 'pin', html: pinHtml(landKleur(o)), iconSize: [30, 38], iconAnchor: [15, 37] }),
         title: o.naam,
-        alt: `${o.naam}, ${o.land}`,
+        alt: `${o.naam}, ${landNaam(o.land)}`,
         opacity: eigen ? 1 : 0.35,
         riseOnHover: true,
       }).addTo(laagOpties);
@@ -103,8 +104,10 @@ function tekenOverzicht(bezocht, actiefLand) {
     L.circle([lat, lng], { radius: 175000, color: kleur, weight: 1.5, dashArray: '4 6', fillColor: kleur, fillOpacity: eigen ? 0.2 : 0.07, opacity: eigen ? 0.8 : 0.3, interactive: false }).addTo(laagWolken);
     const wolk = L.marker([lat, lng], {
       icon: L.divIcon({ className: 'wolk', html: `<span style="--k:${esc(kleur)}">?${lijst.length > 1 ? `<i>${lijst.length}</i>` : ''}</span>`, iconSize: [44, 44], iconAnchor: [22, 22] }),
-      title: `${lijst.length === 1 ? 'Een geheime bestemming' : `${lijst.length} geheime bestemmingen`} in ${o.land}`,
-      alt: `Geheime bestemming in ${o.land}`,
+      title: lijst.length === 1
+        ? t(`Een geheime bestemming in ${landNaam(o.land)}`, `A secret destination in ${landNaam(o.land)}`)
+        : t(`${lijst.length} geheime bestemmingen in ${landNaam(o.land)}`, `${lijst.length} secret destinations in ${landNaam(o.land)}`),
+      alt: t(`Geheime bestemming in ${landNaam(o.land)}`, `Secret destination in ${landNaam(o.land)}`),
       opacity: eigen ? 1 : 0.45,
     }).addTo(laagWolken);
     wolk.on('click', () => terug.opWolk(o.land));
@@ -144,7 +147,7 @@ export function toonBestemming(o, gekozen, opHuis, animeer = true) {
     const pin = L.marker([h.lat, h.lng], {
       icon: L.divIcon({ className: 'huispin', html: `<span style="--k:${esc(kleur)}">${i + 1}</span>`, iconSize: [34, 34], iconAnchor: [17, 17] }),
       title: h.naam,
-      alt: `Huis ${i + 1}: ${h.naam}`,
+      alt: t(`Huis ${i + 1}: ${h.naam}`, `House ${i + 1}: ${h.naam}`),
     }).addTo(laagHuizen);
     pin.bindTooltip(esc(h.naam), { direction: 'top', offset: [0, -16], className: 'pinlabel' });
     pin.on('click', () => opHuis(i));

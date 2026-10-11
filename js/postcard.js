@@ -1,9 +1,10 @@
 // De ansichtkaart: je naam, je drie favorieten met hun stempels en een groet, getekend op een canvas.
 
-import { meta, optie, land, kosten, euro } from './data.js';
+import { meta, optie, land, landNaam, kosten, euro } from './data.js';
 import { staat } from './store.js';
 import { poppetje } from './avatar.js';
 import { stempel, kanteling } from './stamps.js';
+import { t } from './i18n.js';
 
 const B = 1200;
 const H = 800;
@@ -74,7 +75,7 @@ export async function tekenAnsichtkaart(canvas) {
   ctx.fillStyle = '#1A2233';
   ctx.textBaseline = 'alphabetic';
   ctx.font = '600 54px Caveat, cursive';
-  ctx.fillText(eerste ? 'Mijn stem gaat naar' : 'Ik ben er nog niet uit', 96, 130);
+  ctx.fillText(eerste ? t('Mijn stem gaat naar', 'My vote goes to') : t('Ik ben er nog niet uit', "I haven't decided yet"), 96, 130);
   ctx.font = '700 76px Fraunces, Georgia, serif';
   ctx.fillStyle = k.basis;
   const regelsTitel = eerste ? regelAf(ctx, eerste.naam, 96, 220, 520, 80) : 0;
@@ -85,18 +86,18 @@ export async function tekenAnsichtkaart(canvas) {
     ctx.fillText(`${i + 1}. ${o.naam}`, 96, y);
     ctx.fillStyle = '#566074';
     ctx.font = '400 24px Inter, system-ui, sans-serif';
-    ctx.fillText(`${o.land} · ca. ${euro(kosten(o, o.huizen[0]).totaal)} p.p.`, 132, y + 32);
+    ctx.fillText(t(`${landNaam(o.land)} · ca. ${euro(kosten(o, o.huizen[0]).totaal)} p.p.`, `${landNaam(o.land)} · approx. ${euro(kosten(o, o.huizen[0]).totaal)} p.p.`), 132, y + 32);
     ctx.font = '600 30px Inter, system-ui, sans-serif';
     y += 84;
   });
   ctx.font = '600 46px Caveat, cursive';
   ctx.fillStyle = '#1A2233';
-  ctx.fillText(`Groetjes, ${s.naam || 'een van ons'}`, 96, H - 120);
+  ctx.fillText(t(`Groetjes, ${s.naam || 'een van ons'}`, `Cheers, ${s.naam || 'one of us'}`), 96, H - 120);
   const beste = Math.max(0, ...Object.values(s.hooghoud ?? {}));
   ctx.font = '700 18px "JetBrains Mono", monospace';
   ctx.fillStyle = '#566074';
   ctx.fillText(String(meta().reisdata).toUpperCase().slice(0, 46), 96, H - 84);
-  if (beste) ctx.fillText(`RECORD HOOGHOUDEN: ${beste}`, 96, H - 58);
+  if (beste) ctx.fillText(t(`RECORD HOOGHOUDEN: ${beste}`, `KEEPY-UPPIES BEST: ${beste}`), 96, H - 58);
 
   // scheidslijn en adresregels
   ctx.strokeStyle = '#C9BBA0';
@@ -137,7 +138,7 @@ export async function tekenAnsichtkaart(canvas) {
   if (!top.length) {
     ctx.font = '600 44px Caveat, cursive';
     ctx.fillStyle = '#566074';
-    ctx.fillText('kies eerst je top 3', 720, 460);
+    ctx.fillText(t('kies eerst je top 3', 'pick your top 3 first'), 720, 460);
   }
 }
 

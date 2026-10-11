@@ -1,7 +1,7 @@
 // Laadt vakantie-data.json en rekent alles uit wat daarvan is afgeleid.
 // Inhoud (teksten, prijzen, scores, kleuren, huizen) komt uitsluitend uit de JSON.
 
-import { locale } from './i18n.js';
+import { t, locale } from './i18n.js';
 
 let NL = null;
 let EN = null;
@@ -125,13 +125,13 @@ export function persoonlijkeScore(o, gewichten, koffer) {
 
 // ---------- kosten ----------
 
-const POSTNAAM = { vlucht_bagage: 'Vlucht en bagage', auto: 'Huurauto', eten_uitjes: 'Eten en uitjes' };
+const POSTNAAM = { vlucht_bagage: ['Vlucht en bagage', 'Flight and luggage'], auto: ['Huurauto', 'Rental car'], eten_uitjes: ['Eten en uitjes', 'Food and outings'] };
 
 export function kosten(o, huis) {
   const n = volwassenen();
-  const posten = [{ naam: `Huis (gedeeld door ${n})`, bedrag: huis.prijs_totaal / n }];
+  const posten = [{ naam: t(`Huis (gedeeld door ${n})`, `House (split by ${n})`), bedrag: huis.prijs_totaal / n }];
   for (const [sleutel, bedrag] of Object.entries(o.kosten_opbouw ?? {})) {
-    if (typeof bedrag === 'number') posten.push({ naam: POSTNAAM[sleutel] ?? netjes(sleutel), bedrag });
+    if (typeof bedrag === 'number') posten.push({ naam: POSTNAAM[sleutel] ? t(...POSTNAAM[sleutel]) : netjes(sleutel), bedrag });
   }
   const som = posten.reduce((t, p) => t + p.bedrag, 0);
   return { posten, totaal: huis.kosten_pp ?? Math.round(som) };

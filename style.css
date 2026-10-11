@@ -653,7 +653,7 @@ body.vliegt .paneel { display: none; }
 .sk b { font: 700 1.3rem/1 var(--mono); color: var(--kleur); }
 .sk-balk { height: 7px; border-radius: 4px; background: var(--grijs-bg); overflow: hidden; }
 .sk-balk i { display: block; height: 100%; border-radius: 4px; background: var(--kleur); }
-.sk-naam { grid-column: 1 / -1; font-size: .72rem; line-height: 1.2; color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sk-naam { grid-column: 1 / -1; font-size: .72rem; line-height: 1.2; color: var(--dim); }
 .sk.telt .sk-naam { color: var(--inkt); font-weight: 700; }
 .sk.telt .sk-naam::after { content: ' ★'; color: var(--land-accent, var(--amber)); }
 .spelknop { width: 100%; margin-top: 12px; background: var(--papier); }
@@ -700,26 +700,6 @@ input[type="number"], textarea { width: 100%; min-height: 48px; padding: 10px 14
 .kv-totaal { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 2px dashed var(--lijn); }
 .kv-totaal strong { font: 700 1.5rem/1 var(--mono); color: var(--kleur); }
 
-.kamers { margin-top: 14px; border-radius: 12px; background: color-mix(in srgb, var(--kleur) 6%, transparent); }
-.kamers summary { display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 12px 14px; font-weight: 700; cursor: pointer; }
-.kamers-in { padding: 0 12px 12px; }
-.kamers-in > .klein { margin-top: 0; }
-.plattegrond { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; padding: 6px; border: 2.5px solid var(--inkt); border-radius: 4px; background: #fff; }
-.kamer { position: relative; min-height: 96px; padding: 6px; border: 1.5px solid var(--inkt); border-radius: 2px; background: var(--papier); }
-.kamer > p { font: 700 .66rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
-.kamer > p span { color: var(--rood); }
-.kamer.vol { background: var(--rood-bg); }
-.kamer.los { margin-top: 8px; border-style: dashed; background: transparent; }
-.kamer-in { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
-.bewoner { display: flex; align-items: flex-end; min-height: 48px; padding: 2px 4px 0; border: 2px solid transparent; border-radius: 10px; background: none; cursor: grab; }
-.bewoner .poppetje { width: 40px; }
-.bewoner .poppetje + .poppetje { margin-left: -8px; }
-.bewoner.ik { background: color-mix(in srgb, var(--amber) 45%, transparent); }
-.bewoner[aria-pressed="true"] { border-color: var(--inkt); background: var(--amber); }
-.hierheen { position: absolute; inset: 0; display: grid; place-items: center; border: 2.5px dashed var(--inkt); border-radius: 2px; background: color-mix(in srgb, var(--amber) 80%, transparent); font-weight: 700; cursor: pointer; }
-.kamermelding { display: flex; align-items: center; gap: 6px; margin-top: 10px; padding: 8px 10px; border-radius: 10px; background: var(--oranje-bg); color: #5C3200; font-size: .88rem; font-weight: 600; }
-.kamers .linkknop { margin-top: 4px; font-weight: 400; font-size: .85rem; }
-
 .hostvraag { margin-top: 10px; border-radius: 14px; background: var(--papier); }
 .hostvraag summary { min-height: 48px; padding: 12px 14px; font-weight: 700; cursor: pointer; }
 .hostvraag pre { margin: 0 14px 12px; padding: 12px; border-radius: 10px; background: var(--zand); font: 400 .88rem/1.5 var(--tekst); white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -750,6 +730,34 @@ input[type="number"], textarea { width: 100%; min-height: 48px; padding: 10px 14
 .weetjes div:last-child { border-bottom: 0; }
 .kv-totaal strong { white-space: nowrap; }
 
+/* ---------- taal, namen, taakverdeling, verder ---------- */
+
+.taalknop { min-width: 44px; justify-content: center; font: 700 .8rem/1 var(--mono); letter-spacing: .06em; }
+.taalknop::before { content: ''; position: absolute; inset: 8px 4px; border: 1.5px solid currentColor; border-radius: 8px; opacity: .7; }
+body[data-scherm="start"] .top { background: transparent; color: var(--inkt); position: absolute; left: 0; right: 0; }
+body[data-scherm="start"] .topknop { color: var(--inkt); }
+body[data-scherm="start"] .top-acties > :not(.taalknop), body[data-scherm="start"] #btn-terug, body[data-scherm="start"] .top-titel { display: none; }
+body[data-scherm="start"] .scherm { padding-top: calc(var(--top-h) + 8px); }
+.figuur-naam { display: block; margin-top: 4px; font-size: .78rem; font-weight: 600; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.rollen { display: grid; gap: 8px; margin: 12px 0 14px; }
+.rollen li { display: flex; align-items: center; gap: 12px; padding: 8px 12px 0; border-radius: 6px 16px 16px 16px; background: var(--papier); overflow: hidden; }
+.rollen li.ik { box-shadow: inset 0 0 0 2.5px var(--inkt); background: color-mix(in srgb, var(--amber) 35%, var(--papier)); }
+.rollen .poppetje { flex: none; width: 54px; align-self: flex-end; }
+.rollen li > span { display: grid; padding-bottom: 8px; min-width: 0; }
+.rollen .taak { font: 600 1.25rem/1.15 'Caveat', cursive; color: var(--kleur); }
+.rollen strong { font-size: .82rem; }
+
+.verder { margin-top: 36px; padding: 18px 16px; border-radius: 6px 18px 18px 18px; background: var(--papier); border: 2.5px solid var(--inkt); box-shadow: 4px 4px 0 var(--inkt); }
+.verder .acties { margin-top: 10px; }
+
+@media (max-width: 359px) {
+  .aftel span { font-size: 0; }
+  .aftel b { font-size: .86rem; }
+  .scorekaart { gap: 10px 6px; padding: 12px 8px; }
+  .wie { gap: 6px; }
+}
+
 /* ---------- brede schermen ---------- */
 
 @media (min-width: 900px) {
@@ -764,7 +772,6 @@ input[type="number"], textarea { width: 100%; min-height: 48px; padding: 10px 14
   .pp-paginas { grid-template-columns: 1fr 1fr; }
   .wie { grid-template-columns: repeat(8, 1fr); }
   .gates { grid-template-columns: repeat(2, 1fr); }
-  .plattegrond { grid-template-columns: repeat(3, 1fr); }
   .scherm { padding-top: 48px; }
 
   .tabelwrap { overflow-x: auto; border-radius: 16px; background: var(--papier); box-shadow: var(--schaduw); }

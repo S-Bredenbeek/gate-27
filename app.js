@@ -58,13 +58,13 @@ const landMotieven = (naam) => (meta().landen[naam]?.motieven ?? []).filter(heef
 
 async function begin() {
   laadStaat();
+  zetTaal(staat().taal ?? voorkeurstaal());
   try {
     await laadData();
   } catch {
-    $('#inhoud').innerHTML = '<p class="laadfout">De reisgegevens konden niet worden geladen. Ververs de pagina om het opnieuw te proberen.</p>';
+    $('#inhoud').innerHTML = `<p class="laadfout">${t('De reisgegevens konden niet worden geladen. Ververs de pagina om het opnieuw te proberen.', 'The trip details could not be loaded. Refresh the page to try again.')}</p>`;
     return;
   }
-  zetTaal(staat().taal ?? voorkeurstaal());
   await kiesDataTaal(huidigeTaal());
   ruimStaatOp();
   leesNamenUitLink();
@@ -117,6 +117,11 @@ function tekenVast() {
   taalknop.textContent = huidigeTaal() === 'nl' ? 'EN' : 'NL';
   taalknop.setAttribute('aria-label', huidigeTaal() === 'nl' ? 'Switch to English' : 'Wissel naar Nederlands');
   taalknop.lang = huidigeTaal() === 'nl' ? 'en' : 'nl';
+  $('#spel').setAttribute('aria-label', t('Hooghouden', 'Keepy-uppies'));
+  el.welkom.setAttribute('aria-label', t('Aangekomen', 'Arrived'));
+  $('#toast').textContent = '';
+  $('.leaflet-control-zoom-in')?.setAttribute('title', t('Inzoomen', 'Zoom in'));
+  $('.leaflet-control-zoom-out')?.setAttribute('title', t('Uitzoomen', 'Zoom out'));
   werkTellersBij();
   tekenAftelklok();
 }
@@ -147,9 +152,9 @@ function tekenAftelklok() {
   if (!van) return (el.aftel.hidden = true);
   const dagen = Math.ceil((new Date(`${van}T00:00:00`) - Date.now()) / 86400000);
   el.aftel.hidden = dagen < 0;
-  el.aftel.innerHTML = `${icoon('klok')}<span><b>${dagen}</b> ${dagen === 1 ? 'dag' : 'dagen'}</span>`;
-  el.aftel.setAttribute('aria-label', `Nog ${dagen} dagen tot vertrek`);
-  el.aftel.title = `Nog ${dagen} dagen tot vertrek`;
+  el.aftel.innerHTML = `${icoon('klok')}<span><b>${dagen}</b> ${dagen === 1 ? t('dag', 'day') : t('dagen', 'days')}</span>`;
+  el.aftel.setAttribute('aria-label', t(`Nog ${dagen} dagen tot vertrek`, `${dagen} ${dagen === 1 ? 'day' : 'days'} until departure`));
+  el.aftel.title = t(`Nog ${dagen} dagen tot vertrek`, `${dagen} ${dagen === 1 ? 'day' : 'days'} until departure`);
 }
 
 // ---------- schermen ----------
@@ -219,14 +224,15 @@ function kiesFiguur(id) {
 function bouwer() {
   const a = staat().avatar ?? {};
   const kies = (lijst) => lijst.map(([id, nl, en]) => [id, t(nl, en)]);
-  const staal = (soort, kleur) => `<button type="button" class="staal" data-av="${soort}" data-w="${kleur}" aria-pressed="${a[soort] === kleur}" aria-label="${soort} ${kleur}" style="--k:${kleur}"></button>`;
+  const soortNaam = { haarkleur: t('haarkleur', 'hair colour'), huid: t('huid', 'skin'), shirt: t('shirt', 'shirt') };
+  const staal = (soort, kleur) => `<button type="button" class="staal" data-av="${soort}" data-w="${kleur}" aria-pressed="${a[soort] === kleur}" aria-label="${soortNaam[soort] ?? soort} ${kleur}" style="--k:${kleur}"></button>`;
   const aanuit = (soort, naam) => `<button type="button" class="keuze" data-av="${soort}" data-w="${!a[soort]}" aria-pressed="${!!a[soort]}">${naam}</button>`;
   return `
-    <div class="bouwrij"><span>Haar</span><div>${kies(KEUZES.haar).map(([id, naam]) => `<button type="button" class="keuze" data-av="haar" data-w="${id}" aria-pressed="${a.haar === id}">${naam}</button>`).join('')}</div></div>
-    <div class="bouwrij"><span>Haarkleur</span><div>${KEUZES.haarkleur.map((k) => staal('haarkleur', k)).join('')}</div></div>
-    <div class="bouwrij"><span>Huid</span><div>${KEUZES.huid.map((k) => staal('huid', k)).join('')}</div></div>
-    <div class="bouwrij"><span>Shirt</span><div>${KEUZES.shirt.map((k) => staal('shirt', k)).join('')}</div></div>
-    <div class="bouwrij"><span>Extra</span><div>${kies(KEUZES.extra).map(([id, naam]) => aanuit(id, naam)).join('')}</div></div>`;
+    <div class="bouwrij"><span>${t('Haar', 'Hair')}</span><div>${kies(KEUZES.haar).map(([id, naam]) => `<button type="button" class="keuze" data-av="haar" data-w="${id}" aria-pressed="${a.haar === id}">${naam}</button>`).join('')}</div></div>
+    <div class="bouwrij"><span>${t('Haarkleur', 'Hair colour')}</span><div>${KEUZES.haarkleur.map((k) => staal('haarkleur', k)).join('')}</div></div>
+    <div class="bouwrij"><span>${t('Huid', 'Skin')}</span><div>${KEUZES.huid.map((k) => staal('huid', k)).join('')}</div></div>
+    <div class="bouwrij"><span>${t('Shirt', 'Shirt')}</span><div>${KEUZES.shirt.map((k) => staal('shirt', k)).join('')}</div></div>
+    <div class="bouwrij"><span>${t('Extra', 'Extras')}</span><div>${kies(KEUZES.extra).map(([id, naam]) => aanuit(id, naam)).join('')}</div></div>`;
 }
 
 function toonStart() {
@@ -237,29 +243,29 @@ function toonStart() {
   el.start.innerHTML = `<div class="intro">
     <p class="kicker">${esc(m.reisdata)}</p>
     <h1>${esc(m.titel)}</h1>
-    <p class="lead">${opties().length} geheime bestemmingen, één week samen weg. Jij mag ze gaan ontdekken. Eerst even:</p>
+    <p class="lead">${t(`${opties().length} geheime bestemmingen, één week samen weg. Jij mag ze gaan ontdekken. Eerst even:`, `${opties().length} secret destinations, one week away together. You get to discover them. But first:`)}</p>
 
-    <h2 id="wie">Wie van ons ben jij?</h2>
+    <h2 id="wie">${t('Wie van ons ben jij?', 'Which one of us are you?')}</h2>
     <div class="wie" role="radiogroup" aria-labelledby="wie">
       ${groot.map((f, i) => `<label class="figuur">
-        <input type="radio" name="figuur" value="${esc(f.id)}"${s.figuur === f.id ? ' checked' : ''} aria-label="${esc(figuurNaam(i) || `Poppetje ${i + 1}`)}">
+        <input type="radio" name="figuur" value="${esc(f.id)}"${s.figuur === f.id ? ' checked' : ''} aria-label="${esc(figuurNaam(i) || t(`Poppetje ${i + 1}`, `Character ${i + 1}`))}">
         <span class="figuur-in">${poppetje(s.figuur === f.id ? { ...f, ...s.avatar } : f)}</span>
         ${figuurNaam(i) ? `<span class="figuur-naam">${esc(figuurNaam(i))}</span>` : ''}
       </label>`).join('')}
     </div>
-    ${klein.length ? `<p class="kleintjes">${klein.map((f) => poppetje(f)).join('')}<span class="hand">en de kleintjes gaan ook mee</span></p>` : ''}
+    ${klein.length ? `<p class="kleintjes">${klein.map((f) => poppetje(f)).join('')}<span class="hand">${t('en de kleintjes gaan ook mee', 'and the little ones are coming too')}</span></p>` : ''}
 
     <div id="ikzelf"${s.figuur ? '' : ' hidden'}>
-      <label class="veld" for="naam">Je voornaam</label>
-      <input id="naam" type="text" autocomplete="given-name" maxlength="20" value="${esc(s.naam)}" placeholder="Voor op je instapkaart">
+      <label class="veld" for="naam">${t('Je voornaam', 'Your first name')}</label>
+      <input id="naam" type="text" autocomplete="given-name" maxlength="20" value="${esc(s.naam)}" placeholder="${t('Voor op je instapkaart', 'For your boarding pass')}">
       <details class="pasaan">
-        <summary>Lijkt het niet? Pas je poppetje aan</summary>
+        <summary>${t('Lijkt het niet? Pas je poppetje aan', "Doesn't look like you? Tweak your character")}</summary>
         <div id="bouwer">${s.avatar ? bouwer() : ''}</div>
       </details>
-      <p class="klein">Je naam en je poppetje blijven alleen op dit apparaat staan.</p>
+      <p class="klein">${t('Je naam en je poppetje blijven alleen op dit apparaat staan.', 'Your name and your character stay on this device only.')}</p>
     </div>
 
-    <button type="button" class="knop primair groot" id="start-verder"${s.figuur ? '' : ' disabled'}>Koffer pakken${icoon('verder')}</button>
+    <button type="button" class="knop primair groot" id="start-verder"${s.figuur ? '' : ' disabled'}>${t('Koffer pakken', 'Pack your suitcase')}${icoon('verder')}</button>
   </div>`;
 
   const verder = $('#start-verder');
@@ -299,19 +305,19 @@ function toonKoffer() {
   const s = staat();
   const tel = () => {
     const n = staat().koffer.length;
-    return n === 1 ? '1 wens ingepakt' : `${n} wensen ingepakt`;
+    return n === 1 ? t('1 wens ingepakt', '1 wish packed') : t(`${n} wensen ingepakt`, `${n} wishes packed`);
   };
   el.start.innerHTML = `<div class="intro">
     <div class="kop-met-pop">${poppetje(s.avatar)}<div>
-      <p class="kicker">Stap 2 van 2</p>
-      <h1>Wat wil jij kunnen deze week?</h1>
+      <p class="kicker">${t('Stap 2 van 2', 'Step 2 of 2')}</p>
+      <h1>${t('Wat wil jij kunnen deze week?', 'What do you want to be able to do this week?')}</h1>
     </div></div>
-    <p class="lead">Tik iets aan om het in of uit je koffer te doen. Hoe meer er op een plek van kan, hoe hoger je koffermatch.</p>
+    <p class="lead">${t('Tik iets aan om het in of uit je koffer te doen. Hoe meer er op een plek van kan, hoe hoger je koffermatch.', 'Tap something to put it in your suitcase or take it out. The more of it a place can offer, the higher your suitcase match.')}</p>
 
     <div class="wensen" id="wensen"></div>
     <div class="kofferbalk">
       <span class="koffertel">${icoon('koffer')}<span id="koffer-n" aria-live="polite">${tel()}</span></span>
-      <a class="knop primair" href="#/hal">Naar de vertrekhal${icoon('verder')}</a>
+      <a class="knop primair" href="#/hal">${t('Naar de vertrekhal', 'To Departures')}${icoon('verder')}</a>
     </div>
   </div>`;
 
@@ -346,10 +352,10 @@ function bordRij(o) {
   const bekend = s.bezocht.includes(o.id);
   const match = koffermatch(o, s.koffer);
   const naam = bekend ? regels(o.naam.replace(/^[^:]+:\s*/, ''), 17) : null;
-  return `<li><button type="button" class="bordrij${bekend ? ' bekend' : ''}" data-instappen="${esc(o.id)}" aria-label="Gate ${gateCode(o)}: ${bekend ? esc(o.naam) : 'geheime bestemming'}, ${esc(o.vlucht.duur)} vliegen">
+  return `<li><button type="button" class="bordrij${bekend ? ' bekend' : ''}" data-instappen="${esc(o.id)}" aria-label="${t(`Gate ${gateCode(o)}: ${bekend ? esc(o.naam) : 'geheime bestemming'}, ${esc(o.vlucht.duur)} vliegen`, `Gate ${gateCode(o)}: ${bekend ? esc(o.naam) : 'secret destination'}, ${esc(o.vlucht.duur)} flight`)}">
     <span class="b-gate">${flaps(gateCode(o), 2)}</span>
     <span class="b-naam">${bekend ? naam.map((regel) => flaps(regel, 17)).join('') : flaps('? ? ? ? ?', 9)}</span>
-    <span class="b-info"><span>${esc(o.vlucht.duur)}</span>${bekend ? `<span>${o.klimaat?.zee == null ? 'geen zee' : `zee ${esc(o.klimaat.zee)}°`}</span><span>${euro(sterksteKosten(o))}</span>` : ''}<span class="b-match">${match ? `${pct(match.score)} match` : ''}</span></span>
+    <span class="b-info"><span>${esc(o.vlucht.duur)}</span>${bekend ? `<span>${o.klimaat?.zee == null ? t('geen zee', 'no sea') : t(`zee ${esc(o.klimaat.zee)}°`, `sea ${esc(o.klimaat.zee)}°`)}</span><span>${euro(sterksteKosten(o))}</span>` : ''}<span class="b-match">${match ? `${pct(match.score)} match` : ''}</span></span>
   </button></li>`;
 }
 
@@ -364,10 +370,10 @@ function toonHal() {
     .slice(0, 3);
   el.paneel.innerHTML = `
     <div class="kop-met-pop">${poppetje(s.avatar)}<div>
-      <p class="kicker">Vertrekhal ${esc(m.vertrek.naam)}</p>
-      <h1>${s.naam ? `Hoi ${esc(s.naam)}. ` : ''}Kies een land.</h1>
+      <p class="kicker">${t(`Vertrekhal ${esc(m.vertrek.naam)}`, `${esc(m.vertrek.naam)} Departures`)}</p>
+      <h1>${s.naam ? t(`Hoi ${esc(s.naam)}. `, `Hi ${esc(s.naam)}. `) : ''}${t('Kies een land.', 'Pick a country.')}</h1>
     </div></div>
-    <p class="lead">Elk land heeft zijn eigen geheime plekken. Waar je precies landt, zie je pas als je er bent.</p>
+    <p class="lead">${t('Elk land heeft zijn eigen geheime plekken. Waar je precies landt, zie je pas als je er bent.', "Every country has its own secret places. You'll only see exactly where you land once you're there.")}</p>
 
     <div class="gates">
       ${landNamen().map((naam) => {
@@ -376,25 +382,25 @@ function toonHal() {
         return `<a class="gate" href="#/gate/${encodeURIComponent(naam)}" style="${thema({ land: naam })}">
           <span class="gate-letter" aria-hidden="true">${gateLetter(naam)}</span>
           <span class="gate-motief" aria-hidden="true">${landMotieven(naam)}</span>
-          <strong>${esc(naam)}</strong>
-          <span class="gate-stand" aria-label="${n} van ${lijst.length} ontdekt">${lijst.map((o) => `<i class="${s.bezocht.includes(o.id) ? 'aan' : ''}"></i>`).join('')}</span>
+          <strong>${esc(landNaam(naam))}</strong>
+          <span class="gate-stand" aria-label="${t(`${n} van ${lijst.length} ontdekt`, `${n} of ${lijst.length} discovered`)}">${lijst.map((o) => `<i class="${s.bezocht.includes(o.id) ? 'aan' : ''}"></i>`).join('')}</span>
         </a>`;
       }).join('')}
     </div>
 
-    <p class="voortgang"><span class="hand">${gezien === 0 ? 'nog niks ontdekt, ga maar vliegen' : gezien === totaal ? 'alles gezien!' : `${gezien} van de ${totaal} plekken ontdekt`}</span></p>
+    <p class="voortgang"><span class="hand">${gezien === 0 ? t('nog niks ontdekt, ga maar vliegen', 'nothing discovered yet, off you fly') : gezien === totaal ? t('alles gezien!', 'seen it all!') : t(`${gezien} van de ${totaal} plekken ontdekt`, `${gezien} of the ${totaal} places discovered`)}</span></p>
     <div class="acties">
-      <button type="button" class="knop" data-spel>${icoon('hooghouden')}Hooghouden</button>
-      ${gezien >= 2 ? `<a class="knop" href="#/vergelijk">Vergelijk wat je kent</a>` : ''}
+      <button type="button" class="knop" data-spel>${icoon('hooghouden')}${t('Hooghouden', 'Keepy-uppies')}</button>
+      ${gezien >= 2 ? `<a class="knop" href="#/vergelijk">${t('Vergelijk wat je kent', "Compare what you've found")}</a>` : ''}
     </div>
 
     ${rondjes.length ? `<div class="rondjes">
-      <h2>${icoon('bier')}Goedkoopste rondje</h2>
+      <h2>${icoon('bier')}${t('Goedkoopste rondje', 'Cheapest round')}</h2>
       <ol>${rondjes.map((o) => `<li><span>${esc(o.naam)}</span><strong>${euro(o.pils.rondje_mannen, 2)}</strong></li>`).join('')}</ol>
-      <p class="klein">Van de plekken die je al kent.</p>
+      <p class="klein">${t('Van de plekken die je al kent.', "Out of the places you've found so far.")}</p>
     </div>` : ''}
 
-    <h2>Vertrekbord</h2>
+    <h2>${t('Vertrekbord', 'Departure board')}</h2>
     <div class="bord" id="bord"><ul>${opties().map(bordRij).join('')}</ul></div>
 
     <div class="groepje" aria-hidden="true">${figuren().map((f) => poppetje(f.id === s.figuur ? { ...f, ...s.avatar } : f, `${f.id === s.figuur ? 'ik' : ''}${f.groot ? ' groot' : ''}`)).join('')}</div>
@@ -414,16 +420,16 @@ function mysterieKaart(o) {
     .sort((a, b) => s.koffer.includes(b.id) - s.koffer.includes(a.id))
     .slice(0, 4);
   return `<article class="mysterie" style="${thema(o)}">
-    <header><span class="gatecode">${gateCode(o)}</span><strong>Mysterievlucht</strong><span class="vraagteken" aria-hidden="true">?</span></header>
+    <header><span class="gatecode">${gateCode(o)}</span><strong>${t('Mysterievlucht', 'Mystery flight')}</strong><span class="vraagteken" aria-hidden="true">?</span></header>
     <div class="mysterie-in">
-      <p class="hand">hier kan in elk geval:</p>
+      <p class="hand">${t('hier kan in elk geval:', 'what you can definitely do here:')}</p>
       <ul class="tips">${tips.map((c) => `<li>${icoon(c.id)}${esc(c.naam)}</li>`).join('')}</ul>
       <dl class="kerncijfers drie">
-        <div><dt>Vliegen</dt><dd>${esc(o.vlucht.duur)}</dd></div>
-        <div><dt>Zee</dt><dd>${o.klimaat?.zee == null ? 'geen' : `${esc(o.klimaat.zee)}°C`}</dd></div>
-        <div><dt>Koffermatch</dt><dd>${match ? pct(match.score) : '--'}</dd></div>
+        <div><dt>${t('Vliegen', 'Flight')}</dt><dd>${esc(o.vlucht.duur)}</dd></div>
+        <div><dt>${t('Zee', 'Sea')}</dt><dd>${o.klimaat?.zee == null ? t('geen', 'none') : `${esc(o.klimaat.zee)}°C`}</dd></div>
+        <div><dt>${t('Koffermatch', 'Suitcase match')}</dt><dd>${match ? pct(match.score) : '--'}</dd></div>
       </dl>
-      <button type="button" class="knop primair groot" data-instappen="${esc(o.id)}">${icoon('vliegtuig')}Instappen</button>
+      <button type="button" class="knop primair groot" data-instappen="${esc(o.id)}">${icoon('vliegtuig')}${t('Instappen', 'Board')}</button>
     </div>
   </article>`;
 }
@@ -432,7 +438,7 @@ function ontdekteKaart(o) {
   const match = koffermatch(o, staat().koffer);
   return `<article class="optiekaart" style="${themaMetPatroon(o, land(o).kleuren?.licht)}">
     <header>
-      <p class="kicker">${esc(o.land)} · gate ${gateCode(o)}</p>
+      <p class="kicker">${esc(landNaam(o.land))} · gate ${gateCode(o)}</p>
       <h2>${esc(o.naam)}</h2>
       <p>${esc(o.subregio)}</p>
       ${hartKnop(o.id, o.naam)}
@@ -440,14 +446,14 @@ function ontdekteKaart(o) {
     <div class="optiekaart-in">
       <p class="tagline">${esc(o.tagline)}</p>
       <dl class="kerncijfers">
-        <div><dt>Vliegen</dt><dd>${esc(o.vlucht.duur)}</dd></div>
-        <div><dt>Zee</dt><dd>${o.klimaat?.zee == null ? 'geen' : `${esc(o.klimaat.zee)}°C`}</dd></div>
-        <div><dt>Per persoon</dt><dd>${euro(sterksteKosten(o))}</dd></div>
+        <div><dt>${t('Vliegen', 'Flight')}</dt><dd>${esc(o.vlucht.duur)}</dd></div>
+        <div><dt>${t('Zee', 'Sea')}</dt><dd>${o.klimaat?.zee == null ? t('geen', 'none') : `${esc(o.klimaat.zee)}°C`}</dd></div>
+        <div><dt>${t('Per persoon', 'Per person')}</dt><dd>${euro(sterksteKosten(o))}</dd></div>
         <div><dt>Match</dt><dd>${match ? pct(match.score) : '--'}</dd></div>
       </dl>
       <div class="acties">
-        <a class="knop primair" href="#/b/${esc(o.id)}">Bekijk opnieuw</a>
-        <button type="button" class="knop" data-instappen="${esc(o.id)}">${icoon('vliegtuig')}Vlieg nog eens</button>
+        <a class="knop primair" href="#/b/${esc(o.id)}">${t('Bekijk opnieuw', 'View again')}</a>
+        <button type="button" class="knop" data-instappen="${esc(o.id)}">${icoon('vliegtuig')}${t('Vlieg nog eens', 'Fly again')}</button>
       </div>
     </div>
   </article>`;
@@ -463,11 +469,11 @@ function toonGate(naam) {
   el.paneel.innerHTML = `
     <div class="best-band">
       <p class="kicker">Gate ${gateLetter(naam)}</p>
-      <h1>${esc(naam)}</h1>
+      <h1>${esc(landNaam(naam))}</h1>
       <p class="best-groet"><span class="hand">${esc(l.welkom)}</span><span class="motieven" aria-hidden="true">${landMotieven(naam)}</span></p>
     </div>
     <p class="lead">${esc(l.intro)}</p>
-    <p class="hand">${open === 0 ? 'je hebt hier alles gezien' : open === 1 ? (lijst.length === 1 ? 'één plek, maar waar precies?' : 'nog één vlucht te gaan') : `nog ${open} plekken te ontdekken`}</p>
+    <p class="hand">${open === 0 ? t('je hebt hier alles gezien', "you've seen everything here") : open === 1 ? (lijst.length === 1 ? t('één plek, maar waar precies?', 'one place, but where exactly?') : t('nog één vlucht te gaan', 'one more flight to go')) : t(`nog ${open} plekken te ontdekken`, `${open} more places to discover`)}</p>
     <div class="optiekaarten">${lijst.map((o) => (s.bezocht.includes(o.id) ? ontdekteKaart(o) : mysterieKaart(o))).join('')}</div>`;
   kaart.toonGate(naam, s.bezocht);
 }
@@ -488,13 +494,13 @@ function toonWelkom(o) {
   const aantal = staat().bezocht.length;
   el.welkom.style.cssText = themaMetPatroon(o, land(o).kleuren?.licht);
   el.welkom.innerHTML = `<div class="welkom-in">
-    <p class="welkom-klein">Geland op ${esc(o.luchthaven.naam)} (${esc(o.luchthaven.code)})</p>
+    <p class="welkom-klein">${t(`Geland op ${esc(o.luchthaven.naam)} (${esc(o.luchthaven.code)})`, `Landed at ${esc(o.luchthaven.naam)} (${esc(o.luchthaven.code)})`)}</p>
     <p class="welkom-groet">${esc(land(o).welkom)}</p>
     <h2>${esc(o.naam)}</h2>
-    <p class="welkom-waar">${esc(o.subregio)}, ${esc(o.land)}</p>
+    <p class="welkom-waar">${esc(o.subregio)}, ${esc(landNaam(o.land))}</p>
     <div class="stempelplek plof" style="--kantel:${kanteling(o.id)}deg">${stempel(o.stempel)}<i></i><i></i><i></i><i></i></div>
-    <p class="hand">stempel ${aantal} van ${totaal} in je paspoort</p>
-    <button type="button" class="knop licht groot" id="welkom-verder">Kijk rond${icoon('verder')}</button>
+    <p class="hand">${t(`stempel ${aantal} van ${totaal} in je paspoort`, `stamp ${aantal} of ${totaal} in your passport`)}</p>
+    <button type="button" class="knop licht groot" id="welkom-verder">${t('Kijk rond', 'Look around')}${icoon('verder')}</button>
   </div>`;
   el.welkom.hidden = false;
   const knop = $('#welkom-verder');
@@ -521,7 +527,7 @@ function stoel(naam, id) {
 function reisdatum() {
   const van = meta().periode?.van;
   if (!van) return '';
-  return new Date(`${van}T12:00:00`).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' }).replace('.', '');
+  return new Date(`${van}T12:00:00`).toLocaleDateString(locale(), { day: 'numeric', month: 'short' }).replace('.', '');
 }
 
 function instappen(id) {
@@ -530,40 +536,40 @@ function instappen(id) {
   const s = staat();
   const v = meta().vertrek;
   const carrier = meta().carriers?.[o.carrier];
-  const naam = s.naam || 'Reiziger';
+  const naam = s.naam || t('Reiziger', 'Traveller');
   const bekend = s.bezocht.includes(o.id);
   const streepjes = Array.from({ length: 34 }, (_, i) => `<i style="width:${1 + ((i * 7 + o.id.length) % 4)}px"></i>`).join('');
   el.dialoog.innerHTML = `
     <div class="instapkaart${bekend ? '' : ' geheim'}" style="${thema(o)}">
-      <header><span>Instapkaart</span><span>${esc(carrier?.naam ?? o.vlucht.maatschappijen)}</span></header>
+      <header><span>${t('Instapkaart', 'Boarding pass')}</span><span>${esc(carrier?.naam ?? o.vlucht.maatschappijen)}</span></header>
       <div class="ik-passagier">
         <div class="ik-foto">${poppetje(s.avatar)}</div>
-        <dl><dt>Passagier</dt><dd>${esc(naam)}</dd></dl>
+        <dl><dt>${t('Passagier', 'Passenger')}</dt><dd>${esc(naam)}</dd></dl>
       </div>
       <div class="ik-route">
         <div><span class="ik-code">${esc(v.code)}</span><span>${esc(v.naam)}</span></div>
         <div class="ik-lijn">${toestelZij(carrier)}<span>${esc(o.vlucht.duur)}</span></div>
-        <div><span class="ik-code">${bekend ? esc(o.luchthaven.code) : '???'}</span><span>${bekend ? esc(o.luchthaven.naam) : 'geheim'}</span></div>
+        <div><span class="ik-code">${bekend ? esc(o.luchthaven.code) : '???'}</span><span>${bekend ? esc(o.luchthaven.naam) : t('geheim', 'secret')}</span></div>
       </div>
       <dl class="ik-velden">
-        <div class="breed"><dt>Bestemming</dt><dd>${bekend ? esc(o.naam) : 'Dat zie je als je er bent'}</dd></div>
-        <div><dt>Datum</dt><dd>${esc(reisdatum())}</dd></div>
+        <div class="breed"><dt>${t('Bestemming', 'Destination')}</dt><dd>${bekend ? esc(o.naam) : t('Dat zie je als je er bent', "You'll see when you get there")}</dd></div>
+        <div><dt>${t('Datum', 'Date')}</dt><dd>${esc(reisdatum())}</dd></div>
         <div><dt>Gate</dt><dd>${gateCode(o)}</dd></div>
-        <div><dt>Stoel</dt><dd>${stoel(naam, o.id)}</dd></div>
-        <div class="breed"><dt>Vluchten per week</dt><dd>${esc(o.vlucht.per_week)}</dd></div>
-        <div class="breed"><dt>Vluchtprijs <span class="indicatie">indicatie</span></dt><dd>${euro(o.vlucht.prijs_pp)} p.p.</dd></div>
+        <div><dt>${t('Stoel', 'Seat')}</dt><dd>${stoel(s.naam || 'Reiziger', o.id)}</dd></div>
+        <div class="breed"><dt>${t('Vluchten per week', 'Flights per week')}</dt><dd>${esc(o.vlucht.per_week)}</dd></div>
+        <div class="breed"><dt>${t('Vluchtprijs', 'Flight price')} <span class="indicatie">${t('indicatie', 'estimate')}</span></dt><dd>${euro(o.vlucht.prijs_pp)} ${t('p.p.', 'pp')}</dd></div>
       </dl>
       <div class="ik-streepjes" aria-hidden="true">${streepjes}</div>
       <p class="ik-noot">${esc(meta().carriers?.toelichting)}</p>
     </div>
     <div class="dialoog-acties">
-      <button type="button" class="knop" data-sluit>Toch niet</button>
-      ${bekend ? `<a class="knop" href="#/b/${esc(o.id)}">Direct erheen</a>` : ''}
-      <button type="button" class="knop primair" id="vertrek" autofocus>${icoon('vliegtuig')}Vertrek</button>
+      <button type="button" class="knop" data-sluit>${t('Toch niet', 'Never mind')}</button>
+      ${bekend ? `<a class="knop" href="#/b/${esc(o.id)}">${t('Direct erheen', 'Go straight there')}</a>` : ''}
+      <button type="button" class="knop primair" id="vertrek" autofocus>${icoon('vliegtuig')}${t('Vertrek', 'Take off')}</button>
     </div>`;
   el.dialoog.onclick = null;
   el.dialoog.className = 'dialoog';
-  el.dialoog.setAttribute('aria-label', bekend ? `Instapkaart naar ${o.naam}` : 'Instapkaart voor een geheime bestemming');
+  el.dialoog.setAttribute('aria-label', bekend ? t(`Instapkaart naar ${o.naam}`, `Boarding pass to ${o.naam}`) : t('Instapkaart voor een geheime bestemming', 'Boarding pass for a secret destination'));
   el.dialoog.showModal();
   $('#vertrek').addEventListener('click', () => vertrek(o));
 }
@@ -582,7 +588,7 @@ function vertrek(o) {
   document.body.classList.add('vliegt');
   el.overslaan.hidden = false;
   el.vluchtinfo.hidden = false;
-  el.vluchtinfo.textContent = `${meta().vertrek.code} naar ${ontdekt(o.id) ? o.luchthaven.code : '???'} · ${o.vlucht.duur}`;
+  el.vluchtinfo.textContent = t(`${meta().vertrek.code} naar ${ontdekt(o.id) ? o.luchthaven.code : '???'} · ${o.vlucht.duur}`, `${meta().vertrek.code} to ${ontdekt(o.id) ? o.luchthaven.code : '???'} · ${o.vlucht.duur}`);
   window.scrollTo(0, 0);
   el.overslaan.focus({ preventScroll: true });
 
@@ -609,17 +615,17 @@ function werkTellersBij() {
   }
   el.teller.textContent = s.top3.length;
   el.teller.hidden = s.top3.length === 0;
-  $('#btn-top3').setAttribute('aria-label', `Mijn top 3 (${s.top3.length} gekozen)`);
+  $('#btn-top3').setAttribute('aria-label', t(`Mijn top 3 (${s.top3.length} gekozen)`, `My top 3 (${s.top3.length} picked)`));
   el.stempelteller.textContent = s.bezocht.length;
   el.stempelteller.hidden = s.bezocht.length === 0;
-  $('#btn-paspoort').setAttribute('aria-label', `Paspoort (${s.bezocht.length} van ${opties().length} stempels)`);
+  $('#btn-paspoort').setAttribute('aria-label', t(`Paspoort (${s.bezocht.length} van ${opties().length} stempels)`, `Passport (${s.bezocht.length} of ${opties().length} stamps)`));
 }
 
 function toonPaspoort() {
   el.dialoog.onclick = null;
-  el.dialoog.innerHTML = `${paspoort()}<div class="dialoog-acties"><button type="button" class="knop" data-sluit>Dichtklappen</button></div>`;
+  el.dialoog.innerHTML = `${paspoort()}<div class="dialoog-acties"><button type="button" class="knop" data-sluit>${t('Dichtklappen', 'Close passport')}</button></div>`;
   el.dialoog.className = 'dialoog breed';
-  el.dialoog.setAttribute('aria-label', 'Paspoort');
+  el.dialoog.setAttribute('aria-label', t('Paspoort', 'Passport'));
   el.dialoog.showModal();
 }
 
@@ -628,25 +634,25 @@ function wisselHart(id) {
   const o = optie(id);
   if (top3.includes(id)) {
     wijzig({ top3: top3.filter((x) => x !== id) });
-    toast(`${o.naam} is uit je top 3`);
+    toast(t(`${o.naam} is uit je top 3`, `${o.naam} is out of your top 3`));
   } else if (top3.length >= 3) {
-    toast('Je top 3 zit vol. Haal er eerst een uit via het hartje bovenin.');
+    toast(t('Je top 3 zit vol. Haal er eerst een uit via het hartje bovenin.', 'Your top 3 is full. Take one out first using the heart at the top.'));
   } else {
     wijzig({ top3: [...top3, id] });
-    toast(`${o.naam} staat op plek ${top3.length + 1} van je top 3`);
+    toast(t(`${o.naam} staat op plek ${top3.length + 1} van je top 3`, `${o.naam} is number ${top3.length + 1} in your top 3`));
   }
   werkTellersBij();
 }
 
 function top3Tekst() {
   const s = staat();
-  const kop = s.top3.length === 3 ? 'Mijn top 3' : 'Mijn favorieten tot nu toe';
+  const kop = s.top3.length === 3 ? t('Mijn top 3', 'My top 3') : t('Mijn favorieten tot nu toe', 'My favourites so far');
   const regelsTekst = s.top3.map((id, i) => {
     const o = optie(id);
     const match = koffermatch(o, s.koffer);
-    return `${i + 1}. ${o.naam} (${o.land}): ca. ${euro(sterksteKosten(o))} p.p.${match ? `, koffermatch ${pct(match.score)}` : ''}`;
+    return t(`${i + 1}. ${o.naam} (${landNaam(o.land)}): ca. ${euro(sterksteKosten(o))} p.p.${match ? `, koffermatch ${pct(match.score)}` : ''}`, `${i + 1}. ${o.naam} (${landNaam(o.land)}): approx. ${euro(sterksteKosten(o))} pp${match ? `, suitcase match ${pct(match.score)}` : ''}`);
   });
-  return `${kop} voor ${meta().titel}${s.naam ? ` (${s.naam})` : ''}:\n${regelsTekst.join('\n')}`;
+  return t(`${kop} voor ${meta().titel}${s.naam ? ` (${s.naam})` : ''}:\n${regelsTekst.join('\n')}`, `${kop} for ${meta().titel}${s.naam ? ` (${s.naam})` : ''}:\n${regelsTekst.join('\n')}`);
 }
 
 function toonTop3() {
@@ -654,32 +660,32 @@ function toonTop3() {
     const s = staat();
     const leeg = s.top3.length === 0;
     el.dialoog.innerHTML = `<div class="dialoog-in">
-      <h2>Mijn top 3</h2>
+      <h2>${t('Mijn top 3', 'My top 3')}</h2>
       ${leeg
-        ? '<p>Nog leeg. Tik op het hartje bij een bestemming die je hebt ontdekt om hem hier te zetten.</p>'
+        ? `<p>${t('Nog leeg. Tik op het hartje bij een bestemming die je hebt ontdekt om hem hier te zetten.', "Still empty. Tap the heart on a destination you've discovered to put it here.")}</p>`
         : `<ol class="top3">${s.top3.map((id, i) => {
           const o = optie(id);
           return `<li>
             <span class="plek">${i + 1}</span>
-            <span class="top3-naam"><strong>${esc(o.naam)}</strong><span class="dim">${esc(o.land)} · ${euro(sterksteKosten(o))} p.p.</span></span>
-            <button type="button" class="iconknop" data-zet="${i}" data-stap="-1" aria-label="${esc(o.naam)} een plek omhoog"${i === 0 ? ' disabled' : ''}>${icoon('op')}</button>
-            <button type="button" class="iconknop" data-zet="${i}" data-stap="1" aria-label="${esc(o.naam)} een plek omlaag"${i === s.top3.length - 1 ? ' disabled' : ''}>${icoon('neer')}</button>
-            <button type="button" class="iconknop" data-weg="${esc(id)}" aria-label="${esc(o.naam)} uit mijn top 3 halen">${icoon('kruis')}</button>
+            <span class="top3-naam"><strong>${esc(o.naam)}</strong><span class="dim">${esc(landNaam(o.land))} · ${euro(sterksteKosten(o))} ${t('p.p.', 'pp')}</span></span>
+            <button type="button" class="iconknop" data-zet="${i}" data-stap="-1" aria-label="${t(`${esc(o.naam)} een plek omhoog`, `Move ${esc(o.naam)} up one place`)}"${i === 0 ? ' disabled' : ''}>${icoon('op')}</button>
+            <button type="button" class="iconknop" data-zet="${i}" data-stap="1" aria-label="${t(`${esc(o.naam)} een plek omlaag`, `Move ${esc(o.naam)} down one place`)}"${i === s.top3.length - 1 ? ' disabled' : ''}>${icoon('neer')}</button>
+            <button type="button" class="iconknop" data-weg="${esc(id)}" aria-label="${t(`${esc(o.naam)} uit mijn top 3 halen`, `Remove ${esc(o.naam)} from my top 3`)}">${icoon('kruis')}</button>
           </li>`;
         }).join('')}</ol>
-        ${s.top3.length < 3 ? `<p class="klein">Nog ${3 - s.top3.length} te kiezen.</p>` : ''}`}
+        ${s.top3.length < 3 ? `<p class="klein">${t(`Nog ${3 - s.top3.length} te kiezen.`, `${3 - s.top3.length} more to pick.`)}</p>` : ''}`}
     </div>
     <div class="dialoog-acties">
-      <button type="button" class="knop primair" id="kopieer-top3"${leeg ? ' disabled' : ''}>${icoon('kopieer')}Mijn top 3 kopiëren</button>
-      <button type="button" class="knop" id="maak-kaart"${leeg ? ' disabled' : ''}>Ansichtkaart</button>
-      <a class="knop" href="#/uitslag">Groepsuitslag</a>
-      <button type="button" class="knop" data-sluit>Sluiten</button>
+      <button type="button" class="knop primair" id="kopieer-top3"${leeg ? ' disabled' : ''}>${icoon('kopieer')}${t('Mijn top 3 kopiëren', 'Copy my top 3')}</button>
+      <button type="button" class="knop" id="maak-kaart"${leeg ? ' disabled' : ''}>${t('Ansichtkaart', 'Postcard')}</button>
+      <a class="knop" href="#/uitslag">${t('Groepsuitslag', 'Group result')}</a>
+      <button type="button" class="knop" data-sluit>${t('Sluiten', 'Close')}</button>
     </div>`;
     $('#maak-kaart').addEventListener('click', toonAnsichtkaart);
     $('#kopieer-top3').addEventListener('click', async () => {
       const tekst = top3Tekst();
       el.dialoog.close();
-      await kopieer(tekst, 'Je top 3 is gekopieerd: plak hem in de groepsapp');
+      await kopieer(tekst, t('Je top 3 is gekopieerd: plak hem in de groepsapp', 'Your top 3 is copied: paste it in the group chat'));
     });
   };
 
@@ -701,7 +707,7 @@ function toonTop3() {
   };
   teken();
   el.dialoog.className = 'dialoog';
-  el.dialoog.setAttribute('aria-label', 'Mijn top 3');
+  el.dialoog.setAttribute('aria-label', t('Mijn top 3', 'My top 3'));
   el.dialoog.showModal();
 }
 
@@ -711,19 +717,19 @@ function toonUitslag() {
   const code = mijnCode();
   el.vergelijk.innerHTML = `<div class="vgl uitslag">
     <p class="kicker">${esc(meta().reisdata)}</p>
-    <h1>Groepsuitslag</h1>
-    <p class="lead">Iedereen deelt zijn code in de groepsapp. Plak hier alle berichten in één keer, dan tellen we de punten.</p>
+    <h1>${t('Groepsuitslag', 'Group result')}</h1>
+    <p class="lead">${t('Iedereen deelt zijn code in de groepsapp. Plak hier alle berichten in één keer, dan tellen we de punten.', "Everyone shares their code in the group chat. Paste all the messages here in one go and we'll add up the points.")}</p>
 
     <div class="codevak">
-      <p class="kicker">Jouw code</p>
+      <p class="kicker">${t('Jouw code', 'Your code')}</p>
       ${code
-        ? `<code id="mijn-code">${esc(code)}</code><button type="button" class="knop primair" id="kopieer-code">${icoon('kopieer')}Kopieer mijn code</button>`
-        : '<p>Kies eerst je top 3 met de hartjes, dan krijg je hier je code.</p>'}
+        ? `<code id="mijn-code">${esc(code)}</code><button type="button" class="knop primair" id="kopieer-code">${icoon('kopieer')}${t('Kopieer mijn code', 'Copy my code')}</button>`
+        : `<p>${t('Kies eerst je top 3 met de hartjes, dan krijg je hier je code.', "Pick your top 3 with the hearts first, then you'll get your code here.")}</p>`}
     </div>
 
-    <label class="veld" for="codes">Codes van de anderen</label>
-    <textarea id="codes" rows="4" placeholder="Plak hier de berichten uit de groepsapp. Tekst eromheen is geen probleem.">${esc(staat().codes ?? '')}</textarea>
-    <p class="klein">Een eerste plek is 3 punten waard, een tweede 2 en een derde 1. Er gaat niets naar een server.</p>
+    <label class="veld" for="codes">${t('Codes van de anderen', "The others' codes")}</label>
+    <textarea id="codes" rows="4" placeholder="${t('Plak hier de berichten uit de groepsapp. Tekst eromheen is geen probleem.', 'Paste the messages from the group chat here. Any text around them is no problem.')}">${esc(staat().codes ?? '')}</textarea>
+    <p class="klein">${t('Een eerste plek is 3 punten waard, een tweede 2 en een derde 1. Er gaat niets naar een server.', 'A first place is worth 3 points, a second 2 and a third 1. Nothing is sent to a server.')}</p>
     <div id="uitslag-lijst"></div>
   </div>`;
 
@@ -734,21 +740,21 @@ function toonUitslag() {
     const deelnemers = [...eigen, ...anderen];
     const rijen = uitslag(deelnemers);
     $('#uitslag-lijst').innerHTML = deelnemers.length ? `
-      <h2>${deelnemers.length === 1 ? '1 stem geteld' : `${deelnemers.length} stemmen geteld`}</h2>
+      <h2>${deelnemers.length === 1 ? t('1 stem geteld', '1 vote counted') : t(`${deelnemers.length} stemmen geteld`, `${deelnemers.length} votes counted`)}</h2>
       <p class="dim">${deelnemers.map((d) => esc(d.naam)).join(', ')}</p>
       <ol class="uitslaglijst">${rijen.map((r, i) => {
         const bekend = s.bezocht.includes(r.o.id);
         return `<li style="${themaStijl(r.o)}">
           <span class="plek">${i + 1}</span>
-          <span class="uitslag-naam"><strong>${bekend ? esc(r.o.naam) : `Nog geheim voor jou (gate ${gateCode(r.o)})`}</strong>
-            <span class="dim">${esc(r.o.land)} · ${r.wie.map((w) => `${esc(w.naam)} (${w.plek}e)`).join(', ')}</span>
-            ${r.match == null ? '' : `<span class="dim">gezamenlijke koffermatch ${pct(r.match)}</span>`}</span>
-          <span class="punten"><b>${r.punten}</b>${r.punten === 1 ? 'punt' : 'punten'}</span>
+          <span class="uitslag-naam"><strong>${bekend ? esc(r.o.naam) : t(`Nog geheim voor jou (gate ${gateCode(r.o)})`, `Still a secret to you (gate ${gateCode(r.o)})`)}</strong>
+            <span class="dim">${esc(landNaam(r.o.land))} · ${r.wie.map((w) => `${esc(w.naam)} (${t(`${w.plek}e`, `${w.plek}${['st', 'nd', 'rd'][w.plek - 1] ?? 'th'}`)})`).join(', ')}</span>
+            ${r.match == null ? '' : `<span class="dim">${t('gezamenlijke koffermatch', 'combined suitcase match')} ${pct(r.match)}</span>`}</span>
+          <span class="punten"><b>${r.punten}</b>${r.punten === 1 ? t('punt', 'point') : t('punten', 'points')}</span>
         </li>`;
-      }).join('')}</ol>` : '<p class="leeg">Nog geen codes gevonden.</p>';
+      }).join('')}</ol>` : `<p class="leeg">${t('Nog geen codes gevonden.', 'No codes found yet.')}</p>`;
   };
 
-  $('#kopieer-code')?.addEventListener('click', () => kopieer(`Mijn vakantiecode: ${code}`, 'Code gekopieerd: plak hem in de groepsapp'));
+  $('#kopieer-code')?.addEventListener('click', () => kopieer(t(`Mijn vakantiecode: ${code}`, `My holiday code: ${code}`), t('Code gekopieerd: plak hem in de groepsapp', 'Code copied: paste it in the group chat')));
   $('#codes').addEventListener('input', (e) => {
     wijzig({ codes: e.target.value });
     teken();
@@ -759,23 +765,23 @@ function toonUitslag() {
 async function toonAnsichtkaart() {
   el.dialoog.onclick = null;
   el.dialoog.innerHTML = `<div class="dialoog-in">
-      <h2>Je ansichtkaart</h2>
-      <canvas id="ansicht" class="ansicht" role="img" aria-label="Ansichtkaart met je top 3 en hun stempels"></canvas>
+      <h2>${t('Je ansichtkaart', 'Your postcard')}</h2>
+      <canvas id="ansicht" class="ansicht" role="img" aria-label="${t('Ansichtkaart met je top 3 en hun stempels', 'Postcard with your top 3 and their stamps')}"></canvas>
     </div>
     <div class="dialoog-acties">
-      <button type="button" class="knop primair" id="kaart-download">Download als PNG</button>
-      <button type="button" class="knop" id="kaart-deel" hidden>Delen</button>
-      <button type="button" class="knop" data-sluit>Sluiten</button>
+      <button type="button" class="knop primair" id="kaart-download">${t('Download als PNG', 'Download as PNG')}</button>
+      <button type="button" class="knop" id="kaart-deel" hidden>${t('Delen', 'Share')}</button>
+      <button type="button" class="knop" data-sluit>${t('Sluiten', 'Close')}</button>
     </div>`;
   el.dialoog.className = 'dialoog breed';
-  el.dialoog.setAttribute('aria-label', 'Ansichtkaart');
+  el.dialoog.setAttribute('aria-label', t('Ansichtkaart', 'Postcard'));
   if (!el.dialoog.open) el.dialoog.showModal();
   const canvas = $('#ansicht');
   await tekenAnsichtkaart(canvas);
   const alsBestand = () => new Promise((klaar) => canvas.toBlob((blob) => klaar(blob && new File([blob], kaartNaam(), { type: 'image/png' })), 'image/png'));
   $('#kaart-download')?.addEventListener('click', async () => {
     const bestand = await alsBestand();
-    if (!bestand) return toast('De kaart kon niet worden opgeslagen');
+    if (!bestand) return toast(t('De kaart kon niet worden opgeslagen', 'The postcard could not be saved'));
     const link = Object.assign(document.createElement('a'), { href: URL.createObjectURL(bestand), download: bestand.name });
     link.click();
     setTimeout(() => URL.revokeObjectURL(link.href), 2000);

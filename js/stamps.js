@@ -3,6 +3,7 @@
 
 import { motiefTekening } from './motifs.js';
 import { esc } from './data.js';
+import { t } from './i18n.js';
 
 let volgnummer = 0;
 
@@ -45,7 +46,7 @@ export function stempel(s, klasse = '') {
   };
   const motief = (x, y, schaal) => `<g transform="translate(${x - 24 * schaal} ${y - 24 * schaal}) scale(${schaal})" fill="none" stroke-width="${2.4 / schaal}" stroke-linecap="round" stroke-linejoin="round">${motiefTekening(s.motief)}</g>`;
   const vorm = VORMEN[s.vorm] ?? VORMEN.rond;
-  return `<svg class="stempel ${klasse}" viewBox="0 0 160 160" role="img" aria-label="Stempel ${esc(s.tekst)}">
+  return `<svg class="stempel ${klasse}" viewBox="0 0 160 160" role="img" aria-label="${t('Stempel', 'Stamp')} ${esc(s.tekst)}">
     <g filter="url(#inkt)" fill="${kleur}" stroke="${kleur}" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="700" letter-spacing="1.5">${vorm(s, tekst, motief)}</g>
   </svg>`;
 }
