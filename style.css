@@ -138,13 +138,6 @@ select { margin-top: 6px; font-weight: 400; }
 
 .scherm { max-width: 720px; margin: 0 auto; padding: 28px 16px 0; }
 .intro { padding-bottom: 40px; }
-.profielen { display: grid; gap: 12px; }
-.profiel { display: block; cursor: pointer; }
-.profiel input { position: absolute; opacity: 0; }
-.profiel-in { display: block; padding: 16px; border: 2px solid var(--lijn); border-radius: 16px; background: var(--papier); transition: border-color .15s, box-shadow .15s; }
-.profiel-in strong { font: 700 1.25rem/1.2 var(--display); }
-.profiel input:checked + .profiel-in { border-color: var(--blauw); box-shadow: 0 0 0 3px rgba(18, 48, 90, .15); }
-.profiel input:focus-visible + .profiel-in { outline: 3px solid #E08A00; outline-offset: 2px; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .chip { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px 4px 7px; border-radius: 999px; background: var(--zand); font-size: .82rem; }
 
