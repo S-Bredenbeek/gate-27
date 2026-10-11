@@ -1,0 +1,3070 @@
+{
+  "meta": {
+    "titel": "Vriendenvakantie september 2027",
+    "reisdata": "za 18 t/m za 25 september 2027 (7 nachten)",
+    "groep": "8 volwassenen (3 stellen + 2 singles) en 2 kinderen onder de 2",
+    "vertrek": {
+      "naam": "Schiphol",
+      "code": "AMS",
+      "lat": 52.31,
+      "lng": 4.76
+    },
+    "budget_pp": [
+      1000,
+      1500
+    ],
+    "groepen": [
+      {
+        "id": "portugal",
+        "naam": "Portugal",
+        "intro": "Vier heel verschillende kanten van Portugal: klassieke kliffenkust, de authentieke oostkant, Sintra met Lissabon om de hoek, en de wijnoogst in de Douro."
+      },
+      {
+        "id": "albanie",
+        "naam": "Albanië",
+        "intro": "Drie varianten: stad en cultuur vanuit Tirana, strand bij Durrës, of de ruige zuidkust bij Vlorë. Het avontuurlijkste land van de lijst."
+      },
+      {
+        "id": "klassiek",
+        "naam": "Klassiekers",
+        "intro": "Twee bekende landen die sterk scoren op prijs, gemak en aanbod: Spanje voor padel en tapas, Kroatië voor eilanden en de kortste reistijd."
+      },
+      {
+        "id": "exoot",
+        "naam": "Exoten",
+        "intro": "Vier minder voor de hand liggende opties, waaronder een Grieks eiland."
+      }
+    ],
+    "scorecriteria": {
+      "zon_zee": "Kans op warm weer en warm zeewater eind september",
+      "value": "Wat je krijgt voor je geld: kwaliteit van het huis per euro en het prijsniveau ter plekke",
+      "eten": "Kwaliteit en sfeer van eten en tafelen",
+      "natuur": "Mooie natuur en buitenactiviteiten binnen korte rijafstand",
+      "cultuur": "Stadjes, geschiedenis en dagtrips",
+      "bier": "Prijs van een biertje (0,5 l van de tap in een restaurant, Numbeo)",
+      "reisgemak": "Vlucht, aantal vluchten en transfer met kinderen onder de 2",
+      "veiligheid": "Reisadvies, verkeer en zorg",
+      "exotisch": "Hoe anders en avontuurlijk het voelt"
+    },
+    "bronnen": {
+      "huizen": "Airbnb.nl, opgehaald op 11 okt 2026. Filters: 18 t/m 25 sept 2027, 8 volwassenen en 2 baby's, minimaal 5 slaapkamers, zwembad. Prijzen zijn totaalprijzen inclusief kosten. Per gebied zijn 54 tot 90 resultaten gescand; de sterkste keuze is gekozen op beoordeling, aantal reviews, kindvoorzieningen (wieg, kinderstoel, omheinde tuin), airco, buiten eten en ligging.",
+      "vluchten": "Skyscanner-routepagina's en Google Flights, okt 2026. De week van 18 sept 2027 is nog niet boekbaar; de prijs is een realistische indicatie per volwassene retour, zonder ruimbagage.",
+      "klimaat": "Klimaatgemiddelden voor de tweede helft van september (indicatief).",
+      "prijzen_lokaal": "Numbeo, landgemiddelden okt 2026: bier 0,5 l van de tap en diner voor 2 in een middenklasse restaurant.",
+      "veiligheid": "Reisadvies Nederland Wereldwijd okt 2026: Portugal, Spanje, Kroatië, Albanië, Malta, Griekenland en Italië groen; Turkije geel (terreurdreiging vooral in grote steden, bosbranden in de zomer, beperkte zorg buiten grote steden).",
+      "kosten": "Kosten per volwassene = huis gedeeld door 8 + vlucht + € 70 ruimbagage + 3 huurauto's gedeeld door 8 + eten en uitjes (7 dagen x (half diner voor 2 + € 25)). Kosten voor de kinderen komen bij de ouders erbij.",
+      "mogelijkheden": "Eigen inschatting op basis van de ligging van het huis, de listings en lokale informatie. Padel nagezocht via clubsites en lokale nieuwsbronnen (okt 2026).",
+      "pils": "Bierprijs: Numbeo, 0,5 l van de tap in een restaurant, landgemiddelde okt 2026. Een rondje voor de mannen is 5 pils."
+    },
+    "mogelijkheden": {
+      "statussen": {
+        "ja": "Kan goed",
+        "beperkt": "Kan, met beperkingen",
+        "nee": "Kan niet of nauwelijks",
+        "onbekend": "Niet kunnen vaststellen"
+      },
+      "categorieen": [
+        {
+          "id": "strand",
+          "naam": "Strand"
+        },
+        {
+          "id": "restaurants",
+          "naam": "Restaurants op loopafstand"
+        },
+        {
+          "id": "uitgaan",
+          "naam": "Uitgaan en borrelen"
+        },
+        {
+          "id": "wijn",
+          "naam": "Wijn proeven of oogst"
+        },
+        {
+          "id": "boot",
+          "naam": "Boottochten"
+        },
+        {
+          "id": "natuur",
+          "naam": "Wandelen en natuur"
+        },
+        {
+          "id": "stad",
+          "naam": "Dagje grote stad"
+        },
+        {
+          "id": "padel",
+          "naam": "Padel"
+        },
+        {
+          "id": "watersport",
+          "naam": "Snorkelen, kajak of surfen"
+        },
+        {
+          "id": "kids",
+          "naam": "Uitje voor de kleintjes"
+        },
+        {
+          "id": "hooghouden",
+          "naam": "Jogo bonito: hooghoudveld bij het huis"
+        }
+      ],
+      "toelichting": "Strand en restaurants gaan uit van de sterkste huiskeuze. Padel is per regio nagezocht; 'onbekend' betekent dat we geen baan konden vinden of bevestigen."
+    },
+    "landen": {
+      "Portugal": {
+        "welkom": "Bem-vindos",
+        "kleuren": {
+          "basis": "#1F4E9C",
+          "licht": "#F4F1EA",
+          "accent": "#E3A72F"
+        },
+        "patroon": "azulejo-tegels in blauw op wit",
+        "motieven": [
+          "sardine",
+          "tegel",
+          "vuurtoren"
+        ],
+        "pils": [
+          "Super Bock",
+          "Sagres"
+        ],
+        "stekker": "Type F"
+      },
+      "Albanië": {
+        "welkom": "Mirë se vini",
+        "kleuren": {
+          "basis": "#B5121B",
+          "licht": "#F3EFE8",
+          "accent": "#2B2B2B"
+        },
+        "patroon": "geometrisch weefmotief en bergsilhouetten",
+        "motieven": [
+          "bergen",
+          "bunker",
+          "stenen huisjes"
+        ],
+        "pils": [
+          "Birra Korça",
+          "Birra Tirana"
+        ],
+        "stekker": "Type F"
+      },
+      "Spanje": {
+        "welkom": "Bienvenidos",
+        "kleuren": {
+          "basis": "#C65D3B",
+          "licht": "#FBF3E4",
+          "accent": "#E8B23A"
+        },
+        "patroon": "Andalusische tegel met sterrenmotief",
+        "motieven": [
+          "padelracket",
+          "sardinespit",
+          "witte dorpjes"
+        ],
+        "pils": [
+          "Victoria (uit Málaga)",
+          "Cruzcampo"
+        ],
+        "stekker": "Type F"
+      },
+      "Kroatië": {
+        "welkom": "Dobrodošli",
+        "kleuren": {
+          "basis": "#0E5A8A",
+          "licht": "#F5F3EE",
+          "accent": "#C8202F"
+        },
+        "patroon": "rood-wit dambord en kalksteen",
+        "motieven": [
+          "zuilen",
+          "zeilboot",
+          "druiventros"
+        ],
+        "pils": [
+          "Ožujsko",
+          "Karlovačko"
+        ],
+        "stekker": "Type F"
+      },
+      "Turkije": {
+        "welkom": "Hoş geldiniz",
+        "kleuren": {
+          "basis": "#138A8A",
+          "licht": "#F6F1E7",
+          "accent": "#C8442F"
+        },
+        "patroon": "Iznik-tegel met bloemmotief",
+        "motieven": [
+          "rotsgraf",
+          "theeglas",
+          "paraglider"
+        ],
+        "pils": [
+          "Efes"
+        ],
+        "stekker": "Type F"
+      },
+      "Malta": {
+        "welkom": "Merħba",
+        "kleuren": {
+          "basis": "#C9A15E",
+          "licht": "#FAF4E6",
+          "accent": "#1F5FA8"
+        },
+        "patroon": "kalksteen met luzzu-strepen in blauw, geel en rood",
+        "motieven": [
+          "luzzu-boot",
+          "megaliet",
+          "balkon"
+        ],
+        "pils": [
+          "Cisk"
+        ],
+        "stekker": "Type G (reisstekker nodig)"
+      },
+      "Griekenland": {
+        "welkom": "Kaló taxídi",
+        "kleuren": {
+          "basis": "#1565C0",
+          "licht": "#FFFFFF",
+          "accent": "#7A8B3A"
+        },
+        "patroon": "meanderrand en witgekalkte muren",
+        "motieven": [
+          "zeeschildpad",
+          "olijftak",
+          "baai"
+        ],
+        "pils": [
+          "Mythos",
+          "Alfa"
+        ],
+        "stekker": "Type F"
+      },
+      "Italië": {
+        "welkom": "Benvenuti",
+        "kleuren": {
+          "basis": "#E2B021",
+          "licht": "#FBF6E9",
+          "accent": "#1F5FA8"
+        },
+        "patroon": "majolica-tegels met citroenen",
+        "motieven": [
+          "citroen",
+          "barokkerk",
+          "cannolo"
+        ],
+        "pils": [
+          "Birra Messina"
+        ],
+        "stekker": "Type F, soms type L (reisstekker handig)"
+      }
+    },
+    "carriers": {
+      "toelichting": "Meest waarschijnlijke maatschappij op zaterdag; kleuren zijn een benadering van de kleurstelling, zonder logo's of namen op het toestel.",
+      "transavia": {
+        "naam": "Transavia",
+        "romp": "#FFFFFF",
+        "staart": "#00C26E",
+        "motor": "#00C26E",
+        "streep": "#1B2A6B"
+      },
+      "klm": {
+        "naam": "KLM",
+        "romp": "#00A1DE",
+        "buik": "#FFFFFF",
+        "staart": "#00A1DE",
+        "motor": "#00A1DE",
+        "streep": "#003F72"
+      },
+      "corendon": {
+        "naam": "Corendon",
+        "romp": "#FFFFFF",
+        "staart": "#D71920",
+        "motor": "#D71920",
+        "streep": "#D71920"
+      }
+    },
+    "profielen": {
+      "toelichting": "Startpunt: pas de wensen aan op wat jullie groep echt wil. Iedereen kan daarna zijn eigen koffer bijstellen.",
+      "lijst": [
+        {
+          "id": "guys",
+          "naam": "De guys",
+          "wensen": [
+            "padel",
+            "uitgaan",
+            "boot",
+            "watersport",
+            "stad",
+            "hooghouden"
+          ],
+          "gewichten": {
+            "bier": 3,
+            "zon_zee": 2,
+            "value": 2,
+            "natuur": 1,
+            "eten": 2
+          }
+        },
+        {
+          "id": "dames",
+          "naam": "De dames",
+          "wensen": [
+            "restaurants",
+            "strand",
+            "wijn",
+            "stad",
+            "natuur"
+          ],
+          "gewichten": {
+            "eten": 3,
+            "zon_zee": 3,
+            "cultuur": 2,
+            "value": 1
+          }
+        },
+        {
+          "id": "kids",
+          "naam": "De kids",
+          "type": "kidscheck",
+          "uitleg": "Geen wensenlijst maar een check: hoe makkelijk en veilig is dit met twee kinderen onder de 2?"
+        }
+      ]
+    },
+    "kidscheck_criteria": [
+      {
+        "id": "transfer_min",
+        "naam": "Reistijd vliegveld naar huis"
+      },
+      {
+        "id": "wieg",
+        "naam": "Wieg in het huis"
+      },
+      {
+        "id": "kinderstoel",
+        "naam": "Kinderstoel"
+      },
+      {
+        "id": "omheind",
+        "naam": "Omheinde tuin"
+      },
+      {
+        "id": "zwembad",
+        "naam": "Zwembad"
+      },
+      {
+        "id": "water",
+        "naam": "Zee voor kleintjes"
+      },
+      {
+        "id": "warmte",
+        "naam": "Warmte overdag"
+      },
+      {
+        "id": "zorg",
+        "naam": "Zorg in de buurt"
+      }
+    ],
+    "extra_kosten_kids": "Kinderen onder de 2 vliegen op schoot tegen een babytarief per vlucht; is een kind op de terugreis al 2, dan is een eigen stoel nodig. Huur twee autostoeltjes mee. Check de actuele tarieven bij de maatschappij.",
+    "periode": {
+      "van": "2027-09-18",
+      "tot": "2027-09-25"
+    },
+    "groep_indeling": {
+      "stellen": 3,
+      "singles": 2,
+      "kids": 2
+    },
+    "scorecriteria_namen": {
+      "zon_zee": "Zon en zee",
+      "value": "Waar voor je geld",
+      "eten": "Eten",
+      "natuur": "Natuur",
+      "cultuur": "Cultuur",
+      "bier": "Bierprijs",
+      "reisgemak": "Reisgemak",
+      "veiligheid": "Veiligheid",
+      "exotisch": "Avontuur"
+    }
+  },
+  "opties": [
+    {
+      "id": "algarve-west",
+      "groep": "portugal",
+      "land": "Portugal",
+      "naam": "Algarve klassiek",
+      "subregio": "Carvoeiro, Pêra en Albufeira",
+      "tagline": "Gouden kliffen, grotten en piri piri kip, op 40 minuten van het vliegveld.",
+      "lat": 37.12,
+      "lng": -8.35,
+      "luchthaven": {
+        "naam": "Faro",
+        "code": "FAO",
+        "lat": 37.014,
+        "lng": -7.966
+      },
+      "vlucht": {
+        "maatschappijen": "Transavia, KLM, easyJet",
+        "duur": "3u10",
+        "per_week": "ca. 30 direct",
+        "prijs_pp": 220
+      },
+      "transfer": "25 tot 50 min",
+      "klimaat": {
+        "lucht": 26,
+        "zee": 21,
+        "regendagen": 2
+      },
+      "lokaal": {
+        "bier": 2.5,
+        "diner2": 45
+      },
+      "huurauto_per_stuk": 350,
+      "scores": {
+        "zon_zee": [
+          3,
+          "Zonzeker, maar de Atlantische zee is fris (21°C)."
+        ],
+        "value": [
+          4,
+          "Sterke huizen rond € 3.400, lage prijzen in restaurants."
+        ],
+        "eten": [
+          4,
+          "Gegrilde vis, cataplana en de piri piri kip van Guia."
+        ],
+        "natuur": [
+          4,
+          "Kliffen, de Benagil-grot en de Sete Vales-route."
+        ],
+        "cultuur": [
+          2,
+          "Silves en Lagos zijn leuk, maar het blijft badplaatsgebied."
+        ],
+        "bier": [
+          5,
+          "€ 2,50 voor een halve liter."
+        ],
+        "reisgemak": [
+          5,
+          "Dagelijks veel directe vluchten, korte transfer."
+        ],
+        "veiligheid": [
+          5,
+          "Groen reisadvies, goede wegen en ziekenhuizen."
+        ],
+        "exotisch": [
+          1,
+          "Bekend terrein voor veel Nederlanders."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "Het meest zorgeloze reisplaatje van de lijst: veel vluchten, korte transfer, alles is er.",
+          "Het sterkste kindvriendelijke huis van alle opties (Villa Charme)."
+        ],
+        "min": [
+          "Koudste zee van alle strandopties.",
+          "Druk en toeristisch rond Albufeira, weinig gevoel van ontdekken."
+        ]
+      },
+      "huizen": [
+        {
+          "rol": "Sterkste keuze",
+          "airbnb_id": "11248947",
+          "naam": "Villa Charme",
+          "plaats": "Pêra",
+          "lat": 37.146,
+          "lng": -8.325,
+          "slaapkamers": 6,
+          "max_gasten": 12,
+          "beoordeling": 4.96,
+          "reviews": 164,
+          "prijs_totaal": 3374,
+          "zwembad": "Privé, verwarmd, met afdekzeil",
+          "waarom": "Het meest kindvriendelijke huis van de hele lijst: wieg, speelgoed 0 tot 2 jaar, speeltuin en speelkamer, volledig omheinde tuin, verwarmd zwembad met afdekzeil, airco, fitnessruimte en buiten eten. 164 reviews met een 4,96.",
+          "let_op": "Ligt 5 km van het strand (locatiescore 4,59).",
+          "foto": "https://a0.muscache.com/im/pictures/90632f51-8dcb-4ba7-90e9-24111d245035.jpg",
+          "kosten_pp": 1175
+        },
+        {
+          "rol": "Alternatief: strand op loopafstand",
+          "airbnb_id": "18730627",
+          "naam": "Villa SunKiss",
+          "plaats": "Carvoeiro (Vale Centianes)",
+          "lat": 37.092,
+          "lng": -8.451,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 5.0,
+          "reviews": 49,
+          "prijs_totaal": 4148,
+          "zwembad": "Privé, verwarmd, met afdekzeil",
+          "waarom": "500 m van het strand, uitzicht op zee, omheinde tuin, wieg en kinderstoel. Hoogste locatiescore (4,98).",
+          "let_op": "Ruim € 750 duurder dan Villa Charme.",
+          "foto": "https://a0.muscache.com/im/pictures/8a7747bc-556b-4dce-af36-e51a1c231eed.jpg",
+          "kosten_pp": 1272
+        },
+        {
+          "rol": "Alternatief: goedkoopst",
+          "airbnb_id": "43119730",
+          "naam": "Strandvilla met verwarmd dakzwembad",
+          "plaats": "Quarteira (Vilamoura)",
+          "lat": 37.092,
+          "lng": -8.116,
+          "slaapkamers": 6,
+          "max_gasten": 16,
+          "beoordeling": 4.95,
+          "reviews": 160,
+          "prijs_totaal": 2469,
+          "zwembad": "Privé, op het dak, verwarmd",
+          "waarom": "6 slaapkamers voor € 2.469, 3 minuten rijden naar het strand, 160 reviews.",
+          "let_op": "Zwembad ligt op het dak: met peuters goed opletten.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-43119730/original/f049bb6f-4ff1-4ac4-8f53-359e848cd1e5.jpeg",
+          "kosten_pp": 1062
+        }
+      ],
+      "kosten_opbouw": {
+        "vlucht_bagage": 290,
+        "auto": 131,
+        "eten_uitjes": 332
+      },
+      "sfeer": "Een makkelijke, zonnige week: veel bij het huis, af en toe een strand of grot, en 's avonds gegrilde vis of piri piri kip. Alles is goed geregeld en dichtbij.",
+      "mogelijkheden": {
+        "strand": [
+          "beperkt",
+          "Praia Grande op ca. 5 km, met de auto 10 minuten."
+        ],
+        "restaurants": [
+          "nee",
+          "Auto nodig; het dorp Pêra ligt een paar kilometer verderop."
+        ],
+        "uitgaan": [
+          "ja",
+          "De uitgaansstrip van Albufeira op 20 minuten, rustiger terrasjes in Carvoeiro en Lagos."
+        ],
+        "wijn": [
+          "beperkt",
+          "Een paar kleine wijngoederen rond Lagoa en Silves; geen oogstcultuur."
+        ],
+        "boot": [
+          "ja",
+          "Boot of kajak naar de Benagil-grot en langs de kliffen."
+        ],
+        "natuur": [
+          "ja",
+          "Kliffenpaden zoals de Sete Vales Suspensos en de bergen van Monchique."
+        ],
+        "stad": [
+          "beperkt",
+          "Faro en Lagos zijn klein; Sevilla is 2u30 rijden."
+        ],
+        "padel": [
+          "ja",
+          "Veel padelclubs in de Algarve."
+        ],
+        "watersport": [
+          "ja",
+          "Kajakken naar grotten, surfen aan de westkust."
+        ],
+        "kids": [
+          "ja",
+          "Zoomarine en waterparken binnen 20 minuten."
+        ],
+        "hooghouden": [
+          "ja",
+          "Tuin met voetbaldoelen en volleybalnet."
+        ]
+      },
+      "carrier": "transavia",
+      "stempel": {
+        "vorm": "rond",
+        "motief": "vuurtoren",
+        "tekst": "ALGARVE",
+        "code": "FAO",
+        "datum": "18 SEP 2027",
+        "kleur": "#1F4E9C"
+      },
+      "kidscheck": {
+        "transfer_min": 40,
+        "wieg": true,
+        "kinderstoel": true,
+        "omheind": true,
+        "zwembad": "Verwarmd, met afdekzeil",
+        "water": "Atlantisch, soms golven; baaitjes zijn rustiger",
+        "warmte": "Aangenaam (26°C)",
+        "zorg": "Goede ziekenhuizen in Faro en Portimão",
+        "oordeel": 5
+      },
+      "pils": {
+        "prijs": 2.5,
+        "merken": [
+          "Super Bock",
+          "Sagres"
+        ],
+        "rondje_mannen": 12.5
+      },
+      "paklijst_extra": []
+    },
+    {
+      "id": "algarve-oost",
+      "groep": "portugal",
+      "land": "Portugal",
+      "naam": "Oost-Algarve",
+      "subregio": "Tavira, Olhão en de Ria Formosa",
+      "tagline": "Het authentieke deel van de Algarve: lagune-eilanden, vismarkten en warmer water.",
+      "lat": 37.13,
+      "lng": -7.75,
+      "luchthaven": {
+        "naam": "Faro",
+        "code": "FAO",
+        "lat": 37.014,
+        "lng": -7.966
+      },
+      "vlucht": {
+        "maatschappijen": "Transavia, KLM, easyJet",
+        "duur": "3u10",
+        "per_week": "ca. 30 direct",
+        "prijs_pp": 220
+      },
+      "transfer": "20 tot 35 min",
+      "klimaat": {
+        "lucht": 27,
+        "zee": 22,
+        "regendagen": 2
+      },
+      "lokaal": {
+        "bier": 2.5,
+        "diner2": 45
+      },
+      "huurauto_per_stuk": 350,
+      "scores": {
+        "zon_zee": [
+          4,
+          "Warmste water van Portugal en kalme lagunestranden."
+        ],
+        "value": [
+          5,
+          "Topvilla met 177 reviews voor € 2.626."
+        ],
+        "eten": [
+          5,
+          "Vismarkt van Olhão, octopus in Santa Luzia, oesters uit de Ria."
+        ],
+        "natuur": [
+          4,
+          "Ria Formosa met flamingo's en eilanden zonder auto's."
+        ],
+        "cultuur": [
+          3,
+          "Tavira en Cacela Velha zijn de mooiste stadjes van de Algarve."
+        ],
+        "bier": [
+          5,
+          "€ 2,50 voor een halve liter."
+        ],
+        "reisgemak": [
+          5,
+          "Zelfde vluchten als de Algarve, transfer 20 minuten."
+        ],
+        "veiligheid": [
+          5,
+          "Groen reisadvies, rustig gebied."
+        ],
+        "exotisch": [
+          2,
+          "Portugal, maar het minst toeristische stuk kust."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "Beste prijs-kwaliteit van Portugal.",
+          "Kalm, ondiep lagunewater: ideaal met kleine kinderen."
+        ],
+        "min": [
+          "Geen spectaculaire kliffen zoals in het westen.",
+          "Het huis ligt landinwaarts, naar het strand rijd je 20 minuten."
+        ]
+      },
+      "huizen": [
+        {
+          "rol": "Sterkste keuze",
+          "airbnb_id": "4319597",
+          "naam": "Sugar Authentic Mansion",
+          "plaats": "São Brás de Alportel",
+          "lat": 37.129,
+          "lng": -7.849,
+          "slaapkamers": 6,
+          "max_gasten": 16,
+          "beoordeling": 4.93,
+          "reviews": 177,
+          "prijs_totaal": 2626,
+          "zwembad": "Privé, op het dak, verwarmd, zout water, met afdekzeil",
+          "waarom": "Meeste reviews van alle Portugese opties, 6 slaapkamers, speeltuin en voetbalveld, omheinde tuin, airco, buiten eten. Voor € 2.626.",
+          "let_op": "Dakzwembad: met peuters goed opletten. Wieg is tegen betaling.",
+          "foto": "https://a0.muscache.com/im/pictures/4853639e-8cff-4736-9c93-c7f179c0c13a.jpg",
+          "kosten_pp": 1081
+        },
+        {
+          "rol": "Alternatief: zeezicht",
+          "airbnb_id": "48536309",
+          "naam": "Quinta Braz Villa",
+          "plaats": "Tavira",
+          "lat": 37.126,
+          "lng": -7.719,
+          "slaapkamers": 5,
+          "max_gasten": 15,
+          "beoordeling": 4.92,
+          "reviews": 26,
+          "prijs_totaal": 3212,
+          "zwembad": "Privé overloopzwembad",
+          "waarom": "Landelijk met uitzicht op zee, dicht bij Tavira, wieg en airco.",
+          "let_op": "Minder reviews, geen omheinde tuin vermeld.",
+          "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NDg1MzYzMDk=/original/f2d2c939-25f9-4c2f-bb05-9930516197e5.jpeg",
+          "kosten_pp": 1154
+        },
+        {
+          "rol": "Alternatief: karakterhuis",
+          "airbnb_id": "48880100",
+          "naam": "Casa do Troco",
+          "plaats": "Cabanas de Tavira",
+          "lat": 37.198,
+          "lng": -7.605,
+          "slaapkamers": 5,
+          "max_gasten": 9,
+          "beoordeling": 4.98,
+          "reviews": 41,
+          "prijs_totaal": 4230,
+          "zwembad": "Privé buitenzwembad",
+          "waarom": "Oud handelshuis met balzaal, prachtig gerestaureerd.",
+          "let_op": "Max. 9 gasten, check of de baby's meetellen; tuin niet volledig omheind.",
+          "foto": "https://a0.muscache.com/im/pictures/cd71f404-360e-4c5c-81f2-b3fdbfd491aa.jpg",
+          "kosten_pp": 1282
+        }
+      ],
+      "kosten_opbouw": {
+        "vlucht_bagage": 290,
+        "auto": 131,
+        "eten_uitjes": 332
+      },
+      "sfeer": "Rustig en authentiek: lange dagen op autovrije eilanden, vismarkten en dorpjes waar vooral Portugezen komen. Minder spektakel, meer genieten.",
+      "mogelijkheden": {
+        "strand": [
+          "beperkt",
+          "Lagunestranden en eilanden op ca. 20 minuten rijden plus een bootje."
+        ],
+        "restaurants": [
+          "nee",
+          "Auto nodig; São Brás ligt een paar kilometer verderop."
+        ],
+        "uitgaan": [
+          "beperkt",
+          "Gezellige terrassen in Tavira en Olhão, geen nachtleven."
+        ],
+        "wijn": [
+          "beperkt",
+          "Enkele wijngoederen in het achterland."
+        ],
+        "boot": [
+          "ja",
+          "Bootjes naar Culatra, Armona en Ilha Deserta, tochten door de Ria Formosa."
+        ],
+        "natuur": [
+          "ja",
+          "Natuurpark Ria Formosa met flamingo's."
+        ],
+        "stad": [
+          "beperkt",
+          "Faro op 20 minuten, Sevilla op 2 uur."
+        ],
+        "padel": [
+          "ja",
+          "Padelclubs in de regio Faro en Tavira."
+        ],
+        "watersport": [
+          "beperkt",
+          "Suppen en kajakken in de lagune."
+        ],
+        "kids": [
+          "ja",
+          "Ondiep, kalm lagunewater en het treintje naar Praia do Barril."
+        ],
+        "hooghouden": [
+          "ja",
+          "Eigen voetbalveldje bij het huis."
+        ]
+      },
+      "carrier": "transavia",
+      "stempel": {
+        "vorm": "zeshoek",
+        "motief": "flamingo",
+        "tekst": "TAVIRA",
+        "code": "FAO",
+        "datum": "18 SEP 2027",
+        "kleur": "#1F4E9C"
+      },
+      "kidscheck": {
+        "transfer_min": 20,
+        "wieg": true,
+        "kinderstoel": true,
+        "omheind": true,
+        "zwembad": "Op het dak: extra opletten",
+        "water": "Kalm en ondiep lagunewater, ideaal",
+        "warmte": "Aangenaam (27°C)",
+        "zorg": "Ziekenhuis in Faro op 20 minuten",
+        "oordeel": 4
+      },
+      "pils": {
+        "prijs": 2.5,
+        "merken": [
+          "Super Bock",
+          "Sagres"
+        ],
+        "rondje_mannen": 12.5
+      },
+      "paklijst_extra": []
+    },
+    {
+      "id": "sintra",
+      "groep": "portugal",
+      "land": "Portugal",
+      "naam": "Sintra-kust en Lissabon",
+      "subregio": "Colares, Sintra, Cascais en Lissabon",
+      "tagline": "Sprookjespaleizen, wilde Atlantische stranden en Lissabon op 40 minuten.",
+      "lat": 38.8,
+      "lng": -9.4,
+      "luchthaven": {
+        "naam": "Lissabon",
+        "code": "LIS",
+        "lat": 38.774,
+        "lng": -9.134
+      },
+      "vlucht": {
+        "maatschappijen": "KLM, TAP, Transavia",
+        "duur": "3u05",
+        "per_week": "dagelijks, meerdere per dag",
+        "prijs_pp": 200
+      },
+      "transfer": "35 tot 40 min",
+      "klimaat": {
+        "lucht": 24,
+        "zee": 19,
+        "regendagen": 3
+      },
+      "lokaal": {
+        "bier": 2.5,
+        "diner2": 45
+      },
+      "huurauto_per_stuk": 350,
+      "scores": {
+        "zon_zee": [
+          2,
+          "Koudste zee (19°C) en kans op zeemist aan de kust."
+        ],
+        "value": [
+          2,
+          "Duurste Portugese optie, huizen rond € 4.500."
+        ],
+        "eten": [
+          5,
+          "Marisqueiras, pastéis de Belém, Colares-wijn en Lissabon."
+        ],
+        "natuur": [
+          4,
+          "Sintra-gebergte, Cabo da Roca en woeste kust."
+        ],
+        "cultuur": [
+          5,
+          "Pena-paleis, Quinta da Regaleira en heel Lissabon."
+        ],
+        "bier": [
+          5,
+          "€ 2,50 voor een halve liter."
+        ],
+        "reisgemak": [
+          5,
+          "Meeste vluchten van alle opties, 40 minuten naar het huis."
+        ],
+        "veiligheid": [
+          5,
+          "Groen reisadvies."
+        ],
+        "exotisch": [
+          2,
+          "Stedentrip en strand in één, maar bekend terrein."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "De meeste cultuur en stad van de lijst.",
+          "Het meeste aantal vluchten: makkelijk om te schuiven met data."
+        ],
+        "min": [
+          "Het minst een zon-en-zwembadvakantie: frisse zee en soms mist.",
+          "Duurste optie binnen Portugal."
+        ]
+      },
+      "huizen": [
+        {
+          "rol": "Sterkste keuze",
+          "airbnb_id": "19601941",
+          "naam": "Casal de Santa Maria",
+          "plaats": "Colares",
+          "lat": 38.822,
+          "lng": -9.466,
+          "slaapkamers": 6,
+          "max_gasten": 12,
+          "beoordeling": 4.97,
+          "reviews": 69,
+          "prijs_totaal": 4459,
+          "zwembad": "Privé",
+          "waarom": "Traditionele villa met 6 slaapkamers, groot zwembad, zeezicht, omheinde tuin, 350 m van het strand.",
+          "let_op": "Geen wieg of airco vermeld; dat vragen bij de host.",
+          "foto": "https://a0.muscache.com/im/pictures/ad3e26b1-49ff-40eb-b8a2-3b90ba03a9b7.jpg",
+          "kosten_pp": 1290
+        },
+        {
+          "rol": "Alternatief: Arrábida",
+          "airbnb_id": "10655747",
+          "naam": "Gezinsvilla bij Sesimbra",
+          "plaats": "Sesimbra en Arrábida",
+          "lat": 38.497,
+          "lng": -9.039,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 4.94,
+          "reviews": 114,
+          "prijs_totaal": 3385,
+          "zwembad": "Privé",
+          "waarom": "Goedkoper, veel reviews, kindvriendelijk en dicht bij de kalmste en warmste baaien rond Lissabon.",
+          "let_op": "45 minuten naar Lissabon, verder van Sintra.",
+          "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-10655747/original/56c63a96-5794-4b8a-9f05-487abca23ef7.jpeg",
+          "kosten_pp": 1156
+        }
+      ],
+      "kosten_opbouw": {
+        "vlucht_bagage": 270,
+        "auto": 131,
+        "eten_uitjes": 332
+      },
+      "sfeer": "Afwisseling: de ene dag paleizen en Lissabon, de andere dag het woeste strand om de hoek. Minder een zwembadvakantie, meer ontdekken.",
+      "mogelijkheden": {
+        "strand": [
+          "ja",
+          "Praia das Maçãs op 350 meter; frisse Atlantische zee."
+        ],
+        "restaurants": [
+          "ja",
+          "Visrestaurants bij Praia das Maçãs op loopafstand."
+        ],
+        "uitgaan": [
+          "ja",
+          "Bairro Alto in Lissabon op 40 minuten, Cascais dichterbij."
+        ],
+        "wijn": [
+          "ja",
+          "Proeven in de oude wijnstreek Colares, en in Setúbal."
+        ],
+        "boot": [
+          "beperkt",
+          "Tochten op de Taag of vanuit Setúbal."
+        ],
+        "natuur": [
+          "ja",
+          "Het Sintra-gebergte en de kust bij Cabo da Roca."
+        ],
+        "stad": [
+          "ja",
+          "Lissabon op 40 minuten."
+        ],
+        "padel": [
+          "ja",
+          "Ruim aanbod in de regio Lissabon en Cascais."
+        ],
+        "watersport": [
+          "ja",
+          "Surfen in Ericeira en bij Guincho."
+        ],
+        "kids": [
+          "ja",
+          "Oceanário in Lissabon."
+        ],
+        "hooghouden": [
+          "beperkt",
+          "Gazon in de voortuin, plus het strand op 350 meter."
+        ]
+      },
+      "carrier": "klm",
+      "stempel": {
+        "vorm": "rechthoek",
+        "motief": "paleis",
+        "tekst": "SINTRA",
+        "code": "LIS",
+        "datum": "18 SEP 2027",
+        "kleur": "#1F4E9C"
+      },
+      "kidscheck": {
+        "transfer_min": 40,
+        "wieg": false,
+        "kinderstoel": false,
+        "omheind": true,
+        "zwembad": "Privé",
+        "water": "Koud en golvend: vooral pootjebaden",
+        "warmte": "Mild (24°C)",
+        "zorg": "Lissabon op 40 minuten",
+        "oordeel": 3
+      },
+      "pils": {
+        "prijs": 2.5,
+        "merken": [
+          "Super Bock",
+          "Sagres"
+        ],
+        "rondje_mannen": 12.5
+      },
+      "paklijst_extra": []
+    },
+    {
+      "id": "douro",
+      "groep": "portugal",
+      "land": "Portugal",
+      "naam": "Douro-vallei",
+      "subregio": "Wijnterrassen tussen Régua en Pinhão",
+      "tagline": "Midden in de druivenoogst: wijnterrassen, quintas en een dag Porto.",
+      "lat": 41.15,
+      "lng": -7.65,
+      "luchthaven": {
+        "naam": "Porto",
+        "code": "OPO",
+        "lat": 41.248,
+        "lng": -8.681
+      },
+      "vlucht": {
+        "maatschappijen": "KLM, Transavia, easyJet",
+        "duur": "2u40",
+        "per_week": "dagelijks, meerdere per dag",
+        "prijs_pp": 180
+      },
+      "transfer": "1 tot 2 uur",
+      "klimaat": {
+        "lucht": 28,
+        "zee": null,
+        "regendagen": 3
+      },
+      "lokaal": {
+        "bier": 2.5,
+        "diner2": 45
+      },
+      "huurauto_per_stuk": 350,
+      "scores": {
+        "zon_zee": [
+          3,
+          "Warmste dagen van Portugal (28°C), maar geen zee."
+        ],
+        "value": [
+          5,
+          "Topvilla met 142 reviews voor € 2.475."
+        ],
+        "eten": [
+          5,
+          "Wijnproeverijen, oogstmaaltijden, Porto en port."
+        ],
+        "natuur": [
+          5,
+          "UNESCO-wijnterrassen en de rivier."
+        ],
+        "cultuur": [
+          4,
+          "Quintas, Lamego en Porto."
+        ],
+        "bier": [
+          5,
+          "€ 2,50, al drink je hier vooral wijn."
+        ],
+        "reisgemak": [
+          3,
+          "Kortste vlucht, maar 1 à 2 uur bochtige wegen."
+        ],
+        "veiligheid": [
+          5,
+          "Groen reisadvies."
+        ],
+        "exotisch": [
+          3,
+          "Geen strandvakantie maar een oogstervaring."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "Uniek moment: eind september is de vindima (druivenoogst).",
+          "Goedkoopste sterke huizen van Portugal."
+        ],
+        "min": [
+          "Geen strand: het zwembad en de rivier zijn het water.",
+          "Langere, bochtige transfer met kleine kinderen."
+        ]
+      },
+      "huizen": [
+        {
+          "rol": "Sterkste keuze",
+          "airbnb_id": "42961840",
+          "naam": "Valadouro",
+          "plaats": "Espinhosa (bij São João da Pesqueira)",
+          "lat": 41.088,
+          "lng": -7.484,
+          "slaapkamers": 5,
+          "max_gasten": 13,
+          "beoordeling": 4.97,
+          "reviews": 142,
+          "prijs_totaal": 2475,
+          "zwembad": "Privé",
+          "waarom": "Moderne villa van 350 m² met drie suites en panoramisch uitzicht, wieg en kinderstoel, speelgoed, omheinde tuin, airco. 142 reviews met een 4,97.",
+          "let_op": "Ruim 2 uur rijden vanaf Porto.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-42961840/original/96c005be-2924-4f9c-bd9e-6129f73cf162.jpeg",
+          "kosten_pp": 1022
+        },
+        {
+          "rol": "Alternatief: dichterbij en goedkoopst",
+          "airbnb_id": "732545486730973785",
+          "naam": "Casa das Origens",
+          "plaats": "Mesão Frio",
+          "lat": 41.15,
+          "lng": -7.893,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 4.85,
+          "reviews": 41,
+          "prijs_totaal": 1316,
+          "zwembad": "Privé, seizoensgebonden",
+          "waarom": "Goedkoopste sterke huis van de hele lijst, 1 uur van Porto, uitzicht op de vallei, airco.",
+          "let_op": "Eenvoudiger huis; check of het zwembad eind september nog open is.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-732545486730973785/original/1c883b15-e3a4-4855-b450-48554b1b5421.jpeg",
+          "kosten_pp": 878
+        }
+      ],
+      "kosten_opbouw": {
+        "vlucht_bagage": 250,
+        "auto": 131,
+        "eten_uitjes": 332
+      },
+      "sfeer": "Langzaam leven tussen de wijnterrassen: lange lunches, proeverijen, de oogst van dichtbij en uitzicht vanaf het zwembad. Geen strand, wel een ervaring.",
+      "mogelijkheden": {
+        "strand": [
+          "nee",
+          "Geen zee; wel rivierstrandjes."
+        ],
+        "restaurants": [
+          "nee",
+          "Landelijk, auto nodig."
+        ],
+        "uitgaan": [
+          "nee",
+          "Heel rustig; voor uitgaan moet je naar Porto (2 uur)."
+        ],
+        "wijn": [
+          "ja",
+          "Eind september is de vindima: druivenoogst en druiven treden bij quintas."
+        ],
+        "boot": [
+          "ja",
+          "Rabelo-boten op de Douro vanuit Pinhão en Régua."
+        ],
+        "natuur": [
+          "ja",
+          "UNESCO-wijnterrassen en uitzichtpunten."
+        ],
+        "stad": [
+          "ja",
+          "Porto, maar dat is 2 uur rijden."
+        ],
+        "padel": [
+          "onbekend",
+          "Geen baan in de directe omgeving gevonden."
+        ],
+        "watersport": [
+          "beperkt",
+          "Kajakken op de rivier."
+        ],
+        "kids": [
+          "beperkt",
+          "Boottocht en rivierstrandjes; verder weinig specifiek voor kleintjes."
+        ],
+        "hooghouden": [
+          "onbekend",
+          "Omheinde tuin, grootte van het grasveld onbekend."
+        ]
+      },
+      "carrier": "transavia",
+      "stempel": {
+        "vorm": "ovaal",
+        "motief": "druiventros",
+        "tekst": "DOURO",
+        "code": "OPO",
+        "datum": "18 SEP 2027",
+        "kleur": "#1F4E9C"
+      },
+      "kidscheck": {
+        "transfer_min": 125,
+        "wieg": true,
+        "kinderstoel": true,
+        "omheind": true,
+        "zwembad": "Privé",
+        "water": "Geen zee; rivierstrandjes",
+        "warmte": "Warm (28°C)",
+        "zorg": "Ziekenhuis in Vila Real, Porto op 2 uur",
+        "oordeel": 3
+      },
+      "pils": {
+        "prijs": 2.5,
+        "merken": [
+          "Super Bock",
+          "Sagres"
+        ],
+        "rondje_mannen": 12.5
+      },
+      "paklijst_extra": []
+    },
+    {
+      "id": "tirana",
+      "groep": "albanie",
+      "land": "Albanië",
+      "naam": "Albanië: Tirana",
+      "subregio": "Heuvels ten westen van Tirana",
+      "tagline": "Bruisende hoofdstad, bunkers en bazaars, en Berat, Kruja en het strand als dagtrip.",
+      "lat": 41.3,
+      "lng": 19.78,
+      "luchthaven": {
+        "naam": "Tirana",
+        "code": "TIA",
+        "lat": 41.414,
+        "lng": 19.721
+      },
+      "vlucht": {
+        "maatschappijen": "Transavia, KLM",
+        "duur": "2u40",
+        "per_week": "ca. 10 direct",
+        "prijs_pp": 220
+      },
+      "transfer": "30 tot 40 min",
+      "klimaat": {
+        "lucht": 27,
+        "zee": 24,
+        "regendagen": 5
+      },
+      "lokaal": {
+        "bier": 2.56,
+        "diner2": 38
+      },
+      "huurauto_per_stuk": 250,
+      "scores": {
+        "zon_zee": [
+          3,
+          "Warm, maar de zee ligt 45 minuten verderop."
+        ],
+        "value": [
+          3,
+          "Villa's met zwembad zijn hier duur, eten en uitjes juist goedkoop."
+        ],
+        "eten": [
+          4,
+          "Goedkoop en goed: byrek, tavë kosi, verse groenten, levendige restaurants."
+        ],
+        "natuur": [
+          4,
+          "Dajti-kabelbaan, Bovilla-meer, bergen rondom."
+        ],
+        "cultuur": [
+          5,
+          "Tirana, Bunk'Art, Kruja en UNESCO-stad Berat."
+        ],
+        "bier": [
+          5,
+          "€ 2,56 voor een halve liter."
+        ],
+        "reisgemak": [
+          4,
+          "Directe vlucht, korte transfer, minder vluchten dan Portugal."
+        ],
+        "veiligheid": [
+          4,
+          "Groen reisadvies, maar onrustig verkeer en beperkte zorg buiten Tirana."
+        ],
+        "exotisch": [
+          5,
+          "Het meest onontdekte land van de lijst."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "De meeste stad en cultuur buiten Lissabon, voor de laagste prijzen ter plekke.",
+          "Het verwarmde zwembad met spa maakt het huis ook buiten het strand een feest."
+        ],
+        "min": [
+          "Geen strand bij het huis.",
+          "Het huis is relatief duur (€ 4.435) en Albanees verkeer vraagt aandacht."
+        ]
+      },
+      "huizen": [
+        {
+          "rol": "Sterkste keuze",
+          "airbnb_id": "1121870004199689834",
+          "naam": "Luxe Villa 2",
+          "plaats": "Pezë e Vogël",
+          "lat": 41.263,
+          "lng": 19.7,
+          "slaapkamers": 5,
+          "max_gasten": 16,
+          "beoordeling": 4.85,
+          "reviews": 72,
+          "prijs_totaal": 4435,
+          "zwembad": "Privé, verwarmd overloopzwembad met afdekzeil, plus jacuzzi",
+          "waarom": "Het enige huis rond Tirana met 5 slaapkamers, veel reviews en alles erop: verwarmd zwembad, spa, tafeltennis, airhockey, barbecue, omheinde tuin, wieg.",
+          "let_op": "Boven het budgetdoel van € 3.500 (€ 554 per persoon); locatiescore 4,35.",
+          "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-1121870004199689834/original/cb65dbf4-93cc-4c5b-a428-df0283e1ac10.png",
+          "kosten_pp": 1246
+        },
+        {
+          "rol": "Alternatief: goedkoper, 4 slaapkamers",
+          "airbnb_id": "1456352605417698552",
+          "naam": "Villa Aries",
+          "plaats": "Vorë",
+          "lat": 41.421,
+          "lng": 19.628,
+          "slaapkamers": 4,
+          "max_gasten": 13,
+          "beoordeling": 5.0,
+          "reviews": 34,
+          "prijs_totaal": 2849,
+          "zwembad": "Privé",
+          "waarom": "Perfecte score, 10 minuten van het vliegveld, € 1.600 goedkoper.",
+          "let_op": "4 slaapkamers: de twee singles delen dan een kamer.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-1456352605417698552/original/1b80a3d4-c065-431d-9d28-6e744a0ca24e.jpeg",
+          "kosten_pp": 1048
+        }
+      ],
+      "kosten_opbouw": {
+        "vlucht_bagage": 290,
+        "auto": 94,
+        "eten_uitjes": 308
+      },
+      "sfeer": "Een week met stadse energie: het huis is de rustige basis, Tirana en de dagtrips zijn het avontuur. Goedkoop uit eten is hier de standaard.",
+      "mogelijkheden": {
+        "strand": [
+          "nee",
+          "Het strand van Durrës is 45 minuten rijden."
+        ],
+        "restaurants": [
+          "nee",
+          "Auto nodig; Tirana op 30 minuten."
+        ],
+        "uitgaan": [
+          "ja",
+          "Blloku in Tirana: bars, clubs en terrassen tot laat."
+        ],
+        "wijn": [
+          "beperkt",
+          "Wijnhuizen rond Berat en Tirana, kleinschalig."
+        ],
+        "boot": [
+          "nee",
+          "Niet in deze regio."
+        ],
+        "natuur": [
+          "ja",
+          "Dajti-berg met kabelbaan en het Bovilla-meer."
+        ],
+        "stad": [
+          "ja",
+          "Tirana op 30 minuten."
+        ],
+        "padel": [
+          "ja",
+          "Padel is populair in Tirana, met meerdere clubs."
+        ],
+        "watersport": [
+          "nee",
+          "Niet in de buurt van het huis."
+        ],
+        "kids": [
+          "beperkt",
+          "Parken en de kabelbaan in Tirana."
+        ],
+        "hooghouden": [
+          "onbekend",
+          "Grote tuin met zwembad; navragen of er gras is."
+        ]
+      },
+      "carrier": "transavia",
+      "stempel": {
+        "vorm": "rond",
+        "motief": "bunker",
+        "tekst": "TIRANA",
+        "code": "TIA",
+        "datum": "18 SEP 2027",
+        "kleur": "#B5121B"
+      },
+      "kidscheck": {
+        "transfer_min": 35,
+        "wieg": true,
+        "kinderstoel": true,
+        "omheind": true,
+        "zwembad": "Verwarmd, met afdekzeil",
+        "water": "Zee op 45 minuten",
+        "warmte": "Warm (27°C)",
+        "zorg": "Beste zorg van Albanië in Tirana",
+        "oordeel": 4
+      },
+      "pils": {
+        "prijs": 2.56,
+        "merken": [
+          "Birra Korça",
+          "Birra Tirana"
+        ],
+        "rondje_mannen": 12.8
+      },
+      "paklijst_extra": []
+    },
+    {
+      "id": "durres",
+      "groep": "albanie",
+      "land": "Albanië",
+      "naam": "Albanië: strand bij Durrës",
+      "subregio": "Golem en de baai van Durrës",
+      "tagline": "Villa direct aan het strand, met Tirana en Berat binnen handbereik.",
+      "lat": 41.24,
+      "lng": 19.52,
+      "luchthaven": {
+        "naam": "Tirana",
+        "code": "TIA",
+        "lat": 41.414,
+        "lng": 19.721
+      },
+      "vlucht": {
+        "maatschappijen": "Transavia, KLM",
+        "duur": "2u40",
+        "per_week": "ca. 10 direct",
+        "prijs_pp": 220
+      },
+      "transfer": "40 tot 50 min",
+      "klimaat": {
+        "lucht": 26,
+        "zee": 24,
+        "regendagen": 5
+      },
+      "lokaal": {
+        "bier": 2.56,
+        "diner2": 38
+      },
+      "huurauto_per_stuk": 250,
+      "scores": {
+        "zon_zee": [
+          4,
+          "Zee van 24°C, zandstrand voor de deur."
+        ],
+        "value": [
+          4,
+          "Strandvilla voor € 3.409 en de laagste prijzen ter plekke."
+        ],
+        "eten": [
+          3,
+          "Goede vis en grill, minder verfijnd dan Tirana."
+        ],
+        "natuur": [
+          2,
+          "Kust is flink bebouwd; mooie natuur ligt op een uur rijden."
+        ],
+        "cultuur": [
+          3,
+          "Romeins amfitheater, Tirana en Kruja als dagtrip."
+        ],
+        "bier": [
+          5,
+          "€ 2,56 voor een halve liter."
+        ],
+        "reisgemak": [
+          4,
+          "Directe vlucht, 45 minuten naar het strandhuis."
+        ],
+        "veiligheid": [
+          4,
+          "Groen reisadvies, verkeer vraagt aandacht."
+        ],
+        "exotisch": [
+          4,
+          "Albanees badplaatsleven, nog weinig Nederlanders."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "Een van de weinige opties met het strand echt voor de deur.",
+          "Goedkoopste combinatie van strandvilla en uitgaan in het hele overzicht."
+        ],
+        "min": [
+          "De kust bij Golem is volgebouwd met appartementen: niet de ansichtkaart-Rivièra.",
+          "Zwembad is seizoensgebonden: navragen of het eind september open is."
+        ]
+      },
+      "huizen": [
+        {
+          "rol": "Sterkste keuze",
+          "airbnb_id": "37109682",
+          "naam": "Villa Lidson",
+          "plaats": "Golem",
+          "lat": 41.25,
+          "lng": 19.521,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 4.94,
+          "reviews": 32,
+          "prijs_totaal": 3409,
+          "zwembad": "Privé baantjesbad, seizoensgebonden",
+          "waarom": "Direct aan het strand, 5 slaapkamers met elk een eigen badkamer, 3 verdiepingen, omheinde tuin, wieg, airco, zeezicht.",
+          "let_op": "Locatiescore 4,44: drukke badplaats. Navragen of het zwembad eind september open is.",
+          "foto": "https://a0.muscache.com/im/pictures/61d97158-f845-4973-b94b-30184cc81e01.jpg",
+          "kosten_pp": 1118
+        },
+        {
+          "rol": "Alternatief: rustiger",
+          "airbnb_id": "1298432057050427019",
+          "naam": "Garden Hill Villa",
+          "plaats": "Durrës (heuvels)",
+          "lat": 41.325,
+          "lng": 19.5,
+          "slaapkamers": 5,
+          "max_gasten": 11,
+          "beoordeling": 4.97,
+          "reviews": 32,
+          "prijs_totaal": 3543,
+          "zwembad": "Privé",
+          "waarom": "Rustig in de heuvels boven Durrës, hoogste waarderingsscore (4,97 voor prijs-kwaliteit).",
+          "let_op": "Strand op een paar minuten rijden.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-1298432057050427019/original/1c4b17fe-ec4d-4fd7-9825-b7106856ac67.png",
+          "kosten_pp": 1135
+        },
+        {
+          "rol": "Alternatief: 6 slaapkamers",
+          "airbnb_id": "48717163",
+          "naam": "Villa Curti",
+          "plaats": "Karpen",
+          "lat": 41.197,
+          "lng": 19.494,
+          "slaapkamers": 6,
+          "max_gasten": 15,
+          "beoordeling": 4.91,
+          "reviews": 23,
+          "prijs_totaal": 3673,
+          "zwembad": "Privé, seizoensgebonden",
+          "waarom": "Aan een rustiger stuk strand, 6 slaapkamers.",
+          "let_op": "Geen wieg vermeld.",
+          "foto": "https://a0.muscache.com/im/pictures/3688dc68-26fa-4cdb-9fb3-ae4f70b0f2bf.jpg",
+          "kosten_pp": 1151
+        }
+      ],
+      "kosten_opbouw": {
+        "vlucht_bagage": 290,
+        "auto": 94,
+        "eten_uitjes": 308
+      },
+      "sfeer": "Een strandweek in Albanese stijl: voeten in het zand, vis aan de boulevard en Tirana of Kruja als uitstapje.",
+      "mogelijkheden": {
+        "strand": [
+          "ja",
+          "Zandstrand direct voor de deur."
+        ],
+        "restaurants": [
+          "ja",
+          "Strandrestaurants en beach bars op loopafstand."
+        ],
+        "uitgaan": [
+          "beperkt",
+          "Beach bars in Golem en Durrës; eind september wordt het rustiger."
+        ],
+        "wijn": [
+          "beperkt",
+          "Kleine wijnhuizen in het binnenland."
+        ],
+        "boot": [
+          "beperkt",
+          "Korte tochtjes langs de kust."
+        ],
+        "natuur": [
+          "beperkt",
+          "Natuurpark Divjaka-Karavasta op een uur rijden."
+        ],
+        "stad": [
+          "ja",
+          "Tirana op 45 minuten."
+        ],
+        "padel": [
+          "beperkt",
+          "Banen in Tirana, op 45 minuten."
+        ],
+        "watersport": [
+          "beperkt",
+          "Zwemmen en suppen; geen snorkelwater."
+        ],
+        "kids": [
+          "ja",
+          "Ondiep zandstrand direct bij het huis."
+        ],
+        "hooghouden": [
+          "ja",
+          "Het zandstrand voor de deur is het veld."
+        ]
+      },
+      "carrier": "transavia",
+      "stempel": {
+        "vorm": "rechthoek",
+        "motief": "amfitheater",
+        "tekst": "DURRËS",
+        "code": "TIA",
+        "datum": "18 SEP 2027",
+        "kleur": "#B5121B"
+      },
+      "kidscheck": {
+        "transfer_min": 45,
+        "wieg": true,
+        "kinderstoel": false,
+        "omheind": true,
+        "zwembad": "Seizoensgebonden, navragen",
+        "water": "Ondiep zandstrand voor de deur",
+        "warmte": "Aangenaam (26°C)",
+        "zorg": "Ziekenhuis in Durrës, Tirana op 45 minuten",
+        "oordeel": 4
+      },
+      "pils": {
+        "prijs": 2.56,
+        "merken": [
+          "Birra Korça",
+          "Birra Tirana"
+        ],
+        "rondje_mannen": 12.8
+      },
+      "paklijst_extra": []
+    },
+    {
+      "id": "vlore",
+      "groep": "albanie",
+      "land": "Albanië",
+      "naam": "Albanië: zuidkust bij Vlorë",
+      "subregio": "Orikum, Karaburun en de poort naar de Rivièra",
+      "tagline": "Ruige bergen in zee, verborgen baaien per boot en de Llogara-pas.",
+      "lat": 40.33,
+      "lng": 19.48,
+      "luchthaven": {
+        "naam": "Tirana",
+        "code": "TIA",
+        "lat": 41.414,
+        "lng": 19.721
+      },
+      "vlucht": {
+        "maatschappijen": "Transavia, KLM",
+        "duur": "2u40",
+        "per_week": "ca. 10 direct",
+        "prijs_pp": 220
+      },
+      "transfer": "2u15",
+      "klimaat": {
+        "lucht": 27,
+        "zee": 24,
+        "regendagen": 4
+      },
+      "lokaal": {
+        "bier": 2.56,
+        "diner2": 38
+      },
+      "huurauto_per_stuk": 250,
+      "scores": {
+        "zon_zee": [
+          4,
+          "Helder water van 24°C, warme dagen."
+        ],
+        "value": [
+          4,
+          "Gezinsvilla voor € 3.643 en lage prijzen ter plekke."
+        ],
+        "eten": [
+          3,
+          "Verse vis en lamsvlees, eenvoudig maar goed."
+        ],
+        "natuur": [
+          5,
+          "Karaburun, Sazan, de Llogara-pas en de stranden van de Rivièra."
+        ],
+        "cultuur": [
+          3,
+          "Apollonia en het oude Vlorë."
+        ],
+        "bier": [
+          5,
+          "€ 2,56 voor een halve liter."
+        ],
+        "reisgemak": [
+          2,
+          "2u15 rijden vanaf Tirana, deels bergweg."
+        ],
+        "veiligheid": [
+          3,
+          "Groen reisadvies, maar langste rit over Albanese wegen."
+        ],
+        "exotisch": [
+          5,
+          "Het meest avontuurlijke stuk kust van de lijst."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "Mooiste natuur van alle Albanese opties, met boottochten naar onbewoonde kusten.",
+          "De echte Rivièra (Dhërmi, Gjipe) ligt op een uur."
+        ],
+        "min": [
+          "Langste transfer van alle opties met kleine kinderen.",
+          "Maar één sterk huis gevonden: weinig uitwijkmogelijkheden."
+        ]
+      },
+      "huizen": [
+        {
+          "rol": "Sterkste keuze",
+          "airbnb_id": "1364943",
+          "naam": "Family Beach Villa",
+          "plaats": "Orikum",
+          "lat": 40.33,
+          "lng": 19.477,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 4.88,
+          "reviews": 26,
+          "prijs_totaal": 3643,
+          "zwembad": "Privé baantjesbad met speelgoed, seizoensgebonden",
+          "waarom": "Op gezinnen ingericht: wieg, kinderstoel, omheinde tuin, zwembadspeelgoed, airco, zeezicht en balkon met uitzicht op de bergen.",
+          "let_op": "Het enige sterke huis in deze regio. Zwembad eind september navragen.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-1364943/original/1a6544bd-60cb-4031-8d80-d92f70d2f9c2.jpeg",
+          "kosten_pp": 1147
+        }
+      ],
+      "kosten_opbouw": {
+        "vlucht_bagage": 290,
+        "auto": 94,
+        "eten_uitjes": 308
+      },
+      "sfeer": "Ruig en avontuurlijk: de dagen draaien om boottochten naar verlaten baaien en ritten over de bergpas naar de Rivièra. Het huis is de uitvalsbasis.",
+      "mogelijkheden": {
+        "strand": [
+          "beperkt",
+          "Stranden van Orikum dichtbij; de mooiste baaien per boot of via de Llogara-pas."
+        ],
+        "restaurants": [
+          "beperkt",
+          "Een paar restaurants in Orikum; meer keuze in Vlorë (30 min)."
+        ],
+        "uitgaan": [
+          "beperkt",
+          "Bars aan de boulevard van Vlorë."
+        ],
+        "wijn": [
+          "beperkt",
+          "Wijnhuis in Narta, bij de lagune."
+        ],
+        "boot": [
+          "ja",
+          "Naar Karaburun, de grot van Haxhi Ali en het eiland Sazan."
+        ],
+        "natuur": [
+          "ja",
+          "Karaburun, de Llogara-pas en de Rivièra."
+        ],
+        "stad": [
+          "nee",
+          "Tirana is 2u15 rijden."
+        ],
+        "padel": [
+          "onbekend",
+          "Geen baan in de buurt gevonden."
+        ],
+        "watersport": [
+          "ja",
+          "Snorkelen in helder water rond Karaburun."
+        ],
+        "kids": [
+          "beperkt",
+          "Strand en zwembad; weinig specifieke uitjes."
+        ],
+        "hooghouden": [
+          "onbekend",
+          "Bloementuin; navragen of er gras is."
+        ]
+      },
+      "carrier": "transavia",
+      "stempel": {
+        "vorm": "driehoek",
+        "motief": "bergen",
+        "tekst": "VLORË",
+        "code": "TIA",
+        "datum": "18 SEP 2027",
+        "kleur": "#B5121B"
+      },
+      "kidscheck": {
+        "transfer_min": 135,
+        "wieg": true,
+        "kinderstoel": true,
+        "omheind": true,
+        "zwembad": "Seizoensgebonden, met speelgoed",
+        "water": "Helder en rustig, kiezel en zand",
+        "warmte": "Warm (27°C)",
+        "zorg": "Beperkt; ziekenhuis in Vlorë",
+        "oordeel": 2
+      },
+      "pils": {
+        "prijs": 2.56,
+        "merken": [
+          "Birra Korça",
+          "Birra Tirana"
+        ],
+        "rondje_mannen": 12.8
+      },
+      "paklijst_extra": [
+        "Waterschoentjes (kiezelstranden)"
+      ]
+    },
+    {
+      "id": "spanje",
+      "groep": "klassiek",
+      "land": "Spanje",
+      "naam": "Spanje: Málaga",
+      "subregio": "Heuvels boven Málaga en de Costa del Sol",
+      "tagline": "Tapas, padel in elk dorp en Málaga op 20 minuten, met Ronda en Granada als dagtrip.",
+      "sfeer": "Zorgeloos genieten: tapas en vermouth in Málaga, padel in de ochtend, middagen bij het zwembad met uitzicht over de vallei.",
+      "lat": 36.66,
+      "lng": -4.56,
+      "luchthaven": {
+        "naam": "Málaga",
+        "code": "AGP",
+        "lat": 36.675,
+        "lng": -4.499
+      },
+      "vlucht": {
+        "maatschappijen": "Transavia, KLM, Ryanair, Vueling",
+        "duur": "3u00",
+        "per_week": "dagelijks, meerdere per dag",
+        "prijs_pp": 180
+      },
+      "transfer": "20 min",
+      "klimaat": {
+        "lucht": 27,
+        "zee": 22,
+        "regendagen": 2
+      },
+      "lokaal": {
+        "bier": 3.0,
+        "diner2": 50
+      },
+      "huurauto_per_stuk": 300,
+      "scores": {
+        "zon_zee": [
+          4,
+          "27°C en zee van 22°C."
+        ],
+        "value": [
+          4,
+          "Sterke villa's van € 2.100 tot € 3.900, betaalbare tapas."
+        ],
+        "eten": [
+          5,
+          "Tapas, espetos (sardines aan het spit) en ajo blanco."
+        ],
+        "natuur": [
+          4,
+          "Caminito del Rey, El Torcal en de witte dorpen."
+        ],
+        "cultuur": [
+          4,
+          "Málaga, Ronda en het Alhambra in Granada (1u30)."
+        ],
+        "bier": [
+          4,
+          "€ 3,00 voor een halve liter."
+        ],
+        "reisgemak": [
+          5,
+          "Veel vluchten, 20 minuten naar het huis."
+        ],
+        "veiligheid": [
+          5,
+          "Groen reisadvies."
+        ],
+        "exotisch": [
+          1,
+          "Veel Nederlanders kennen het al."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "Padel is hier overal, in bijna elk dorp ligt een baan.",
+          "Samen met Lissabon de meeste vluchten en de kortste transfer."
+        ],
+        "min": [
+          "De kust is druk en flink bebouwd.",
+          "Het minst avontuurlijke land van de lijst."
+        ]
+      },
+      "mogelijkheden": {
+        "strand": [
+          "beperkt",
+          "Stranden van Torremolinos en Benalmádena op ca. 20 minuten."
+        ],
+        "restaurants": [
+          "nee",
+          "Auto nodig; villa op een heuvel."
+        ],
+        "uitgaan": [
+          "ja",
+          "Tapasbars in Málaga op 20 minuten, Marbella iets verder."
+        ],
+        "wijn": [
+          "beperkt",
+          "Wijnhuizen rond Ronda (1 uur) en zoete wijn uit de Axarquía."
+        ],
+        "boot": [
+          "beperkt",
+          "Dolfijntochten vanuit Benalmádena."
+        ],
+        "natuur": [
+          "ja",
+          "Caminito del Rey en El Torcal."
+        ],
+        "stad": [
+          "ja",
+          "Málaga op 20 minuten, Granada op 1u30."
+        ],
+        "padel": [
+          "ja",
+          "Spanje is het padelland bij uitstek."
+        ],
+        "watersport": [
+          "beperkt",
+          "Suppen en kajakken; geen bijzonder snorkelwater."
+        ],
+        "kids": [
+          "ja",
+          "Bioparc in Fuengirola en Selwo Marina."
+        ],
+        "hooghouden": [
+          "beperkt",
+          "Grote, privé tuin; type ondergrond onbekend."
+        ]
+      },
+      "huizen": [
+        {
+          "rol": "Sterkste keuze",
+          "airbnb_id": "2359648",
+          "naam": "Andalusische villa",
+          "plaats": "Alhaurín de la Torre",
+          "lat": 36.644,
+          "lng": -4.583,
+          "slaapkamers": 5,
+          "max_gasten": 11,
+          "beoordeling": 4.95,
+          "reviews": 189,
+          "prijs_totaal": 3880,
+          "zwembad": "Privé, verwarmd, zout water",
+          "waarom": "Meeste reviews van de hele lijst, panoramisch uitzicht over de vallei, speelgoed 0 tot 2 jaar, kinderstoel, omheinde tuin, airco. 20 minuten van het vliegveld.",
+          "let_op": "Strand op 20 minuten rijden.",
+          "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-2359648/original/3b2e5142-4b90-4b3b-a464-74f0ed7502c1.jpeg",
+          "kosten_pp": 1197
+        },
+        {
+          "rol": "Alternatief: veel goedkoper",
+          "airbnb_id": "927434751685209474",
+          "naam": "Finca Volando",
+          "plaats": "Bergen ten noorden van Málaga",
+          "lat": 36.85,
+          "lng": -4.24,
+          "slaapkamers": 6,
+          "max_gasten": 10,
+          "beoordeling": 4.97,
+          "reviews": 59,
+          "prijs_totaal": 2100,
+          "zwembad": "Privé, zout water",
+          "waarom": "6 slaapkamers met uitzicht over bergen en zee, speeltuin en speelgoed, voor € 2.100.",
+          "let_op": "Tuin niet volledig omheind; verder van het strand.",
+          "foto": "https://a0.muscache.com/im/pictures/9c7333f7-3af8-48d5-a523-dcba12f94681.jpg",
+          "kosten_pp": 974
+        },
+        {
+          "rol": "Alternatief: Mijas",
+          "airbnb_id": "651252460413114501",
+          "naam": "Casa Karibu",
+          "plaats": "Mijas",
+          "lat": 36.599,
+          "lng": -4.68,
+          "slaapkamers": 5,
+          "max_gasten": 11,
+          "beoordeling": 4.91,
+          "reviews": 34,
+          "prijs_totaal": 3309,
+          "zwembad": "Privé",
+          "waarom": "Ruime familievilla op een hectare grond aan de voet van de Sierra de Mijas, omheinde tuin, airco.",
+          "let_op": "Minder reviews dan de sterkste keuze.",
+          "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NjUxMjUyNDYwNDEzMTE0NTAx/original/ede32b7e-f625-44ef-b163-c8ef1a84f4f7.jpeg",
+          "kosten_pp": 1126
+        }
+      ],
+      "kosten_opbouw": {
+        "vlucht_bagage": 250,
+        "auto": 112,
+        "eten_uitjes": 350
+      },
+      "carrier": "transavia",
+      "stempel": {
+        "vorm": "zeshoek",
+        "motief": "padelracket",
+        "tekst": "MÁLAGA",
+        "code": "AGP",
+        "datum": "18 SEP 2027",
+        "kleur": "#C65D3B"
+      },
+      "kidscheck": {
+        "transfer_min": 20,
+        "wieg": true,
+        "kinderstoel": true,
+        "omheind": true,
+        "zwembad": "Verwarmd",
+        "water": "Rustige zandstranden",
+        "warmte": "Warm (27°C)",
+        "zorg": "Grote ziekenhuizen in Málaga",
+        "oordeel": 5
+      },
+      "pils": {
+        "prijs": 3.0,
+        "merken": [
+          "Victoria (uit Málaga)",
+          "Cruzcampo"
+        ],
+        "rondje_mannen": 15.0
+      },
+      "paklijst_extra": []
+    },
+    {
+      "id": "kroatie",
+      "groep": "klassiek",
+      "land": "Kroatië",
+      "naam": "Kroatië: Dalmatië",
+      "subregio": "Kaštela tussen Split en Trogir",
+      "tagline": "Kortste reis van deur tot zwembad, eilanden als dagtrip en de geboortegrond van de Zinfandel.",
+      "sfeer": "Licht en makkelijk: zwemmen in de Adriatische Zee, een boot naar Hvar of Brač, en 's avonds een wandeling over de Riva van Split.",
+      "lat": 43.55,
+      "lng": 16.35,
+      "luchthaven": {
+        "naam": "Split",
+        "code": "SPU",
+        "lat": 43.539,
+        "lng": 16.298
+      },
+      "vlucht": {
+        "maatschappijen": "KLM, Transavia, easyJet",
+        "duur": "2u10",
+        "per_week": "dagelijks",
+        "prijs_pp": 190
+      },
+      "transfer": "10 tot 15 min",
+      "klimaat": {
+        "lucht": 25,
+        "zee": 23,
+        "regendagen": 4
+      },
+      "lokaal": {
+        "bier": 3.5,
+        "diner2": 60
+      },
+      "huurauto_per_stuk": 300,
+      "scores": {
+        "zon_zee": [
+          3,
+          "25°C en zee van 23°C, iets wisselvalliger dan het zuiden."
+        ],
+        "value": [
+          5,
+          "Villa met 5,0 uit 130 reviews voor € 3.309; meeste keuze van alle opties."
+        ],
+        "eten": [
+          4,
+          "Peka, gegrilde vis, pršut en lokale wijn."
+        ],
+        "natuur": [
+          5,
+          "Watervallen van Krka, de Cetina-kloof en de eilanden."
+        ],
+        "cultuur": [
+          5,
+          "Diocletianuspaleis in Split en UNESCO-stadje Trogir."
+        ],
+        "bier": [
+          4,
+          "€ 3,50 voor een halve liter."
+        ],
+        "reisgemak": [
+          5,
+          "2u10 vliegen en 15 minuten naar het huis: de kortste reis van allemaal."
+        ],
+        "veiligheid": [
+          5,
+          "Groen reisadvies."
+        ],
+        "exotisch": [
+          2,
+          "Bekend, maar met eilanden die nog verrassen."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "Kortste totale reistijd van alle opties: ideaal met kleine kinderen.",
+          "Grootste aanbod van sterke huizen, dus makkelijk uitwijken."
+        ],
+        "min": [
+          "Eind september koeler en wisselvalliger dan Turkije, Gozo of Sicilië.",
+          "Split en de eilanden zijn toeristisch geprijsd."
+        ]
+      },
+      "mogelijkheden": {
+        "strand": [
+          "ja",
+          "Kiezelstrandjes en de boulevard van Kaštela op loopafstand."
+        ],
+        "restaurants": [
+          "ja",
+          "Restaurants aan het water in Kaštel Lukšić, naar schatting 10 minuten lopen."
+        ],
+        "uitgaan": [
+          "ja",
+          "Bars in en rond het Diocletianuspaleis in Split, 20 minuten."
+        ],
+        "wijn": [
+          "ja",
+          "Kaštela is de bakermat van de Zinfandel (Crljenak Kaštelanski); proeven bij kleine wijnhuizen."
+        ],
+        "boot": [
+          "ja",
+          "Veerboten en tochten naar Hvar, Brač en Šolta."
+        ],
+        "natuur": [
+          "ja",
+          "Krka-watervallen (1 uur) en de Cetina-kloof bij Omiš."
+        ],
+        "stad": [
+          "ja",
+          "Split op 20 minuten."
+        ],
+        "padel": [
+          "ja",
+          "Padelcentrum in Kaštel Štafilić en meerdere clubs in Split."
+        ],
+        "watersport": [
+          "ja",
+          "Kajakken, snorkelen en raften op de Cetina."
+        ],
+        "kids": [
+          "beperkt",
+          "Speeltuin bij het huis en rustige strandjes."
+        ],
+        "hooghouden": [
+          "beperkt",
+          "Grote tuin met speelplek; strand en promenade op loopafstand."
+        ]
+      },
+      "huizen": [
+        {
+          "rol": "Sterkste keuze",
+          "airbnb_id": "19341867",
+          "naam": "Villa Tissa",
+          "plaats": "Kaštel Lukšić",
+          "lat": 43.559,
+          "lng": 16.364,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 5.0,
+          "reviews": 130,
+          "prijs_totaal": 3309,
+          "zwembad": "Privé, verwarmd, plus jacuzzi",
+          "waarom": "Perfecte score over 130 reviews. Groot verwarmd zwembad, jacuzzi, infraroodsauna, tafeltennis, speelplek voor kinderen, wieg, kinderstoel, omheinde tuin, airco.",
+          "let_op": "Zwembad is seizoensgebonden: navragen of het eind september verwarmd open is.",
+          "foto": "https://a0.muscache.com/im/pictures/808ec4a8-2dee-4f4b-b5ad-d6a7e4f075ba.jpg",
+          "kosten_pp": 1171
+        },
+        {
+          "rol": "Alternatief: bij Trogir",
+          "airbnb_id": "50868740",
+          "naam": "Villa Petra",
+          "plaats": "Seget Donji (Trogir)",
+          "lat": 43.521,
+          "lng": 16.229,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 5.0,
+          "reviews": 80,
+          "prijs_totaal": 3625,
+          "zwembad": "Privé, verwarmd",
+          "waarom": "Nieuwbouwvilla bij het UNESCO-stadje Trogir, speeltuin, omheinde tuin, centrale airco.",
+          "let_op": "Geen wieg vermeld.",
+          "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NTA4Njg3NDA%3D/original/18560edc-1d54-41b2-8b78-b8e9226cc683.jpeg",
+          "kosten_pp": 1210
+        }
+      ],
+      "kosten_opbouw": {
+        "vlucht_bagage": 260,
+        "auto": 112,
+        "eten_uitjes": 385
+      },
+      "carrier": "klm",
+      "stempel": {
+        "vorm": "rond",
+        "motief": "zuilen",
+        "tekst": "SPLIT",
+        "code": "SPU",
+        "datum": "18 SEP 2027",
+        "kleur": "#0E5A8A"
+      },
+      "kidscheck": {
+        "transfer_min": 15,
+        "wieg": true,
+        "kinderstoel": true,
+        "omheind": true,
+        "zwembad": "Verwarmd, seizoensgebonden",
+        "water": "Kiezelstrand: waterschoentjes mee",
+        "warmte": "Aangenaam (25°C)",
+        "zorg": "Universitair ziekenhuis in Split",
+        "oordeel": 5
+      },
+      "pils": {
+        "prijs": 3.5,
+        "merken": [
+          "Ožujsko",
+          "Karlovačko"
+        ],
+        "rondje_mannen": 17.5
+      },
+      "paklijst_extra": [
+        "Waterschoentjes (kiezelstrandjes)"
+      ]
+    },
+    {
+      "id": "fethiye",
+      "groep": "exoot",
+      "land": "Turkije",
+      "naam": "Turkije: Fethiye",
+      "subregio": "Turquoise Kust tussen Fethiye en Kaş",
+      "tagline": "Warmste zee van de lijst, eindeloze mezetafels en villa's voor de helft van de prijs.",
+      "lat": 36.55,
+      "lng": 29.2,
+      "luchthaven": {
+        "naam": "Dalaman",
+        "code": "DLM",
+        "lat": 36.713,
+        "lng": 28.793
+      },
+      "vlucht": {
+        "maatschappijen": "TUI, Corendon",
+        "duur": "3u45",
+        "per_week": "ca. 4 direct",
+        "prijs_pp": 340
+      },
+      "transfer": "45 min (Fethiye) tot 2 uur (Kaş)",
+      "klimaat": {
+        "lucht": 31,
+        "zee": 26,
+        "regendagen": 1
+      },
+      "lokaal": {
+        "bier": 3.25,
+        "diner2": 36
+      },
+      "huurauto_per_stuk": 300,
+      "scores": {
+        "zon_zee": [
+          5,
+          "31°C en zee van 26°C: de beste garantie van de lijst."
+        ],
+        "value": [
+          5,
+          "Villa met verwarmd zwembad, sauna en hamam voor € 2.060."
+        ],
+        "eten": [
+          5,
+          "Turks ontbijt, meze en de vismarkt van Fethiye: de ultieme borreltafel."
+        ],
+        "natuur": [
+          5,
+          "Ölüdeniz, de Saklıkent-kloof, de Lycische kust en eilandjes per boot."
+        ],
+        "cultuur": [
+          4,
+          "Lycische rotsgraven, spookdorp Kayaköy, Tlos en Patara."
+        ],
+        "bier": [
+          4,
+          "€ 3,25 voor een halve liter."
+        ],
+        "reisgemak": [
+          2,
+          "Langste vlucht, maar ca. 4 directe vluchten per week; zaterdag niet zeker."
+        ],
+        "veiligheid": [
+          3,
+          "Geel reisadvies voor heel Turkije; de kust is rustig, dreiging zit vooral in grote steden."
+        ],
+        "exotisch": [
+          5,
+          "Andere cultuur, andere keuken, ander landschap."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "Warmste zee en beste prijs-kwaliteit van alle opties.",
+          "Het beste eten voor jullie stijl van tafelen."
+        ],
+        "min": [
+          "Enige optie met geel reisadvies.",
+          "Minste directe vluchten en langste vliegtijd."
+        ]
+      },
+      "huizen": [
+        {
+          "rol": "Sterkste keuze",
+          "airbnb_id": "16980777",
+          "naam": "Luxe villa met verwarmd zwembad, sauna en hamam",
+          "plaats": "Fethiye",
+          "lat": 36.565,
+          "lng": 29.144,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 4.93,
+          "reviews": 29,
+          "prijs_totaal": 2060,
+          "zwembad": "Privé, verwarmd",
+          "waarom": "Rustig met bergzicht, verwarmd zwembad, bubbelbad, sauna en hamam, speeltuin, omheinde tuin, wieg, airco. Voor € 2.060.",
+          "let_op": "Strand op 15 tot 20 minuten rijden.",
+          "foto": "https://a0.muscache.com/im/pictures/f970e6b4-f4fb-42a1-970e-214a1b39b9b0.jpg",
+          "kosten_pp": 1080
+        },
+        {
+          "rol": "Alternatief: meeste reviews en zeezicht",
+          "airbnb_id": "6373817",
+          "naam": "Villa met zeezicht",
+          "plaats": "Kaş",
+          "lat": 36.265,
+          "lng": 29.425,
+          "slaapkamers": 5,
+          "max_gasten": 14,
+          "beoordeling": 4.88,
+          "reviews": 138,
+          "prijs_totaal": 2247,
+          "zwembad": "Privé, plus jacuzzi",
+          "waarom": "5 suites met zeezicht boven Kaş, het mooiste stadje van de kust. 138 reviews.",
+          "let_op": "2 uur rijden vanaf Dalaman; geen omheinde tuin vermeld.",
+          "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-6373817/original/1d7b2630-1071-49c8-ae4d-863aa5dfce93.jpeg",
+          "kosten_pp": 1104
+        },
+        {
+          "rol": "Alternatief: goedkoopst",
+          "airbnb_id": "51382651",
+          "naam": "Villa met eigen zwembad",
+          "plaats": "Fethiye centrum",
+          "lat": 36.649,
+          "lng": 29.13,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 5.0,
+          "reviews": 23,
+          "prijs_totaal": 1947,
+          "zwembad": "Privé, seizoensgebonden",
+          "waarom": "Perfecte score, speeltuin en omheinde tuin, dicht bij restaurants.",
+          "let_op": "Minder rustig dan de heuvels.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-51382651/original/7184e3b9-a6ed-40fc-8d05-916aee4afbfa.jpeg",
+          "kosten_pp": 1066
+        }
+      ],
+      "kosten_opbouw": {
+        "vlucht_bagage": 410,
+        "auto": 112,
+        "eten_uitjes": 301
+      },
+      "sfeer": "Warm, overvloedig en exotisch: lange ontbijten met meze, bootdagen langs eilandjes en avonden aan de haven. De zon is hier bijna gegarandeerd.",
+      "mogelijkheden": {
+        "strand": [
+          "beperkt",
+          "Çalış en Ölüdeniz op 15 tot 25 minuten rijden."
+        ],
+        "restaurants": [
+          "nee",
+          "Auto nodig; rustig gelegen in de heuvels."
+        ],
+        "uitgaan": [
+          "ja",
+          "Haven en oude stad van Fethiye, bars in Hisarönü."
+        ],
+        "wijn": [
+          "nee",
+          "Weinig wijncultuur; wel raki."
+        ],
+        "boot": [
+          "ja",
+          "Dagtocht langs de 12 eilanden, boten vanuit Ölüdeniz."
+        ],
+        "natuur": [
+          "ja",
+          "Saklıkent-kloof, Lycische Weg, Babadağ."
+        ],
+        "stad": [
+          "nee",
+          "Geen grote stad in de buurt."
+        ],
+        "padel": [
+          "onbekend",
+          "Geen baan kunnen bevestigen."
+        ],
+        "watersport": [
+          "ja",
+          "Snorkelen, kajakken en paragliden boven Ölüdeniz."
+        ],
+        "kids": [
+          "beperkt",
+          "Kalm water in de lagune van Ölüdeniz."
+        ],
+        "hooghouden": [
+          "onbekend",
+          "Omheinde tuin, grootte onbekend."
+        ]
+      },
+      "carrier": "corendon",
+      "stempel": {
+        "vorm": "ovaal",
+        "motief": "rotsgraf",
+        "tekst": "FETHİYE",
+        "code": "DLM",
+        "datum": "18 SEP 2027",
+        "kleur": "#138A8A"
+      },
+      "kidscheck": {
+        "transfer_min": 45,
+        "wieg": true,
+        "kinderstoel": true,
+        "omheind": true,
+        "zwembad": "Verwarmd",
+        "water": "Kalm in de lagune van Ölüdeniz",
+        "warmte": "Heet (31°C): schaduw en middagrust nodig",
+        "zorg": "Privéziekenhuizen in Fethiye",
+        "oordeel": 3
+      },
+      "pils": {
+        "prijs": 3.25,
+        "merken": [
+          "Efes"
+        ],
+        "rondje_mannen": 16.25
+      },
+      "paklijst_extra": []
+    },
+    {
+      "id": "gozo",
+      "groep": "exoot",
+      "land": "Malta",
+      "naam": "Gozo",
+      "subregio": "Xagħra en het platteland van Gozo",
+      "tagline": "Stenen boerderijen, tempels ouder dan de piramides en een dorpsplein om de hoek.",
+      "lat": 36.05,
+      "lng": 14.25,
+      "luchthaven": {
+        "naam": "Malta",
+        "code": "MLA",
+        "lat": 35.857,
+        "lng": 14.477
+      },
+      "vlucht": {
+        "maatschappijen": "KLM, easyJet, KM Malta Airlines",
+        "duur": "3u05",
+        "per_week": "dagelijks",
+        "prijs_pp": 200
+      },
+      "transfer": "ca. 1u45 incl. veerboot van 25 min",
+      "klimaat": {
+        "lucht": 28,
+        "zee": 25,
+        "regendagen": 3
+      },
+      "lokaal": {
+        "bier": 4.0,
+        "diner2": 75
+      },
+      "huurauto_per_stuk": 300,
+      "scores": {
+        "zon_zee": [
+          5,
+          "28°C en zee van 25°C."
+        ],
+        "value": [
+          3,
+          "Sterke huizen rond € 3.700, restaurants relatief duur."
+        ],
+        "eten": [
+          4,
+          "Ftira, kaasjes, konijnenstoof en verse vis; tafelen op het dorpsplein."
+        ],
+        "natuur": [
+          4,
+          "Rode strand van Ramla, Dwejra en het Blue Lagoon van Comino."
+        ],
+        "cultuur": [
+          5,
+          "Ġgantija-tempels, de citadel van Victoria en Valletta."
+        ],
+        "bier": [
+          4,
+          "€ 4,00 voor een halve liter."
+        ],
+        "reisgemak": [
+          3,
+          "Veel vluchten, maar met veerboot erbij."
+        ],
+        "veiligheid": [
+          5,
+          "Groen reisadvies, Engelstalig, goede zorg; links rijden."
+        ],
+        "exotisch": [
+          4,
+          "Klein eiland met eigen taal en sfeer."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "Enige optie waar je vanuit het huis naar restaurants kunt lopen.",
+          "Combinatie van warmste zee en veel cultuur."
+        ],
+        "min": [
+          "Duurste restaurants van de lijst.",
+          "Extra veerboot en links rijden."
+        ]
+      },
+      "huizen": [
+        {
+          "rol": "Sterkste keuze",
+          "airbnb_id": "656440171708352758",
+          "naam": "Dar Ta Nina (Xagħra Villa)",
+          "plaats": "Xagħra",
+          "lat": 36.049,
+          "lng": 14.264,
+          "slaapkamers": 5,
+          "max_gasten": 12,
+          "beoordeling": 4.97,
+          "reviews": 36,
+          "prijs_totaal": 3722,
+          "zwembad": "Privé",
+          "waarom": "Grote stenen familieboerderij op 2 minuten lopen van het dorpsplein met restaurants. Wieg, kinderstoel, speelgoed, omheinde tuin, centrale airco.",
+          "let_op": "Restaurants zijn hier duurder dan elders.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-656440171708352758/original/f7e7ba76-b12a-43b1-bc10-0c9824881588.jpeg",
+          "kosten_pp": 1285
+        },
+        {
+          "rol": "Alternatief: meeste reviews",
+          "airbnb_id": "53038310",
+          "naam": "Villa Rossa",
+          "plaats": "Xewkija",
+          "lat": 36.034,
+          "lng": 14.252,
+          "slaapkamers": 5,
+          "max_gasten": 13,
+          "beoordeling": 4.98,
+          "reviews": 64,
+          "prijs_totaal": 4630,
+          "zwembad": "Privé baantjesbad plus jacuzzi",
+          "waarom": "Verbouwd karakterhuis, 5 slaapkamers met eigen badkamer, jacuzzi, omheinde tuin.",
+          "let_op": "Bijna € 900 duurder.",
+          "foto": "https://a0.muscache.com/im/pictures/cf5ab8d7-266c-43c0-b5ed-737228a5cbdc.jpg",
+          "kosten_pp": 1399
+        }
+      ],
+      "kosten_opbouw": {
+        "vlucht_bagage": 270,
+        "auto": 112,
+        "eten_uitjes": 438
+      },
+      "sfeer": "Dorps en ontspannen: 's avonds wandel je naar het plein, overdag kies je tussen zwembad, rood strand, tempels of een boot naar Comino.",
+      "mogelijkheden": {
+        "strand": [
+          "beperkt",
+          "Ramla Bay op 10 minuten rijden."
+        ],
+        "restaurants": [
+          "ja",
+          "Het dorpsplein van Xagħra op 2 minuten lopen."
+        ],
+        "uitgaan": [
+          "beperkt",
+          "Bars op de dorpspleinen; het echte nachtleven zit op Malta."
+        ],
+        "wijn": [
+          "beperkt",
+          "Een paar wijngoederen op Gozo, zoals Ta' Mena."
+        ],
+        "boot": [
+          "ja",
+          "Naar het Blue Lagoon van Comino en langs de grotten."
+        ],
+        "natuur": [
+          "ja",
+          "Kliffen van Dwejra, zoutpannen, kustpaden."
+        ],
+        "stad": [
+          "ja",
+          "Valletta met de snelboot."
+        ],
+        "padel": [
+          "nee",
+          "Geen baan op Gozo gevonden; wel op Malta."
+        ],
+        "watersport": [
+          "ja",
+          "Een van de beste duik- en snorkelplekken van Europa."
+        ],
+        "kids": [
+          "beperkt",
+          "Zandstrand van Ramla, rustig dorpsleven."
+        ],
+        "hooghouden": [
+          "onbekend",
+          "Tuin bij de boerderij; het dorpsplein is om de hoek."
+        ]
+      },
+      "carrier": "klm",
+      "stempel": {
+        "vorm": "rechthoek",
+        "motief": "luzzu-boot",
+        "tekst": "GOZO",
+        "code": "MLA",
+        "datum": "18 SEP 2027",
+        "kleur": "#C9A15E"
+      },
+      "kidscheck": {
+        "transfer_min": 105,
+        "wieg": true,
+        "kinderstoel": true,
+        "omheind": true,
+        "zwembad": "Privé",
+        "water": "Rood zandstrand van Ramla, rustig",
+        "warmte": "Warm (28°C)",
+        "zorg": "Ziekenhuis op Gozo zelf",
+        "oordeel": 4
+      },
+      "pils": {
+        "prijs": 4.0,
+        "merken": [
+          "Cisk"
+        ],
+        "rondje_mannen": 20.0
+      },
+      "paklijst_extra": []
+    },
+    {
+      "id": "kefalonia",
+      "groep": "exoot",
+      "land": "Griekenland",
+      "naam": "Kefalonia",
+      "subregio": "Zuidkust bij Lourdata",
+      "tagline": "Het Griekse eiland van Myrtos-strand en grotmeren, en het best beoordeelde huis van de lijst.",
+      "lat": 38.22,
+      "lng": 20.55,
+      "luchthaven": {
+        "naam": "Kefalonia",
+        "code": "EFL",
+        "lat": 38.12,
+        "lng": 20.5
+      },
+      "vlucht": {
+        "maatschappijen": "Transavia",
+        "duur": "3u00",
+        "per_week": "ca. 4 direct",
+        "prijs_pp": 250
+      },
+      "transfer": "20 min",
+      "klimaat": {
+        "lucht": 26,
+        "zee": 24,
+        "regendagen": 4
+      },
+      "lokaal": {
+        "bier": 5.0,
+        "diner2": 50
+      },
+      "huurauto_per_stuk": 350,
+      "scores": {
+        "zon_zee": [
+          4,
+          "Zee van 24°C, kleine kans op een buiendag."
+        ],
+        "value": [
+          5,
+          "Huis met 4,99 uit 100 reviews voor € 2.885."
+        ],
+        "eten": [
+          4,
+          "Griekse taverna's, vleespastei van Kefalonia en Robola-wijn."
+        ],
+        "natuur": [
+          5,
+          "Myrtos, Antisamos, de grotten van Melissani en Drogarati."
+        ],
+        "cultuur": [
+          3,
+          "Fiskardo, Assos en een boottocht naar Ithaka."
+        ],
+        "bier": [
+          2,
+          "€ 5,00 voor een halve liter."
+        ],
+        "reisgemak": [
+          4,
+          "3 uur vliegen en 20 minuten naar het huis; ca. 4 vluchten per week."
+        ],
+        "veiligheid": [
+          5,
+          "Groen reisadvies."
+        ],
+        "exotisch": [
+          4,
+          "Minder bekend dan Kreta of Corfu."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "Hoogst beoordeelde huis van alle opties (4,99 uit 100 reviews).",
+          "Kortste transfer van alle exoten."
+        ],
+        "min": [
+          "Duurste biertje van de lijst.",
+          "Alleen Transavia vliegt direct, niet elke dag."
+        ]
+      },
+      "huizen": [
+        {
+          "rol": "Sterkste keuze",
+          "airbnb_id": "19616034",
+          "naam": "Levanta Unique Country Home",
+          "plaats": "Zuid-Kefalonia (Lourdata)",
+          "lat": 38.22,
+          "lng": 20.494,
+          "slaapkamers": 5,
+          "max_gasten": 13,
+          "beoordeling": 4.99,
+          "reviews": 100,
+          "prijs_totaal": 2885,
+          "zwembad": "Privé",
+          "waarom": "Bijna perfecte score over 100 reviews, zeezicht, omheinde tuin, wieg en kinderstoel, centrale airco.",
+          "let_op": "Dichtstbijzijnde strand met de auto.",
+          "foto": "https://a0.muscache.com/im/pictures/miso/Hosting-19616034/original/8ae34ff4-e9b0-4ebf-a26b-9f30bc3c466d.jpeg",
+          "kosten_pp": 1162
+        },
+        {
+          "rol": "Alternatief: aan zee",
+          "airbnb_id": "555585",
+          "naam": "Privévilla bij Nyfi",
+          "plaats": "Nyfi (oostkust)",
+          "lat": 38.301,
+          "lng": 20.491,
+          "slaapkamers": 5,
+          "max_gasten": 10,
+          "beoordeling": 4.97,
+          "reviews": 66,
+          "prijs_totaal": 3601,
+          "zwembad": "Privé, seizoensgebonden",
+          "waarom": "Directe toegang tot zee, uitzicht over het water, omheinde tuin.",
+          "let_op": "Zwembad eind september navragen.",
+          "foto": "https://a0.muscache.com/im/pictures/77951815/aa82018b_original.jpg",
+          "kosten_pp": 1251
+        }
+      ],
+      "kosten_opbouw": {
+        "vlucht_bagage": 320,
+        "auto": 131,
+        "eten_uitjes": 350
+      },
+      "sfeer": "Grieks eilandleven: taverna's, turquoise baaien en zonsondergangen vanaf het terras. Weinig drukte, veel natuur.",
+      "mogelijkheden": {
+        "strand": [
+          "beperkt",
+          "Strand van Lourdata op een paar minuten rijden."
+        ],
+        "restaurants": [
+          "nee",
+          "Landelijk, auto nodig."
+        ],
+        "uitgaan": [
+          "beperkt",
+          "Bars in Argostoli en Lassi."
+        ],
+        "wijn": [
+          "ja",
+          "Robola-wijnhuizen; de oogst valt in september."
+        ],
+        "boot": [
+          "ja",
+          "Grotmeer Melissani, boten naar Ithaka en verborgen baaien."
+        ],
+        "natuur": [
+          "ja",
+          "Myrtos, Antisamos en de berg Ainos."
+        ],
+        "stad": [
+          "nee",
+          "Alleen het kleine Argostoli."
+        ],
+        "padel": [
+          "onbekend",
+          "Geen baan kunnen bevestigen."
+        ],
+        "watersport": [
+          "ja",
+          "Snorkelen en kajakken langs de kust."
+        ],
+        "kids": [
+          "beperkt",
+          "Zeeschildpadden kijken in de haven van Argostoli."
+        ],
+        "hooghouden": [
+          "onbekend",
+          "Omheinde tuin met tuinsalon, grootte onbekend."
+        ]
+      },
+      "carrier": "transavia",
+      "stempel": {
+        "vorm": "rond",
+        "motief": "zeeschildpad",
+        "tekst": "KEFALONIA",
+        "code": "EFL",
+        "datum": "18 SEP 2027",
+        "kleur": "#1565C0"
+      },
+      "kidscheck": {
+        "transfer_min": 20,
+        "wieg": true,
+        "kinderstoel": true,
+        "omheind": true,
+        "zwembad": "Privé",
+        "water": "Helder, deels kiezel",
+        "warmte": "Aangenaam (26°C)",
+        "zorg": "Ziekenhuis in Argostoli",
+        "oordeel": 4
+      },
+      "pils": {
+        "prijs": 5.0,
+        "merken": [
+          "Mythos",
+          "Alfa"
+        ],
+        "rondje_mannen": 25.0
+      },
+      "paklijst_extra": [
+        "Waterschoentjes (deels kiezel)"
+      ]
+    },
+    {
+      "id": "sicilie",
+      "groep": "exoot",
+      "land": "Italië",
+      "naam": "Sicilië: barokke zuidoosten",
+      "subregio": "Modica, Noto en Ragusa",
+      "tagline": "Barokstadjes, chocolade van Modica, granita als ontbijt en de beste keuken van de lijst.",
+      "lat": 36.85,
+      "lng": 14.85,
+      "luchthaven": {
+        "naam": "Catania",
+        "code": "CTA",
+        "lat": 37.467,
+        "lng": 15.066
+      },
+      "vlucht": {
+        "maatschappijen": "KLM, Transavia",
+        "duur": "2u50",
+        "per_week": "dagelijks",
+        "prijs_pp": 220
+      },
+      "transfer": "1u20 tot 1u30",
+      "klimaat": {
+        "lucht": 27,
+        "zee": 24,
+        "regendagen": 3
+      },
+      "lokaal": {
+        "bier": 5.0,
+        "diner2": 70
+      },
+      "huurauto_per_stuk": 350,
+      "scores": {
+        "zon_zee": [
+          4,
+          "27°C en zee van 24°C."
+        ],
+        "value": [
+          3,
+          "Sterke huizen rond € 3.950, restaurants niet goedkoop."
+        ],
+        "eten": [
+          5,
+          "Arancini, cannoli, granita, Nero d'Avola: de beste keuken van de lijst."
+        ],
+        "natuur": [
+          4,
+          "Natuurreservaat Vendicari, de Cava d'Ispica en de Etna als dagtrip."
+        ],
+        "cultuur": [
+          5,
+          "UNESCO-barok van Noto, Modica en Ragusa, plus Ortigia."
+        ],
+        "bier": [
+          2,
+          "€ 5,00 voor een halve liter."
+        ],
+        "reisgemak": [
+          3,
+          "Veel vluchten, maar 1u30 rijden naar het huis."
+        ],
+        "veiligheid": [
+          5,
+          "Groen reisadvies."
+        ],
+        "exotisch": [
+          3,
+          "Italië, maar met een eigen, ruige Siciliaanse sfeer."
+        ]
+      },
+      "onderscheid": {
+        "plus": [
+          "Beste eten en de mooiste stadjes van alle opties.",
+          "Huizen op oude landgoederen met veel karakter."
+        ],
+        "min": [
+          "Duurste optie qua eten en drinken.",
+          "Langere transfer en het strand ligt niet bij het huis."
+        ]
+      },
+      "huizen": [
+        {
+          "rol": "Sterkste keuze",
+          "airbnb_id": "15589416",
+          "naam": "Baglio Fasana",
+          "plaats": "Modica Alta",
+          "lat": 36.886,
+          "lng": 14.783,
+          "slaapkamers": 5,
+          "max_gasten": 14,
+          "beoordeling": 5.0,
+          "reviews": 56,
+          "prijs_totaal": 3950,
+          "zwembad": "Privé overloopzwembad, seizoensgebonden",
+          "waarom": "Oud landgoed in de heuvels van Modica, alle slaapkamers met eigen badkamer, perfecte score over 56 reviews, wieg, omheinde tuin, airco.",
+          "let_op": "Zwembad eind september navragen.",
+          "foto": "https://a0.muscache.com/im/pictures/c1989050-28d1-4ca4-8492-fcd0ef8527cb.jpg",
+          "kosten_pp": 1335
+        },
+        {
+          "rol": "Alternatief: aan zee",
+          "airbnb_id": "32129242",
+          "naam": "Villa Sariva",
+          "plaats": "Ispica (kust)",
+          "lat": 36.718,
+          "lng": 14.925,
+          "slaapkamers": 5,
+          "max_gasten": 12,
+          "beoordeling": 4.99,
+          "reviews": 93,
+          "prijs_totaal": 4329,
+          "zwembad": "Privé",
+          "waarom": "50 meter van het strand, 93 reviews met een 4,99.",
+          "let_op": "Geen wieg of omheinde tuin vermeld; € 380 duurder.",
+          "foto": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MzIxMjkyNDI=/original/c83d1a8f-f6bf-4d3b-a77d-9588fde116af.jpeg",
+          "kosten_pp": 1382
+        }
+      ],
+      "kosten_opbouw": {
+        "vlucht_bagage": 290,
+        "auto": 131,
+        "eten_uitjes": 420
+      },
+      "sfeer": "Een week van tafelen en slenteren: ochtenden met granita, middagen in barokstadjes of op het strand, avonden met lange Siciliaanse diners.",
+      "mogelijkheden": {
+        "strand": [
+          "beperkt",
+          "Stranden van Vendicari en Marina di Modica op 25 tot 30 minuten."
+        ],
+        "restaurants": [
+          "nee",
+          "Auto nodig; Modica op korte rijafstand."
+        ],
+        "uitgaan": [
+          "beperkt",
+          "Aperitivo in Modica en Ragusa Ibla, levendiger in Ortigia."
+        ],
+        "wijn": [
+          "ja",
+          "Cerasuolo di Vittoria en Nero d'Avola; eind september is de vendemmia."
+        ],
+        "boot": [
+          "beperkt",
+          "Boottochtjes rond Ortigia."
+        ],
+        "natuur": [
+          "ja",
+          "Vendicari, Cava d'Ispica en de Etna als lange dagtrip."
+        ],
+        "stad": [
+          "beperkt",
+          "Siracusa op 1 uur, Catania op 1u30."
+        ],
+        "padel": [
+          "ja",
+          "Padel in Marina di Ragusa, op ca. 30 minuten."
+        ],
+        "watersport": [
+          "beperkt",
+          "Snorkelen bij Vendicari."
+        ],
+        "kids": [
+          "beperkt",
+          "Strand en het treintje van Ragusa Ibla."
+        ],
+        "hooghouden": [
+          "beperkt",
+          "Ruim landgoed met zwembadtuin."
+        ]
+      },
+      "carrier": "klm",
+      "stempel": {
+        "vorm": "zeshoek",
+        "motief": "citroen",
+        "tekst": "SICILIA",
+        "code": "CTA",
+        "datum": "18 SEP 2027",
+        "kleur": "#E2B021"
+      },
+      "kidscheck": {
+        "transfer_min": 90,
+        "wieg": true,
+        "kinderstoel": true,
+        "omheind": true,
+        "zwembad": "Seizoensgebonden, navragen",
+        "water": "Zandstranden, rustig",
+        "warmte": "Warm (27°C)",
+        "zorg": "Ziekenhuis in Modica",
+        "oordeel": 4
+      },
+      "pils": {
+        "prijs": 5.0,
+        "merken": [
+          "Birra Messina"
+        ],
+        "rondje_mannen": 25.0
+      },
+      "paklijst_extra": []
+    }
+  ]
+}
