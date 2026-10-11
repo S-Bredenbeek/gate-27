@@ -868,6 +868,62 @@ button.matchbalk div span { text-decoration: underline; text-underline-offset: 3
 .keuzes.klein strong { font: 600 1rem/1.2 var(--tekst); }
 .paneel > .lead + .gates { margin-top: 18px; }
 
+/* ---------- de reis in stappen, goud en de missie per plek ---------- */
+
+.reis { margin-top: 16px; padding: 14px 14px 16px; border-radius: 6px 20px 20px 20px; background: var(--papier); border: 2.5px solid var(--inkt); box-shadow: 4px 4px 0 var(--inkt); }
+.reisbalk { display: flex; gap: 3px; }
+.reisbalk i { flex: 1; height: 12px; border-radius: 3px; background: var(--grijs-bg); transition: background-color .3s; }
+.reisbalk i.aan { background: var(--groen); }
+.reisbalk i.mijlpaal { box-shadow: 0 0 0 2px var(--amber); }
+.reisstand { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; margin-top: 8px; font-size: .9rem; }
+.reisstand strong { font-family: var(--mono); }
+.reisstand .hand { font-size: 1.25rem; }
+.stappen { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 12px; }
+.stappen li { position: relative; display: grid; justify-items: center; gap: 4px; padding: 0 2px; text-align: center; color: var(--dim); }
+.stappen li::before { content: ''; position: absolute; top: 15px; left: -50%; width: 100%; height: 2px; background: var(--lijn); z-index: 0; }
+.stappen li:first-child::before { display: none; }
+.stappen li.klaar::before, .stappen li.nu::before { background: var(--groen); }
+.stapnr { position: relative; z-index: 1; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--papier); border: 2px solid var(--lijn); font: 700 .9rem/1 var(--mono); }
+.stapnr .ico { width: 18px; height: 18px; stroke-width: 2.6; }
+.stappen li.klaar .stapnr { background: var(--groen); border-color: var(--groen); color: #fff; }
+.stappen li.nu { color: var(--inkt); }
+.stappen li.nu .stapnr { background: var(--amber); border-color: var(--inkt); animation: klop 1.8s ease-in-out infinite; }
+@keyframes klop { 50% { box-shadow: 0 0 0 7px rgba(255, 197, 61, .35); } }
+.stappen li > span:last-child { display: grid; gap: 1px; }
+.stappen strong { font-size: .74rem; line-height: 1.15; }
+.stappen li > span:last-child span { font-size: .66rem; line-height: 1.15; }
+.reisactie { display: grid; gap: 8px; margin-top: 14px; }
+.reisactie .knop.groot { margin-top: 0; }
+.verrasknop { animation: wenk 2.6s ease-in-out infinite; }
+@keyframes wenk { 0%, 86%, 100% { transform: none; } 90% { transform: rotate(-1.5deg) scale(1.02); } 94% { transform: rotate(1.5deg) scale(1.02); } }
+
+.welkom-duw { margin-top: 4px; font-weight: 600; }
+.welkom-spel { max-width: 320px; margin-top: 8px !important; border-color: currentColor; color: inherit; }
+.welkom-spel:hover { background: rgba(255, 255, 255, .14); }
+
+.missie { margin-top: 18px; padding: 14px 16px 16px; border-radius: 6px 18px 18px 18px; background: var(--papier); border: 2px dashed var(--kleur); }
+.missie ul { display: grid; gap: 8px; margin: 8px 0 14px; }
+.missie li { display: flex; align-items: flex-start; gap: 10px; font-size: .92rem; }
+.vinkvak { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--lijn); }
+.vinkvak .ico { width: 15px; height: 15px; stroke-width: 2.8; }
+.missie li.klaar .vinkvak { background: var(--groen); border-color: var(--groen); color: #fff; }
+.missie li.klaar { color: var(--dim); }
+.missie .spelknop { margin-top: 0; }
+.spel-goud { margin: -6px 0 10px; font-weight: 600; color: #8A6500; }
+.spel-goud.binnen { color: var(--groen); }
+
+.pp-stempel.goud { position: relative; }
+.pp-stempel.goud::before { content: ''; position: absolute; inset: 2px; border-radius: 50%; border: 4px solid #D4A017; box-shadow: 0 0 0 2px #FFF3C4, 0 0 14px rgba(212, 160, 23, .55); }
+.pp-stempel.goud::after { content: '★'; position: absolute; top: 0; right: 4px; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #D4A017; color: #fff; font-size: .9rem; }
+.goudteller { color: #F3D99A; font-size: .82rem; }
+
+@media (prefers-reduced-motion: reduce) { .verrasknop, .stappen li.nu .stapnr { animation: none; } }
+
+.reis .stappen { margin-top: 16px; }
+.reis .reisactie { margin-top: 12px; }
+.stappen li > span:last-child span { display: none; }
+.stappen li.nu > span:last-child span { display: block; }
+
 /* ---------- brede schermen ---------- */
 
 @media (min-width: 900px) {

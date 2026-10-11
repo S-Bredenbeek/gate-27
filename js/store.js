@@ -19,6 +19,7 @@ const standaard = () => ({
   taal: null,
   klaar: false,
   huisFav: [],
+  gedeeld: false,
   paklijst: {},
   kv: {},
   codes: '',

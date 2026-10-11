@@ -13,6 +13,7 @@ import { motief, heeftMotief } from './motifs.js';
 import { icoon } from './icons.js';
 import { statusLabel, hartKnop, bolletjes, beren, bronnenBlok, toast, rolLabel, kenmerkChips, huisHart, luxeUitleg } from './ui.js';
 import * as kaart from './map.js';
+import { GOUD, isGoud } from './game.js';
 
 const TABS = [
   ['kort', 'In het kort', 'At a glance'],
@@ -177,7 +178,25 @@ function tabKort(o) {
       <button type="button" class="knop" data-naartab="kan">${t('Wat kan hier?', 'What can you do?')}</button>
       <button type="button" class="knop" data-naartab="kosten">${t('Kosten', 'Costs')}</button>
     </div>
-    <button type="button" class="knop spelknop" data-spel="${esc(o.id)}">${icoon('hooghouden')}${esc(o.spel?.naam ?? t('Hooghouden', 'Keepy-uppies'))}</button>`;
+    ${missie(o)}`;
+}
+
+// Wat je op deze plek kunt verdienen: de stempel heb je al, de gouden rand win je met het spel van deze plek.
+function missie(o) {
+  const record = staat().hooghoud?.[o.id] ?? 0;
+  const goud = isGoud(o.id);
+  const inTop = staat().top3.includes(o.id);
+  const regel = (klaar, tekst) => `<li class="${klaar ? 'klaar' : ''}"><span class="vinkvak">${klaar ? icoon('check') : ''}</span><span>${tekst}</span></li>`;
+  return `<section class="missie">
+    <p class="kicker">${t('Te verdienen op deze plek', 'To earn in this place')}</p>
+    <ul>
+      ${regel(true, t('Stempel in je paspoort', 'Stamp in your passport'))}
+      ${regel(goud, goud ? t(`Gouden rand om je stempel (record ${record})`, `Golden rim on your stamp (best ${record})`) : t(`Gouden rand: houd ${GOUD} keer hoog${record ? ` (record ${record})` : ''}`, `Golden rim: do ${GOUD} keepy-uppies${record ? ` (best ${record})` : ''}`))}
+      ${regel(inTop, inTop ? t('Staat in je top 3', 'In your top 3') : t('Vind je het wat? Zet hem in je top 3 met het hartje bovenaan', 'Like it? Put it in your top 3 with the heart at the top'))}
+    </ul>
+    <button type="button" class="knop primair spelknop" data-spel="${esc(o.id)}">${icoon('hooghouden')}${esc(o.spel?.naam ?? t('Hooghouden', 'Keepy-uppies'))}</button>
+    ${o.spel?.regel ? `<p class="klein">${esc(o.spel.regel)}</p>` : ''}
+  </section>`;
 }
 
 function tabKan(o) {
@@ -362,8 +381,8 @@ function verder(o) {
   return `<nav class="verder" aria-label="${t('Verder', 'Next')}">
     <p class="hand">${open ? (open === 1 ? t(`nog één geheime plek in ${esc(landNaam(o.land))}`, `one more secret spot in ${esc(landNaam(o.land))}`) : t(`nog ${open} geheime plekken in ${esc(landNaam(o.land))}`, `${open} more secret spots in ${esc(landNaam(o.land))}`)) : t(`${esc(landNaam(o.land))} heb je helemaal gezien`, `you've seen all of ${esc(landNaam(o.land))}`)}</p>
     <div class="acties">
-      ${open ? `<a class="knop primair" href="#/gate/${encodeURIComponent(o.land)}">${t('Volgende mysterievlucht', 'Next mystery flight')}</a>` : ''}
-      <a class="knop${open ? '' : ' primair'}" href="#/hal">${t('Kies een ander land', 'Pick another country')}</a>
+      ${opties().some((x) => !bezocht.includes(x.id)) ? `<button type="button" class="knop primair" data-verras="${esc(o.land)}">${icoon('vliegtuig')}${t('Volgende mysterievlucht', 'Next mystery flight')}</button>` : ''}
+      <a class="knop" href="#/hal">${t('Kies een ander land', 'Pick another country')}</a>
     </div>
   </nav>`;
 }

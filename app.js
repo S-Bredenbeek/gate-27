@@ -17,7 +17,7 @@ import { toonHuizen } from './js/houses.js';
 import { poppetje, KEUZES, UITERLIJK } from './js/avatar.js';
 import { thema } from './js/patterns.js';
 import { motief, heeftMotief } from './js/motifs.js';
-import { speel, stopSpel, totaalHooghouden } from './js/game.js';
+import { speel, stopSpel, totaalHooghouden, isGoud } from './js/game.js';
 import { mijnCode, leesCodes, uitslag, huizenUitslag, vanCode } from './js/group.js';
 import { figuurNaam } from './js/extras.js';
 import { tekenAnsichtkaart, kaartNaam } from './js/postcard.js';
@@ -401,14 +401,11 @@ function toonHal() {
   el.paneel.innerHTML = `
     <div class="kop-met-pop"><a class="pop-link" href="#/start" aria-label="${t('Poppetje en naam aanpassen', 'Change character and name')}">${poppetje(s.avatar)}</a><div>
       <p class="kicker">${t(`Vertrekhal ${esc(m.vertrek.naam)}`, `${esc(m.vertrek.naam)} Departures`)}</p>
-      <h1>${s.naam ? t(`Hoi ${esc(s.naam)}. `, `Hi ${esc(s.naam)}. `) : ''}${t('Kies een land.', 'Pick a country.')}</h1>
+      <h1>${s.naam ? t(`Hoi ${esc(s.naam)}. `, `Hi ${esc(s.naam)}. `) : ''}${gezien === 0 ? t('Klaar om te vliegen?', 'Ready to fly?') : gezien === totaal ? t('Tijd om te kiezen.', 'Time to choose.') : t('Waar vliegen we nu heen?', 'Where to next?')}</h1>
     </div></div>
-    <p class="lead">${gezien === 0
-      ? t(`Achter elk land liggen geheime plekken: ${totaal} in totaal. Vlieg erheen en verzamel de stempels.`, `Behind every country are secret places: ${totaal} in total. Fly there and collect the stamps.`)
-      : gezien === totaal
-        ? t('Je hebt alle plekken gezien. Tijd om te kiezen!', "You've seen every place. Time to choose!")
-        : t(`Je hebt ${gezien} van de ${totaal} geheime plekken gezien. Waar vlieg je nu heen?`, `You've seen ${gezien} of the ${totaal} secret places. Where to next?`)}</p>
+    ${reisStappen()}
 
+    <h2 id="landen">${t('Of kies zelf een land', 'Or pick a country yourself')}</h2>
     <div class="gates">
       ${landNamen().map((naam) => {
         const lijst = optiesIn(naam);
@@ -441,10 +438,6 @@ function toonHal() {
       </a>
     </div>
 
-    <h2>${t('Voor de lol', 'Just for fun')}</h2>
-    <div class="acties">
-      <button type="button" class="knop" data-spel>${icoon('hooghouden')}${t('Hooghouden', 'Keepy-uppies')}${totaalHooghouden() ? ` · ${totaalHooghouden()}` : ''}</button>
-    </div>
     ${rondjes.length ? `<div class="rondjes">
       <h2>${icoon('bier')}${t('Goedkoopste rondje', 'Cheapest round')}</h2>
       <ol>${rondjes.map((o) => `<li><span>${esc(o.naam)}</span><strong>${euro(o.pils.rondje_mannen, 2)}</strong></li>`).join('')}</ol>
@@ -463,6 +456,63 @@ function toonHal() {
   $('#bordvak').addEventListener('toggle', (e) => e.target.open && draai($('#bord')));
   kaart.toonHal(s.bezocht);
 }
+
+// De reis in vier stappen. Eén stap is "nu", met één knop die je verder helpt.
+const DOEL_VERGELIJKEN = 3;
+
+function reisStappen() {
+  const s = staat();
+  const totaal = opties().length;
+  const gezien = s.bezocht.length;
+  const over = totaal - gezien;
+  const goud = opties().filter((o) => isGoud(o.id)).length;
+  const nu = gezien < DOEL_VERGELIJKEN ? 1 : s.top3.length < 3 ? 2 : !s.gedeeld ? 3 : 4;
+  const stap = (n, titel, uitleg) => `<li class="${n < nu ? 'klaar' : n === nu ? 'nu' : ''}"${n === nu ? ' aria-current="step"' : ''}>
+      <span class="stapnr">${n < nu ? icoon('check') : n}</span>
+      <span><strong>${titel}</strong><span>${uitleg}</span></span>
+    </li>`;
+  const verras = over ? `<button type="button" class="knop primair groot verrasknop" data-verras>${icoon('vliegtuig')}${gezien === 0 ? t('Start: verrassingsvlucht', 'Start: surprise flight') : t('Verrassingsvlucht', 'Surprise flight')}</button>` : '';
+  const actie = {
+    1: verras,
+    2: `<a class="knop primair groot" href="#/vergelijk">${icoon('hart')}${t('Kies je top 3', 'Pick your top 3')}</a>${over ? `<button type="button" class="knop groot" data-verras>${icoon('vliegtuig')}${t(`Of ontdek verder (nog ${over})`, `Or keep discovering (${over} left)`)}</button>` : ''}`,
+    3: `<a class="knop primair groot" href="#/uitslag">${icoon('kopieer')}${t('Deel je code met de groep', 'Share your code with the group')}</a>${over ? `<button type="button" class="knop groot" data-verras>${icoon('vliegtuig')}${t(`Of ontdek verder (nog ${over})`, `Or keep discovering (${over} left)`)}</button>` : ''}`,
+    4: `<a class="knop primair groot" href="#/uitslag">${t('Bekijk de groepsuitslag', 'See the group result')}</a>${over ? `<button type="button" class="knop groot" data-verras>${icoon('vliegtuig')}${t(`Nog ${over} te ontdekken`, `${over} left to discover`)}</button>` : ''}`,
+  }[nu];
+  const aanmoediging = gezien === 0
+    ? t(`${totaal} geheime plekken wachten. Eén tik en je vliegt.`, `${totaal} secret places are waiting. One tap and you're off.`)
+    : gezien < DOEL_VERGELIJKEN
+      ? t(`Nog ${DOEL_VERGELIJKEN - gezien} en je kunt je top 3 kiezen.`, `${DOEL_VERGELIJKEN - gezien} more and you can pick your top 3.`)
+      : over === 0
+        ? t('Alles gezien. Echte ontdekkingsreiziger.', 'Seen it all. A true explorer.')
+        : over <= 3
+          ? t(`Nog maar ${over} tot je alles hebt gezien.`, `Only ${over} to go until you've seen it all.`)
+          : gezien * 2 >= totaal
+            ? t('Over de helft. Doorvliegen!', 'Past halfway. Keep flying!')
+            : t(`${gezien} gezien, ${over} geheimen over.`, `${gezien} seen, ${over} secrets left.`);
+  return `<section class="reis" aria-label="${t('Jouw reis in vier stappen', 'Your journey in four steps')}">
+    <div class="reisbalk" role="img" aria-label="${t(`${gezien} van ${totaal} plekken ontdekt`, `${gezien} of ${totaal} places discovered`)}">
+      ${opties().map((o, i) => `<i class="${i < gezien ? 'aan' : ''}${i + 1 === DOEL_VERGELIJKEN ? ' mijlpaal' : ''}"></i>`).join('')}
+    </div>
+    <p class="reisstand"><strong>${gezien}/${totaal}</strong> ${t('ontdekt', 'discovered')}${goud ? ` · <strong>${goud}</strong> ${t('goud', 'gold')}` : ''} <span class="hand">${aanmoediging}</span></p>
+    <div class="reisactie">${actie}</div>
+    <ol class="stappen">
+      ${stap(1, t('Ontdek de plekken', 'Discover the places'), t('Vlieg erheen, verzamel stempels', 'Fly there, collect stamps'))}
+      ${stap(2, t('Kies je top 3', 'Pick your top 3'), t(`${s.top3.length} van 3 gekozen`, `${s.top3.length} of 3 picked`))}
+      ${stap(3, t('Deel je code', 'Share your code'), t('In de groepsapp', 'In the group chat'))}
+      ${stap(4, t('Groepsuitslag', 'Group result'), t('Wie wint?', 'Who wins?'))}
+    </ol>
+  </section>`;
+}
+
+// Het lot kiest een plek die je nog niet kent, bij voorkeur in het land waar je net was.
+function verrassingsvlucht(landNaam) {
+  const open = opties().filter((o) => !ontdekt(o.id));
+  const dichtbij = open.filter((o) => o.land === landNaam);
+  const lijst = dichtbij.length ? dichtbij : open;
+  if (!lijst.length) return toast(t('Je hebt alle plekken al gezien', "You've already seen every place"));
+  instappen(lijst[Math.floor(Math.random() * lijst.length)].id);
+}
+document.addEventListener('verrasvlucht', (e) => verrassingsvlucht(e.detail?.land));
 
 // --- gate ---
 
@@ -554,13 +604,19 @@ function toonWelkom(o) {
     <p class="welkom-waar">${esc(o.subregio)}, ${esc(landNaam(o.land))}</p>
     <div class="stempelplek plof" style="--kantel:${kanteling(o.id)}deg">${stempel(o.stempel)}<i></i><i></i><i></i><i></i></div>
     <p class="hand">${t(`stempel ${aantal} van ${totaal} in je paspoort`, `stamp ${aantal} of ${totaal} in your passport`)}</p>
+    <p class="welkom-duw">${aantal === totaal ? t('Dat was de laatste. Je hebt alles gezien!', "That was the last one. You've seen it all!") : aantal < DOEL_VERGELIJKEN ? t(`Nog ${DOEL_VERGELIJKEN - aantal} en je kunt je top 3 kiezen.`, `${DOEL_VERGELIJKEN - aantal} more and you can pick your top 3.`) : aantal === DOEL_VERGELIJKEN ? t('Je kunt nu je top 3 kiezen. Of vlieg lekker door.', 'You can now pick your top 3. Or just keep flying.') : t(`Nog ${totaal - aantal} geheimen over.`, `${totaal - aantal} secrets left.`)}</p>
     <button type="button" class="knop licht groot" id="welkom-verder">${t('Kijk rond', 'Look around')}${icoon('verder')}</button>
+    <button type="button" class="knop groot welkom-spel" id="welkom-spel">${icoon('hooghouden')}${t(`Verdien goud: ${esc(o.spel?.naam ?? 'hooghouden')}`, `Earn gold: ${esc(o.spel?.naam ?? 'keepy-uppies')}`)}</button>
   </div>`;
   el.welkom.hidden = false;
   const knop = $('#welkom-verder');
   knop.addEventListener('click', () => {
     sluitWelkom();
     if (aantal === totaal) toonPaspoort();
+  });
+  $('#welkom-spel').addEventListener('click', () => {
+    sluitWelkom();
+    speel(o);
   });
   knop.focus({ preventScroll: true });
 }
@@ -742,6 +798,7 @@ function toonTop3() {
     $('#kopieer-top3').addEventListener('click', async () => {
       const tekst = top3Tekst();
       el.dialoog.close();
+      wijzig({ gedeeld: true });
       await kopieer(tekst, t('Je top 3 is gekopieerd: plak hem in de groepsapp', 'Your top 3 is copied: paste it in the group chat'));
     });
   };
@@ -809,6 +866,12 @@ function toonUitslag() {
           <span class="punten"><b>${r.punten}</b>${r.punten === 1 ? t('punt', 'point') : t('punten', 'points')}</span>
         </li>`;
       }).join('')}</ol>
+      ${deelnemers.some((d) => d.hooghouden) ? `<h2>${t('Hooghoud-klassement', 'Keepy-uppy leaderboard')}</h2>
+      <ol class="uitslaglijst">${[...deelnemers].filter((d) => d.hooghouden).sort((x, y) => y.hooghouden - x.hooghouden).map((d, i) => `<li>
+          <span class="plek">${i + 1}</span>
+          <span class="uitslag-naam"><strong>${esc(d.naam)}</strong></span>
+          <span class="punten"><b>${d.hooghouden}</b>${t('totaal', 'total')}</span>
+        </li>`).join('')}</ol>` : ''}
       ${huizenUitslag(deelnemers).length ? `<h2>${t('Meest gekozen huizen', 'Most picked houses')}</h2>
       <ol class="uitslaglijst">${huizenUitslag(deelnemers).map((r, i) => `<li style="${themaStijl(r.o)}">
           <span class="plek">${i + 1}</span>
@@ -819,6 +882,7 @@ function toonUitslag() {
         </li>`).join('')}</ol>` : ''}` : `<p class="leeg">${t('Nog geen codes gevonden.', 'No codes found yet.')}</p>`;
   };
 
+  $('#kopieer-code')?.addEventListener('click', () => wijzig({ gedeeld: true }));
   $('#kopieer-code')?.addEventListener('click', () => kopieer(t(`Mijn vakantiecode: ${code}`, `My holiday code: ${code}`), t('Code gekopieerd: plak hem in de groepsapp', 'Code copied: paste it in the group chat')));
   $('#codes').addEventListener('input', (e) => {
     wijzig({ codes: e.target.value });
@@ -910,6 +974,8 @@ function klik(e) {
   if (hart) return wisselHart(hart.dataset.hart);
   if (e.target.closest('[data-reset]')) return opnieuwBeginnen();
   if (e.target.closest('[data-onthul]')) return onthulAlles();
+  const verras = e.target.closest('[data-verras]');
+  if (verras) return verrassingsvlucht(verras.dataset.verras || null);
   const huishart = e.target.closest('[data-huishart]');
   if (huishart) return wisselHuisHart(huishart.dataset.huishart);
   const open = e.target.closest('[data-open]');

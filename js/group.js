@@ -15,7 +15,8 @@ export function mijnCode() {
   const huizen = (s.huisFav ?? []).slice(0, 5);
   if (!s.top3.length && !huizen.length) return null;
   const bits = categorieen().reduce((t, c, i) => t | (s.koffer.includes(c.id) ? 1 << i : 0), 0);
-  return MERK + naarCode(JSON.stringify([s.naam || 'Reiziger', s.top3, bits, huizen]));
+  const hooghouden = Object.values(s.hooghoud ?? {}).reduce((som, n) => som + n, 0);
+  return MERK + naarCode(JSON.stringify([s.naam || 'Reiziger', s.top3, bits, huizen, hooghouden]));
 }
 
 export function leesCodes(tekst) {
@@ -23,12 +24,12 @@ export function leesCodes(tekst) {
   for (const [code] of String(tekst).matchAll(/VV1\.[A-Za-z0-9_-]+/g)) {
     try {
       // codes van voor de huisfavorieten hebben geen vierde deel: die blijven gewoon werken
-      const [naam, top3, bits, huizenRuw] = JSON.parse(vanCode(code.slice(MERK.length)));
+      const [naam, top3, bits, huizenRuw, hooghouden] = JSON.parse(vanCode(code.slice(MERK.length)));
       const huizen = (Array.isArray(huizenRuw) ? huizenRuw : []).map(String).filter((id) => huis(id)).slice(0, 5);
       const ids = (Array.isArray(top3) ? top3 : []).filter((id) => optie(id)).slice(0, 3);
       if (typeof naam !== 'string' || (!ids.length && !huizen.length)) continue;
       const koffer = categorieen().filter((_, i) => (Number(bits) >> i) & 1).map((c) => c.id);
-      gevonden.set(naam.trim().toLowerCase(), { naam: naam.trim().slice(0, 20), top3: ids, koffer, huizen });
+      gevonden.set(naam.trim().toLowerCase(), { naam: naam.trim().slice(0, 20), top3: ids, koffer, huizen, hooghouden: Math.max(0, Number(hooghouden) || 0) });
     } catch {
       // geen geldige code: overslaan
     }

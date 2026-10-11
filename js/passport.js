@@ -5,6 +5,7 @@ import { staat } from './store.js';
 import { poppetje } from './avatar.js';
 import { thema } from './patterns.js';
 import { stempel, kanteling } from './stamps.js';
+import { isGoud, GOUD as GOUD_DOEL } from './game.js';
 import { t } from './i18n.js';
 
 export function paspoort() {
@@ -21,7 +22,7 @@ export function paspoort() {
     const bekend = lijst.some((o) => s.bezocht.includes(o.id));
     const l = land(lijst[0]);
     const stempels = lijst.map((o) => (s.bezocht.includes(o.id)
-      ? `<a class="pp-stempel" href="#/b/${esc(o.id)}" style="--kantel:${kanteling(o.id)}deg" aria-label="${t(`Stempel van ${esc(o.naam)}: bekijk deze bestemming`, `Stamp from ${esc(o.naam)}: view this destination`)}">${stempel(o.stempel)}</a>`
+      ? `<a class="pp-stempel${isGoud(o.id) ? ' goud' : ''}" href="#/b/${esc(o.id)}" style="--kantel:${kanteling(o.id)}deg" aria-label="${t(`Stempel van ${esc(o.naam)}: bekijk deze bestemming`, `Stamp from ${esc(o.naam)}: view this destination`)}">${stempel(o.stempel)}</a>`
       : `<span class="pp-leeg" aria-label="${t('Nog niet ontdekt', 'Not discovered yet')}">?</span>`)).join('');
     return `<section class="pp-pagina${bekend ? '' : ' onbekend'}" style="${bekend ? thema(lijst[0]) : ''}">
       <h3>${bekend ? esc(landNaam(naam)) : t('Nog geheim', 'Still secret')}</h3>
@@ -37,6 +38,7 @@ export function paspoort() {
         <p class="kicker">${t('Paspoort', 'Passport')}</p>
         <h2>${esc(s.naam || t('Reiziger', 'Traveller'))}</h2>
         <p class="pp-teller">${t(`<strong>${aantal} van ${totaal}</strong> stempels verzameld`, `<strong>${aantal} of ${totaal}</strong> stamps collected`)}</p>
+        <p class="pp-teller goudteller">${t(`${opties().filter((o) => isGoud(o.id)).length} met een gouden rand (houd er ${GOUD_DOEL} keer hoog)`, `${opties().filter((o) => isGoud(o.id)).length} with a golden rim (do ${GOUD_DOEL} keepy-uppies there)`)}</p>
       </div>
     </header>
     ${aantal === totaal ? `<div class="pp-klaar"><strong>${t('Je hebt alles gezien: tijd om te kiezen', "You've seen it all: time to choose")}</strong><a class="knop primair" href="#/vergelijk">${t('Naar de vergelijking', 'To the comparison')}</a></div>` : ''}
