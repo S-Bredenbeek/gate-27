@@ -24,6 +24,8 @@ Alles wat je op de site leest, komt uit `vakantie-data.json`. Na een wijziging v
 
 **Alle huizen.** De weergave "Alle huizen" (vanuit de vertrekhal en de vergelijking) toont elk huis uit de JSON met filters, sorteren, een kaart en twee tot vier huizen naast elkaar. Er hoeft niets voor ingesteld te worden.
 
+**Medailles.** `meta.medailles` bepaalt bij welk record op een plek je brons, zilver en goud krijgt (`vanaf`) en in welke kleur de rand om de stempel komt. Pas de getallen aan als het te makkelijk of te moeilijk blijkt.
+
 **Een land toevoegen.** Voeg het toe aan `meta.landen` met `welkom`, `intro`, `kleuren` (basis, licht, accent), `patroon`, `motieven`, `pils` en `stekker`. Het patroon wordt gekozen op een trefwoord in `patroon`: azulejo, weef, ster, dambord, bloem of iznik, strepen of luzzu, meander, majolica of citroen. Zonder trefwoord krijgt het land stippen. De motieven en stempelmotieven die een tekening hebben staan in `js/motifs.js`; een onbekend motief wordt overgeslagen.
 
 **Een maatschappij toevoegen.** Voeg een blok toe aan `meta.carriers` met `romp`, `staart`, `motor` en `streep` (en eventueel `buik`), en verwijs ernaar met `carrier` in de optie.

@@ -11,9 +11,11 @@ import { t } from './i18n.js';
 
 const INKT = '#1A2233';
 const rustig = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
-// Vanaf zoveel keer hooghouden op een plek krijgt de stempel van die plek een gouden rand.
-export const GOUD = 10;
-export const isGoud = (id) => (staat().hooghoud?.[id] ?? 0) >= GOUD;
+// Medailles per plek (meta.medailles): brons, zilver en goud bij een oplopend record op die plek.
+// De stempel van de plek krijgt de rand van de hoogste medaille die je daar hebt gehaald.
+export const medailles = () => [...(meta().medailles ?? [])].sort((a, b) => a.vanaf - b.vanaf);
+export const medaille = (id) => medailles().filter((m) => (staat().hooghoud?.[id] ?? 0) >= m.vanaf).pop() ?? null;
+export const volgendeMedaille = (id) => medailles().find((m) => (staat().hooghoud?.[id] ?? 0) < m.vanaf) ?? null;
 export const totaalHooghouden = () => Object.values(staat().hooghoud ?? {}).reduce((som, n) => som + n, 0);
 let stop = null;
 
@@ -57,6 +59,7 @@ export function speel(o) {
   let H = 0;
   let bal;
   let score;
+  let recordBijStart = 0;
   let basisZwaarte;
   let fase; // 'klaar' (wacht op eerste tik), 'speelt', 'af'
   let vorige;
@@ -95,6 +98,7 @@ export function speel(o) {
     const r = Math.max(26, Math.min(B, H) * 0.075);
     bal = { x: B / 2, y: H * 0.5, vx: 0, vy: 0, r, draai: 0 };
     score = 0;
+    recordBijStart = record();
     basisZwaarte = H * 2.1;
     fase = 'klaar';
     tijd = 0;
@@ -120,8 +124,13 @@ export function speel(o) {
     score += erbij;
     scoreEl.textContent = score;
     const gehaald = (grens) => eerst < grens && score >= grens;
+    if (o) {
+      for (const m of medailles()) {
+        if (gehaald(m.vanaf) && recordBijStart < m.vanaf) meld(t(`${m.naam}! Je stempel krijgt een nieuwe rand.`, `${m.naam}! Your stamp gets a new rim.`));
+      }
+    }
     if (gehaald(10)) {
-      meld(o && !isGoud(sleutel) ? t('Goud! Je stempel krijgt een gouden rand.', 'Gold! Your stamp gets a golden rim.') : t('Tien! Lekker bezig.', 'Ten! Nice going.'));
+      if (!o || recordBijStart >= 10) meld(t('Tien! Lekker bezig.', 'Ten! Nice going.'));
       if (!rustig()) {
         confetti = Array.from({ length: 70 }, () => ({
           x: Math.random() * B, y: -20 - Math.random() * H * 0.4, vx: (Math.random() - 0.5) * 120, vy: 120 + Math.random() * 220,
@@ -359,7 +368,7 @@ export function speel(o) {
     eindeEl.innerHTML = `
       <p class="hand">${nieuwRecord && score > 0 ? t(`${afloop}, maar wel een record!`, `${afloop}, but a new best!`) : afloop}</p>
       <p class="spel-eindscore"><b>${score}</b> ${t('keer hooggehouden', score === 1 ? 'keepy-uppie' : 'keepy-uppies')}</p>
-      ${o ? `<p class="spel-goud${isGoud(sleutel) ? ' binnen' : ''}">${isGoud(sleutel) ? t('Gouden stempel binnen voor deze plek', 'Golden stamp earned for this place') : t(`Nog ${GOUD - record()} voor een gouden stempel`, `${GOUD - record()} more for a golden stamp`)}</p>` : ''}
+      ${o ? `<p class="spel-medaille">${medaille(sleutel) ? `<strong style="color:${esc(medaille(sleutel).kleur)}">${esc(medaille(sleutel).naam)}</strong> ${t('binnen op deze plek.', 'earned in this place.')} ` : ''}${volgendeMedaille(sleutel) ? t(`Nog ${volgendeMedaille(sleutel).vanaf - record()} voor ${esc(volgendeMedaille(sleutel).naam.toLowerCase())}.`, `${volgendeMedaille(sleutel).vanaf - record()} more for ${esc(volgendeMedaille(sleutel).naam.toLowerCase())}.`) : t('Hoger kan niet!', 'Top of the podium!')}</p>` : ''}
       <p class="spel-totaal">${t(`Totaal over alle plekken: <strong>${totaalHooghouden()}</strong>`, `Total across all places: <strong>${totaalHooghouden()}</strong>`)}</p>
       <div class="acties">
         <button type="button" class="knop primair" id="spel-opnieuw">${t('Nog een keer', 'Again')}</button>

@@ -510,7 +510,27 @@
           "naam": "Sauna of jacuzzi"
         }
       ]
-    }
+    },
+    "medailles": [
+      {
+        "id": "brons",
+        "naam": "Brons",
+        "vanaf": 10,
+        "kleur": "#B0713A"
+      },
+      {
+        "id": "zilver",
+        "naam": "Zilver",
+        "vanaf": 25,
+        "kleur": "#8E99A4"
+      },
+      {
+        "id": "goud",
+        "naam": "Goud",
+        "vanaf": 40,
+        "kleur": "#D4A017"
+      }
+    ]
   },
   "opties": [
     {

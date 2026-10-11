@@ -13,7 +13,7 @@ import { motief, heeftMotief } from './motifs.js';
 import { icoon } from './icons.js';
 import { statusLabel, hartKnop, bolletjes, beren, bronnenBlok, toast, rolLabel, kenmerkChips, huisHart, luxeUitleg } from './ui.js';
 import * as kaart from './map.js';
-import { GOUD, isGoud } from './game.js';
+import { medaille, volgendeMedaille } from './game.js';
 
 const TABS = [
   ['kort', 'In het kort', 'At a glance'],
@@ -184,14 +184,15 @@ function tabKort(o) {
 // Wat je op deze plek kunt verdienen: de stempel heb je al, de gouden rand win je met het spel van deze plek.
 function missie(o) {
   const record = staat().hooghoud?.[o.id] ?? 0;
-  const goud = isGoud(o.id);
+  const nu = medaille(o.id);
+  const straks = volgendeMedaille(o.id);
   const inTop = staat().top3.includes(o.id);
   const regel = (klaar, tekst) => `<li class="${klaar ? 'klaar' : ''}"><span class="vinkvak">${klaar ? icoon('check') : ''}</span><span>${tekst}</span></li>`;
   return `<section class="missie">
     <p class="kicker">${t('Te verdienen op deze plek', 'To earn in this place')}</p>
     <ul>
       ${regel(true, t('Stempel in je paspoort', 'Stamp in your passport'))}
-      ${regel(goud, goud ? t(`Gouden rand om je stempel (record ${record})`, `Golden rim on your stamp (best ${record})`) : t(`Gouden rand: houd ${GOUD} keer hoog${record ? ` (record ${record})` : ''}`, `Golden rim: do ${GOUD} keepy-uppies${record ? ` (best ${record})` : ''}`))}
+      ${regel(!straks, `${nu ? `<strong style="color:${esc(nu.kleur)}">${esc(nu.naam)}</strong> ${t('binnen', 'earned')}${record ? t(` (record ${record})`, ` (best ${record})`) : ''}. ` : ''}${straks ? t(`${esc(straks.naam)}: houd ${straks.vanaf} keer hoog${!nu && record ? ` (record ${record})` : ''}`, `${esc(straks.naam)}: do ${straks.vanaf} keepy-uppies${!nu && record ? ` (best ${record})` : ''}`) : t('Hoger kan niet!', 'Top of the podium!')}`)}
       ${regel(inTop, inTop ? t('Staat in je top 3', 'In your top 3') : t('Vind je het wat? Zet hem in je top 3 met het hartje bovenaan', 'Like it? Put it in your top 3 with the heart at the top'))}
     </ul>
     <button type="button" class="knop primair spelknop" data-spel="${esc(o.id)}">${icoon('hooghouden')}${esc(o.spel?.naam ?? t('Hooghouden', 'Keepy-uppies'))}</button>

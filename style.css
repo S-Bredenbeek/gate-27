@@ -909,13 +909,13 @@ button.matchbalk div span { text-decoration: underline; text-underline-offset: 3
 .missie li.klaar .vinkvak { background: var(--groen); border-color: var(--groen); color: #fff; }
 .missie li.klaar { color: var(--dim); }
 .missie .spelknop { margin-top: 0; }
-.spel-goud { margin: -6px 0 10px; font-weight: 600; color: #8A6500; }
-.spel-goud.binnen { color: var(--groen); }
-
-.pp-stempel.goud { position: relative; }
-.pp-stempel.goud::before { content: ''; position: absolute; inset: 2px; border-radius: 50%; border: 4px solid #D4A017; box-shadow: 0 0 0 2px #FFF3C4, 0 0 14px rgba(212, 160, 23, .55); }
-.pp-stempel.goud::after { content: '★'; position: absolute; top: 0; right: 4px; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #D4A017; color: #fff; font-size: .9rem; }
-.goudteller { color: #F3D99A; font-size: .82rem; }
+.spel-medaille { margin: -6px 0 10px; font-weight: 600; }
+.pp-stempel.medaille { position: relative; }
+.pp-stempel.medaille::before { content: ''; position: absolute; inset: 2px; border-radius: 50%; border: 4px solid var(--medaille); box-shadow: 0 0 0 2px #FFF8E6, 0 0 12px color-mix(in srgb, var(--medaille) 55%, transparent); }
+.pp-stempel.medaille::after { content: '★'; position: absolute; top: 0; right: 4px; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--medaille); color: #fff; font-size: .9rem; }
+.medailleteller { display: flex; flex-wrap: wrap; gap: 4px 12px; color: #F3D99A; font-size: .82rem; }
+.medailleteller span { display: inline-flex; align-items: center; gap: 5px; }
+.medailleteller i { width: 12px; height: 12px; border-radius: 50%; background: var(--medaille); box-shadow: 0 0 0 1.5px #fff; }
 
 @media (prefers-reduced-motion: reduce) { .verrasknop, .stappen li.nu .stapnr { animation: none; } }
 

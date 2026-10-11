@@ -17,7 +17,7 @@ import { toonHuizen } from './js/houses.js';
 import { poppetje, KEUZES, UITERLIJK } from './js/avatar.js';
 import { thema } from './js/patterns.js';
 import { motief, heeftMotief } from './js/motifs.js';
-import { speel, stopSpel, totaalHooghouden, isGoud } from './js/game.js';
+import { speel, stopSpel, totaalHooghouden, medaille } from './js/game.js';
 import { mijnCode, leesCodes, uitslag, huizenUitslag, vanCode } from './js/group.js';
 import { figuurNaam } from './js/extras.js';
 import { tekenAnsichtkaart, kaartNaam } from './js/postcard.js';
@@ -465,7 +465,7 @@ function reisStappen() {
   const totaal = opties().length;
   const gezien = s.bezocht.length;
   const over = totaal - gezien;
-  const goud = opties().filter((o) => isGoud(o.id)).length;
+  const goud = opties().filter((o) => medaille(o.id)).length;
   const nu = gezien < DOEL_VERGELIJKEN ? 1 : s.top3.length < 3 ? 2 : !s.gedeeld ? 3 : 4;
   const stap = (n, titel, uitleg) => `<li class="${n < nu ? 'klaar' : n === nu ? 'nu' : ''}"${n === nu ? ' aria-current="step"' : ''}>
       <span class="stapnr">${n < nu ? icoon('check') : n}</span>
@@ -493,7 +493,7 @@ function reisStappen() {
     <div class="reisbalk" role="img" aria-label="${t(`${gezien} van ${totaal} plekken ontdekt`, `${gezien} of ${totaal} places discovered`)}">
       ${opties().map((o, i) => `<i class="${i < gezien ? 'aan' : ''}${i + 1 === DOEL_VERGELIJKEN ? ' mijlpaal' : ''}"></i>`).join('')}
     </div>
-    <p class="reisstand"><strong>${gezien}/${totaal}</strong> ${t('ontdekt', 'discovered')}${goud ? ` · <strong>${goud}</strong> ${t('goud', 'gold')}` : ''} <span class="hand">${aanmoediging}</span></p>
+    <p class="reisstand"><strong>${gezien}/${totaal}</strong> ${t('ontdekt', 'discovered')}${goud ? ` · <strong>${goud}</strong> ${goud === 1 ? t('medaille', 'medal') : t('medailles', 'medals')}` : ''} <span class="hand">${aanmoediging}</span></p>
     <div class="reisactie">${actie}</div>
     <ol class="stappen">
       ${stap(1, t('Ontdek de plekken', 'Discover the places'), t('Vlieg erheen, verzamel stempels', 'Fly there, collect stamps'))}
@@ -606,7 +606,7 @@ function toonWelkom(o) {
     <p class="hand">${t(`stempel ${aantal} van ${totaal} in je paspoort`, `stamp ${aantal} of ${totaal} in your passport`)}</p>
     <p class="welkom-duw">${aantal === totaal ? t('Dat was de laatste. Je hebt alles gezien!', "That was the last one. You've seen it all!") : aantal < DOEL_VERGELIJKEN ? t(`Nog ${DOEL_VERGELIJKEN - aantal} en je kunt je top 3 kiezen.`, `${DOEL_VERGELIJKEN - aantal} more and you can pick your top 3.`) : aantal === DOEL_VERGELIJKEN ? t('Je kunt nu je top 3 kiezen. Of vlieg lekker door.', 'You can now pick your top 3. Or just keep flying.') : t(`Nog ${totaal - aantal} geheimen over.`, `${totaal - aantal} secrets left.`)}</p>
     <button type="button" class="knop licht groot" id="welkom-verder">${t('Kijk rond', 'Look around')}${icoon('verder')}</button>
-    <button type="button" class="knop groot welkom-spel" id="welkom-spel">${icoon('hooghouden')}${t(`Verdien goud: ${esc(o.spel?.naam ?? 'hooghouden')}`, `Earn gold: ${esc(o.spel?.naam ?? 'keepy-uppies')}`)}</button>
+    <button type="button" class="knop groot welkom-spel" id="welkom-spel">${icoon('hooghouden')}${t(`Verdien een medaille: ${esc(o.spel?.naam ?? 'hooghouden')}`, `Earn a medal: ${esc(o.spel?.naam ?? 'keepy-uppies')}`)}</button>
   </div>`;
   el.welkom.hidden = false;
   const knop = $('#welkom-verder');
