@@ -129,7 +129,8 @@
           "Super Bock",
           "Sagres"
         ],
-        "stekker": "Type F"
+        "stekker": "Type F",
+        "intro": "Vier heel verschillende kanten van Portugal: kliffen, lagunes, paleizen en wijnoogst."
       },
       "Albanië": {
         "welkom": "Mirë se vini",
@@ -148,7 +149,8 @@
           "Birra Korça",
           "Birra Tirana"
         ],
-        "stekker": "Type F"
+        "stekker": "Type F",
+        "intro": "Drie varianten: stad en cultuur, strand, of een ruige kust. Het avontuurlijkste land van de lijst."
       },
       "Spanje": {
         "welkom": "Bienvenidos",
@@ -167,7 +169,8 @@
           "Victoria (uit Málaga)",
           "Cruzcampo"
         ],
-        "stekker": "Type F"
+        "stekker": "Type F",
+        "intro": "Eén plek in Spanje: tapas, padel in elk dorp en een stad om de hoek."
       },
       "Kroatië": {
         "welkom": "Dobrodošli",
@@ -186,7 +189,8 @@
           "Ožujsko",
           "Karlovačko"
         ],
-        "stekker": "Type F"
+        "stekker": "Type F",
+        "intro": "Eén plek in Kroatië: de kortste reis van deur tot zwembad, met eilanden als dagtrip."
       },
       "Turkije": {
         "welkom": "Hoş geldiniz",
@@ -204,7 +208,8 @@
         "pils": [
           "Efes"
         ],
-        "stekker": "Type F"
+        "stekker": "Type F",
+        "intro": "Eén plek in Turkije: de warmste zee van de lijst en eindeloze mezetafels."
       },
       "Malta": {
         "welkom": "Merħba",
@@ -222,7 +227,8 @@
         "pils": [
           "Cisk"
         ],
-        "stekker": "Type G (reisstekker nodig)"
+        "stekker": "Type G (reisstekker nodig)",
+        "intro": "Eén plek op Malta: stenen boerderijen, oeroude tempels en een dorpsplein om de hoek."
       },
       "Griekenland": {
         "welkom": "Kaló taxídi",
@@ -241,7 +247,8 @@
           "Mythos",
           "Alfa"
         ],
-        "stekker": "Type F"
+        "stekker": "Type F",
+        "intro": "Eén Grieks eiland: taverna's, turquoise baaien en weinig drukte."
       },
       "Italië": {
         "welkom": "Benvenuti",
@@ -259,7 +266,8 @@
         "pils": [
           "Birra Messina"
         ],
-        "stekker": "Type F, soms type L (reisstekker handig)"
+        "stekker": "Type F, soms type L (reisstekker handig)",
+        "intro": "Eén plek in Italië: barokstadjes, granita als ontbijt en de beste keuken van de lijst."
       }
     },
     "carriers": {
@@ -380,97 +388,101 @@
     },
     "scorecriteria_namen": {
       "zon_zee": "Zon en zee",
-      "value": "Waar voor je geld",
+      "value": "Prijs-kwaliteit",
       "eten": "Eten",
       "natuur": "Natuur",
       "cultuur": "Cultuur",
-      "bier": "Bierprijs",
+      "bier": "Bierscore",
       "reisgemak": "Reisgemak",
       "veiligheid": "Veiligheid",
       "exotisch": "Avontuur"
     },
     "groep_figuren": {
-      "toelichting": "De cartoonversie van de groep, zonder namen. Pas haar, huid, bril en baard aan tot het klopt; 'profiel' bepaalt met welke koffer iemand begint.",
+      "toelichting": "De cartoonversie van de groep, zonder namen. 'stel' koppelt twee figuren aan elkaar (voor de kamerverdeling), 'profiel' bepaalt met welke koffer iemand begint. Haar: kort, kuif, krul, lang, golvend, knot, staart of kaal. Shirtmotief: streep, zebra of ruit.",
       "lijst": [
         {
           "id": "f1",
-          "profiel": "guys",
-          "huid": "#EDBE98",
-          "haar": "kort",
-          "haarkleur": "#5A3A22",
-          "shirt": "#2E86AB",
-          "baard": true,
-          "bril": false
+          "profiel": "dames",
+          "stel": 1,
+          "huid": "#F6D3B8",
+          "haar": "golvend",
+          "haarkleur": "#B98A4E",
+          "shirt": "#F2F2EC",
+          "bril_op_hoofd": true
         },
         {
           "id": "f2",
           "profiel": "dames",
-          "huid": "#F6D3B8",
+          "stel": 2,
+          "huid": "#EDBE98",
           "haar": "lang",
-          "haarkleur": "#C99A4B",
-          "shirt": "#E4572E",
-          "baard": false,
-          "bril": false
+          "haarkleur": "#2B1D14",
+          "shirt": "#6E7480"
         },
         {
           "id": "f3",
           "profiel": "guys",
+          "stel": 1,
           "huid": "#F6D3B8",
-          "haar": "kort",
-          "haarkleur": "#C99A4B",
-          "shirt": "#3D9970",
-          "baard": false,
-          "bril": true
+          "haar": "kuif",
+          "haarkleur": "#3B2A1E",
+          "shirt": "#EFE6D2",
+          "groot": true
         },
         {
           "id": "f4",
-          "profiel": "dames",
+          "profiel": "guys",
+          "stel": 2,
           "huid": "#EDBE98",
-          "haar": "knot",
-          "haarkleur": "#2B1D14",
-          "shirt": "#F2B134",
-          "baard": false,
-          "bril": false
+          "haar": "kuif",
+          "haarkleur": "#4A3324",
+          "shirt": "#F4EFE0",
+          "shirtmotief": "streep",
+          "shirtaccent": "#3F6FB5",
+          "stoppels": true
         },
         {
           "id": "f5",
           "profiel": "guys",
-          "huid": "#D49B6E",
-          "haar": "krul",
-          "haarkleur": "#2B1D14",
-          "shirt": "#F2B134",
-          "baard": false,
-          "bril": false
+          "stel": 3,
+          "huid": "#F6D3B8",
+          "haar": "kort",
+          "haarkleur": "#6B4A2F",
+          "shirt": "#EFE6D2",
+          "baard": true,
+          "zonnebril": true
         },
         {
           "id": "f6",
-          "profiel": "dames",
+          "profiel": "guys",
           "huid": "#F6D3B8",
-          "haar": "staart",
-          "haarkleur": "#8A5A2B",
-          "shirt": "#8E5572",
-          "baard": false,
-          "bril": true
+          "haar": "kuif",
+          "haarkleur": "#2B1D14",
+          "shirt": "#5A5F68",
+          "shirtmotief": "ruit",
+          "shirtaccent": "#D9DCE0",
+          "bril_op_hoofd": true
         },
         {
           "id": "f7",
-          "profiel": "guys",
-          "huid": "#EDBE98",
-          "haar": "kaal",
-          "haarkleur": "#5A3A22",
-          "shirt": "#22313F",
-          "baard": true,
-          "bril": false
+          "profiel": "dames",
+          "stel": 3,
+          "huid": "#F6D3B8",
+          "haar": "lang",
+          "haarkleur": "#8A6A45",
+          "shirt": "#F2F2EC",
+          "shirtmotief": "zebra",
+          "shirtaccent": "#1A2233",
+          "zonnebril": true
         },
         {
           "id": "f8",
-          "profiel": "dames",
-          "huid": "#D49B6E",
-          "haar": "lang",
+          "profiel": "guys",
+          "huid": "#EDBE98",
+          "haar": "kort",
           "haarkleur": "#2B1D14",
-          "shirt": "#2E86AB",
-          "baard": false,
-          "bril": false
+          "shirt": "#EFE6D2",
+          "zonnebril": true
         },
         {
           "id": "k1",

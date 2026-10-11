@@ -17,6 +17,7 @@ const WEERGAVEN = [
 
 let bril = 'ik';
 let weergave = 'scores';
+let sortering = 'score'; // of 'rondje'
 
 // Door wiens ogen kijken we: eigen keuzes, of de standaard van een profiel.
 function blik() {
@@ -30,7 +31,10 @@ const bekend = () => opties().filter((o) => staat().bezocht.includes(o.id));
 
 function gesorteerd(b) {
   const lijst = bekend().map((o) => ({ o, score: b.kids ? null : persoonlijkeScore(o, b.gewichten, b.koffer) }));
-  if (b.kids) {
+  const rondje = (o) => o.pils?.rondje_mannen ?? Infinity;
+  if (sortering === 'rondje' && weergave === 'scores') {
+    lijst.sort((x, y) => rondje(x.o) - rondje(y.o));
+  } else if (b.kids) {
     lijst.sort((x, y) => y.o.kidscheck.oordeel - x.o.kidscheck.oordeel || x.o.kidscheck.transfer_min - y.o.kidscheck.transfer_min);
   } else {
     lijst.sort((x, y) => (y.score ?? -1) - (x.score ?? -1));
@@ -80,6 +84,11 @@ export function toonVergelijk(el, gevraagd) {
       ${WEERGAVEN.map(([id, naam]) => `<button type="button" role="tab" id="vgl-tab-${id}" data-weergave="${id}" aria-controls="vgl-paneel">${naam}</button>`).join('')}
     </div>
     <div id="vgl-paneel" role="tabpanel">
+      <fieldset class="segment klein" id="sortering">
+        <legend>Sorteer op</legend>
+        <label><input type="radio" name="sortering" value="score"${sortering === 'score' ? ' checked' : ''}><span>Jouw score</span></label>
+        <label><input type="radio" name="sortering" value="rondje"${sortering === 'rondje' ? ' checked' : ''}><span>Goedkoopste rondje</span></label>
+      </fieldset>
       <p class="klein" id="vgl-uitleg"></p>
       <div class="tabelwrap"><table class="vgl-tabel" id="vgl-tabel"></table></div>
     </div>
@@ -120,6 +129,8 @@ export function toonVergelijk(el, gevraagd) {
         ? 'Gesorteerd op jouw score. Kosten per persoon gelden voor de sterkste huiskeuze en zijn een indicatie.'
         : `Door de ogen van ${profiel(bril).naam}: de standaardwensen en standaardweging van dit profiel.`;
 
+    el.querySelector('#sortering').hidden = weergave !== 'scores';
+    if (sortering === 'rondje' && weergave === 'scores') uitleg.textContent = 'Gesorteerd op de prijs van een rondje voor de mannen, goedkoopste bovenaan.';
     const { kop, cellen } = KOLOMMEN[weergave](b);
     tabel.className = `vgl-tabel vgl-${weergave}`;
     tabel.innerHTML = `
@@ -142,6 +153,10 @@ export function toonVergelijk(el, gevraagd) {
     }
   }
 
+  el.querySelector('#sortering').addEventListener('change', (e) => {
+    sortering = e.target.value;
+    tekenTabel();
+  });
   el.querySelector('#bril').addEventListener('change', (e) => {
     bril = e.target.value;
     tekenSchuifjes();
@@ -181,11 +196,11 @@ const KOLOMMEN = {
     const telt = (c) => (b.gewichten[c] ?? 0) > 0;
     return {
       kop: criteria().map((c) => `<th scope="col" class="${telt(c) ? 'telt' : ''}" title="${esc(meta().scorecriteria[c])}">${esc(critNaam(c))}${telt(c) ? `<small>weegt ${b.gewichten[c]}×</small>` : ''}</th>`).join('')
-        + '<th scope="col">Kosten p.p.<small>indicatie</small></th>',
+        + '<th scope="col">Rondje</th><th scope="col">Kosten p.p.<small>indicatie</small></th>',
       cellen: (o) => criteria().map((c) => {
         const [s, tekst] = o.scores?.[c] ?? [0, ''];
         return `<td data-label="${esc(critNaam(c))}" class="${telt(c) ? 'telt' : ''}" title="${esc(tekst)}">${bolletjes(s)}</td>`;
-      }).join('') + `<td data-label="Kosten p.p. (indicatie)" class="getal">${euro(kosten(o, o.huizen[0]).totaal)}</td>`,
+      }).join('') + `<td data-label="Rondje voor de mannen" class="getal">${o.pils?.rondje_mannen == null ? '?' : euro(o.pils.rondje_mannen, 2)}</td><td data-label="Kosten p.p. (indicatie)" class="getal">${euro(kosten(o, o.huizen[0]).totaal)}</td>`,
     };
   },
 

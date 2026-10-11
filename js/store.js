@@ -13,6 +13,12 @@ const standaard = () => ({
   top3: [],
   bezocht: [],
   huis: {},
+  hooghoud: {},
+  jogo: 0,
+  kamers: {},
+  paklijst: {},
+  kv: {},
+  codes: '',
 });
 
 let geheugen = standaard();

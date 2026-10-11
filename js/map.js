@@ -75,10 +75,10 @@ function wis() {
 }
 
 // Ontdekte opties als pin, de rest als wolk per land. Met een actieve groep staat de rest op de achtergrond.
-function tekenOverzicht(bezocht, actieveGroep) {
+function tekenOverzicht(bezocht, actiefLand) {
   const wolken = new Map();
   for (const o of opties()) {
-    const eigen = !actieveGroep || o.groep === actieveGroep;
+    const eigen = !actiefLand || o.land === actiefLand;
     if (bezocht.includes(o.id)) {
       const pin = L.marker([o.lat, o.lng], {
         icon: L.divIcon({ className: 'pin', html: pinHtml(landKleur(o)), iconSize: [30, 38], iconAnchor: [15, 37] }),
@@ -87,10 +87,10 @@ function tekenOverzicht(bezocht, actieveGroep) {
         opacity: eigen ? 1 : 0.35,
         riseOnHover: true,
       }).addTo(laagOpties);
-      pin.bindTooltip(esc(o.naam), { direction: 'top', offset: [0, -34], className: 'pinlabel', permanent: !!actieveGroep && eigen });
+      pin.bindTooltip(esc(o.naam), { direction: 'top', offset: [0, -34], className: 'pinlabel', permanent: !!actiefLand && eigen });
       pin.on('click', () => terug.opPin(o.id));
     } else {
-      const sleutel = `${o.groep}|${o.land}`;
+      const sleutel = o.land;
       if (!wolken.has(sleutel)) wolken.set(sleutel, { o, lijst: [], eigen });
       wolken.get(sleutel).lijst.push(o);
     }
@@ -107,7 +107,7 @@ function tekenOverzicht(bezocht, actieveGroep) {
       alt: `Geheime bestemming in ${o.land}`,
       opacity: eigen ? 1 : 0.45,
     }).addTo(laagWolken);
-    wolk.on('click', () => terug.opWolk(o.groep));
+    wolk.on('click', () => terug.opWolk(o.land));
   }
 }
 
@@ -119,15 +119,15 @@ export function toonHal(bezocht) {
   pas([[v.lat, v.lng], ...opties().map((o) => [o.lat, o.lng])], { maxZoom: 5 });
 }
 
-export function toonGate(groepId, bezocht) {
+export function toonGate(landNaam, bezocht) {
   if (!kaart) return;
   wis();
-  tekenOverzicht(bezocht, groepId);
-  const punten = opties().filter((o) => o.groep === groepId).map((o) => [o.lat, o.lng]);
+  tekenOverzicht(bezocht, landNaam);
+  const punten = opties().filter((o) => o.land === landNaam).map((o) => [o.lat, o.lng]);
   if (!punten.length) return;
   // wat lucht rond de groep, zodat de wolken helemaal in beeld zijn
   const g = L.latLngBounds(punten);
-  pas([[g.getSouth() - 1.6, g.getWest() - 2], [g.getNorth() + 1.6, g.getEast() + 2]], { maxZoom: 6 });
+  pas([[g.getSouth() - 1.6, g.getWest() - 2], [g.getNorth() + 1.6, g.getEast() + 2]], { maxZoom: 6.5 });
 }
 
 export function toonBestemming(o, gekozen, opHuis, animeer = true) {

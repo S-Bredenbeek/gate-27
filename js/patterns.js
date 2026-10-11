@@ -1,6 +1,8 @@
 // Herhalende landpatronen als SVG-tegel, gekozen op trefwoorden uit meta.landen[land].patroon.
 // Eén patroon per land, getekend in één lijnkleur, bedoeld om met lage dekking achter tekst te liggen.
 
+import { land, themaStijl } from './data.js';
+
 const TEGELS = [
   [/azulejo/i, (k) => `<g fill="none" stroke="${k}" stroke-width="2"><rect x="1" y="1" width="58" height="58"/><circle cx="30" cy="30" r="7"/><circle cx="0" cy="0" r="12"/><circle cx="60" cy="0" r="12"/><circle cx="0" cy="60" r="12"/><circle cx="60" cy="60" r="12"/></g><g fill="${k}"><path d="M30 8q7 12 0 20-7-8 0-20zM30 52q7-12 0-20-7 8 0 20zM8 30q12-7 20 0-8 7-20 0zM52 30q-12-7-20 0 8 7 20 0z"/></g>`],
   [/weef/i, (k) => `<g fill="none" stroke="${k}" stroke-width="2.5" stroke-linejoin="miter"><path d="M0 15l15-15 15 15 15-15 15 15M0 45l15-15 15 15 15-15 15 15M0 75l15-15 15 15 15-15 15 15"/></g><g fill="${k}"><path d="M15 26l5 5-5 5-5-5zM45 26l5 5-5 5-5-5zM30 54l4 4-4 4-4-4zM0 54l4 4-4 4-4-4zM60 54l4 4-4 4-4-4z"/></g>`],
@@ -18,4 +20,12 @@ export function patroon(beschrijving, kleur) {
   const tegel = (TEGELS.find(([trefwoord]) => trefwoord.test(beschrijving ?? '')) ?? [null, STIPPEN])[1];
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">${tegel(kleur)}</svg>`;
   return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+
+// Het volledige landthema als inline stijl: kleuren, het patroon voor op de basiskleur
+// en een heel lichte versie voor achter de hele pagina. Werkt met een optie of met { land: naam }.
+export function thema(o) {
+  const l = land(o);
+  const k = l.kleuren ?? {};
+  return `${themaStijl(o)};--patroon:${patroon(l.patroon, k.licht ?? '#FFFFFF')};--patroon-zacht:${patroon(l.patroon, `${k.basis ?? '#12305A'}16`)};--patroon-accent:${patroon(l.patroon, k.accent ?? '#E3A72F')}`;
 }

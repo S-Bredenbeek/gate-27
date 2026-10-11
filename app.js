@@ -2,7 +2,7 @@
 // zoals de instapkaart, de vlucht, de aankomst, het paspoort en de top 3.
 
 import {
-  laadData, meta, opties, optie, groepen, groep, optiesVan, categorieen, criteria, land,
+  laadData, meta, opties, optie, landNamen, optiesIn, categorieen, criteria, land,
   profiel, kiesbareProfielen, profielGewichten, koffermatch, kosten, gateLetter, gateCode,
   euro, pct, esc, themaStijl,
 } from './js/data.js';
@@ -12,8 +12,12 @@ import { toast, kopieer, hartKnop, bronnenBlok } from './js/ui.js';
 import * as kaart from './js/map.js';
 import { toonBestemming } from './js/destination.js';
 import { toonVergelijk } from './js/compare.js';
-import { poppetje, KEUZES } from './js/avatar.js';
-import { patroon } from './js/patterns.js';
+import { poppetje, KEUZES, UITERLIJK } from './js/avatar.js';
+import { thema } from './js/patterns.js';
+import { motief, heeftMotief } from './js/motifs.js';
+import { speel, stopSpel } from './js/game.js';
+import { mijnCode, leesCodes, uitslag } from './js/group.js';
+import { tekenAnsichtkaart, kaartNaam } from './js/postcard.js';
 import { stempel, kanteling } from './js/stamps.js';
 import { toestelZij } from './js/plane.js';
 import { flaps, regels, draai } from './js/board.js';
@@ -37,7 +41,7 @@ const el = {
   vluchtinfo: $('#vluchtinfo'),
 };
 
-const SCHERMEN = ['start', 'koffer', 'hal', 'gate', 'b', 'vergelijk'];
+const SCHERMEN = ['start', 'koffer', 'hal', 'gate', 'b', 'vergelijk', 'uitslag'];
 let kaartOk = false;
 let stopVlucht = null;
 
@@ -45,7 +49,8 @@ const rustig = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const sterksteKosten = (o) => kosten(o, o.huizen[0]).totaal;
 const ontdekt = (id) => staat().bezocht.includes(id);
 const figuren = () => meta().groep_figuren?.lijst ?? [];
-const themaMetPatroon = (o, kleur) => `${themaStijl(o)};--patroon:${patroon(land(o).patroon, kleur ?? land(o).kleuren?.basis ?? '#12305A')}`;
+const themaMetPatroon = (o) => thema(o);
+const landMotieven = (naam) => (meta().landen[naam]?.motieven ?? []).filter(heeftMotief).map((m) => motief(m)).join('');
 
 // ---------- begin ----------
 
@@ -65,7 +70,7 @@ async function begin() {
   $('#btn-koffer').innerHTML = icoon('koffer');
   el.terug.innerHTML = `${icoon('terug')}<span>Vertrekhal</span>`;
 
-  kaartOk = kaart.maakKaart({ opPin: instappen, opWolk: (groepId) => (location.hash = `#/gate/${groepId}`) });
+  kaartOk = kaart.maakKaart({ opPin: instappen, opWolk: (landNaam) => (location.hash = `#/gate/${encodeURIComponent(landNaam)}`) });
   window.addEventListener('hashchange', route);
   document.addEventListener('click', klik);
   $('#btn-top3').addEventListener('click', toonTop3);
@@ -114,19 +119,24 @@ function route() {
   }
   if (el.dialoog.open) el.dialoog.close();
   sluitWelkom();
+  stopSpel();
 
   if (!staat().profiel || !staat().avatar) scherm = 'start';
   else if (!SCHERMEN.includes(scherm)) scherm = 'hal';
-  if ((scherm === 'gate' && !groep(a)) || (scherm === 'b' && !optie(a))) scherm = 'hal';
+  if ((scherm === 'gate' && !landNamen().includes(a)) || (scherm === 'b' && !optie(a))) scherm = 'hal';
 
   const opPodium = ['hal', 'gate', 'b'].includes(scherm);
   document.body.dataset.scherm = scherm;
   el.start.hidden = !['start', 'koffer'].includes(scherm);
   el.podium.hidden = !opPodium;
-  el.vergelijk.hidden = scherm !== 'vergelijk';
+  el.vergelijk.hidden = !['vergelijk', 'uitslag'].includes(scherm);
   el.top.hidden = scherm === 'start';
   el.terug.hidden = scherm === 'hal';
-  if (scherm !== 'b') {
+  // in een land kleurt ook de bovenbalk mee
+  const themaLand = scherm === 'b' ? optie(a) : scherm === 'gate' ? { land: a } : null;
+  el.top.style.cssText = themaLand ? themaStijl(themaLand) : '';
+  el.top.classList.toggle('land', !!themaLand);
+  if (!themaLand) {
     el.paneel.className = 'paneel';
     el.paneel.style.cssText = '';
   }
@@ -134,8 +144,9 @@ function route() {
   if (scherm === 'start') toonStart();
   else if (scherm === 'koffer') toonKoffer();
   else if (scherm === 'hal') toonHal();
-  else if (scherm === 'gate') toonGate(groep(a));
+  else if (scherm === 'gate') toonGate(a);
   else if (scherm === 'b') aankomst(optie(a), b);
+  else if (scherm === 'uitslag') toonUitslag();
   else toonVergelijk(el.vergelijk, a);
 
   window.scrollTo(0, 0);
@@ -148,8 +159,6 @@ function route() {
 }
 
 // --- wie ben jij ---
-
-const UITERLIJK = ['huid', 'haar', 'haarkleur', 'shirt', 'baard', 'bril'];
 
 function kiesFiguur(id) {
   const f = figuren().find((x) => x.id === id);
@@ -170,7 +179,7 @@ function bouwer() {
     <div class="bouwrij"><span>Haarkleur</span><div>${KEUZES.haarkleur.map((k) => staal('haarkleur', k)).join('')}</div></div>
     <div class="bouwrij"><span>Huid</span><div>${KEUZES.huid.map((k) => staal('huid', k)).join('')}</div></div>
     <div class="bouwrij"><span>Shirt</span><div>${KEUZES.shirt.map((k) => staal('shirt', k)).join('')}</div></div>
-    <div class="bouwrij"><span>Extra</span><div>${aanuit('bril', 'Bril')}${aanuit('baard', 'Baard')}</div></div>`;
+    <div class="bouwrij"><span>Extra</span><div>${KEUZES.extra.map(([id, naam]) => aanuit(id, naam)).join('')}</div></div>`;
 }
 
 function toonStart() {
@@ -308,32 +317,46 @@ function toonHal() {
   const m = meta();
   const totaal = opties().length;
   const gezien = s.bezocht.length;
+  const rondjes = opties()
+    .filter((o) => s.bezocht.includes(o.id) && o.pils?.rondje_mannen != null)
+    .sort((a, b) => a.pils.rondje_mannen - b.pils.rondje_mannen)
+    .slice(0, 3);
   el.paneel.innerHTML = `
     <div class="kop-met-pop">${poppetje(s.avatar)}<div>
       <p class="kicker">Vertrekhal ${esc(m.vertrek.naam)}</p>
-      <h1>${s.naam ? `Hoi ${esc(s.naam)}. ` : ''}Kies een gate.</h1>
+      <h1>${s.naam ? `Hoi ${esc(s.naam)}. ` : ''}Kies een land.</h1>
     </div></div>
-    <p class="lead">Achter elke gate liggen geheime bestemmingen. Waar je landt, zie je pas als je er bent.</p>
+    <p class="lead">Elk land heeft zijn eigen geheime plekken. Waar je precies landt, zie je pas als je er bent.</p>
 
     <div class="gates">
-      ${groepen().map((g) => {
-        const lijst = optiesVan(g.id);
+      ${landNamen().map((naam) => {
+        const lijst = optiesIn(naam);
         const n = lijst.filter((o) => s.bezocht.includes(o.id)).length;
-        return `<a class="gate" href="#/gate/${esc(g.id)}">
-          <span class="gate-letter" aria-hidden="true">${gateLetter(g.id)}</span>
-          <strong>${esc(g.naam)}</strong>
+        return `<a class="gate" href="#/gate/${encodeURIComponent(naam)}" style="${thema({ land: naam })}">
+          <span class="gate-letter" aria-hidden="true">${gateLetter(naam)}</span>
+          <span class="gate-motief" aria-hidden="true">${landMotieven(naam)}</span>
+          <strong>${esc(naam)}</strong>
           <span class="gate-stand" aria-label="${n} van ${lijst.length} ontdekt">${lijst.map((o) => `<i class="${s.bezocht.includes(o.id) ? 'aan' : ''}"></i>`).join('')}</span>
         </a>`;
       }).join('')}
     </div>
 
-    <p class="voortgang"><span class="hand">${gezien === 0 ? 'nog niks ontdekt, ga maar vliegen' : gezien === totaal ? 'alles gezien!' : `${gezien} van de ${totaal} ontdekt`}</span>
-      ${gezien >= 2 ? `<a class="knop" href="#/vergelijk">Vergelijk wat je kent</a>` : ''}</p>
+    <p class="voortgang"><span class="hand">${gezien === 0 ? 'nog niks ontdekt, ga maar vliegen' : gezien === totaal ? 'alles gezien!' : `${gezien} van de ${totaal} plekken ontdekt`}</span></p>
+    <div class="acties">
+      <button type="button" class="knop" data-spel>${icoon('hooghouden')}Hooghouden</button>
+      ${gezien >= 2 ? `<a class="knop" href="#/vergelijk">Vergelijk wat je kent</a>` : ''}
+    </div>
+
+    ${rondjes.length ? `<div class="rondjes">
+      <h2>${icoon('bier')}Goedkoopste rondje</h2>
+      <ol>${rondjes.map((o) => `<li><span>${esc(o.naam)}</span><strong>${euro(o.pils.rondje_mannen, 2)}</strong></li>`).join('')}</ol>
+      <p class="klein">Van de plekken die je al kent.</p>
+    </div>` : ''}
 
     <h2>Vertrekbord</h2>
     <div class="bord" id="bord"><ul>${opties().map(bordRij).join('')}</ul></div>
 
-    <div class="groepje" aria-hidden="true">${figuren().map((f) => poppetje(f.id === s.figuur ? s.avatar : f, f.id === s.figuur ? 'ik' : '')).join('')}</div>
+    <div class="groepje" aria-hidden="true">${figuren().map((f) => poppetje(f.id === s.figuur ? { ...f, ...s.avatar } : f, `${f.id === s.figuur ? 'ik' : ''}${f.groot ? ' groot' : ''}`)).join('')}</div>
     <p class="hand midden">${esc(m.groep)}</p>
     ${bronnenBlok()}`;
   draai($('#bord'));
@@ -349,7 +372,7 @@ function mysterieKaart(o) {
     .filter((c) => o.mogelijkheden?.[c.id]?.[0] === 'ja')
     .sort((a, b) => s.koffer.includes(b.id) - s.koffer.includes(a.id))
     .slice(0, 4);
-  return `<article class="mysterie">
+  return `<article class="mysterie" style="${thema(o)}">
     <header><span class="gatecode">${gateCode(o)}</span><strong>Mysterievlucht</strong><span class="vraagteken" aria-hidden="true">?</span></header>
     <div class="mysterie-in">
       <p class="hand">hier kan in elk geval:</p>
@@ -389,17 +412,23 @@ function ontdekteKaart(o) {
   </article>`;
 }
 
-function toonGate(g) {
+function toonGate(naam) {
   const s = staat();
-  const lijst = optiesVan(g.id);
+  const lijst = optiesIn(naam);
+  const l = meta().landen[naam] ?? {};
   const open = lijst.filter((o) => !s.bezocht.includes(o.id)).length;
+  el.paneel.className = 'paneel thema';
+  el.paneel.style.cssText = thema({ land: naam });
   el.paneel.innerHTML = `
-    <p class="kicker">Gate ${gateLetter(g.id)}</p>
-    <h1>${esc(g.naam)}</h1>
-    <p class="lead">${esc(g.intro)}</p>
-    <p class="hand">${open === 0 ? 'je hebt hier alles gezien' : open === 1 ? 'nog één vlucht te gaan' : `nog ${open} vluchten te ontdekken`}</p>
+    <div class="best-band">
+      <p class="kicker">Gate ${gateLetter(naam)}</p>
+      <h1>${esc(naam)}</h1>
+      <p class="best-groet"><span class="hand">${esc(l.welkom)}</span><span class="motieven" aria-hidden="true">${landMotieven(naam)}</span></p>
+    </div>
+    <p class="lead">${esc(l.intro)}</p>
+    <p class="hand">${open === 0 ? 'je hebt hier alles gezien' : open === 1 ? (lijst.length === 1 ? 'één plek, maar waar precies?' : 'nog één vlucht te gaan') : `nog ${open} plekken te ontdekken`}</p>
     <div class="optiekaarten">${lijst.map((o) => (s.bezocht.includes(o.id) ? ontdekteKaart(o) : mysterieKaart(o))).join('')}</div>`;
-  kaart.toonGate(g.id, s.bezocht);
+  kaart.toonGate(naam, s.bezocht);
 }
 
 // --- aankomst ---
@@ -464,7 +493,7 @@ function instappen(id) {
   const bekend = s.bezocht.includes(o.id);
   const streepjes = Array.from({ length: 34 }, (_, i) => `<i style="width:${1 + ((i * 7 + o.id.length) % 4)}px"></i>`).join('');
   el.dialoog.innerHTML = `
-    <div class="instapkaart${bekend ? '' : ' geheim'}" style="${bekend ? themaMetPatroon(o, land(o).kleuren?.licht) : ''}">
+    <div class="instapkaart${bekend ? '' : ' geheim'}" style="${thema(o)}">
       <header><span>Instapkaart</span><span>${esc(carrier?.naam ?? o.vlucht.maatschappijen)}</span></header>
       <div class="ik-passagier">
         <div class="ik-foto">${poppetje(s.avatar)}</div>
@@ -600,10 +629,12 @@ function toonTop3() {
         ${s.top3.length < 3 ? `<p class="klein">Nog ${3 - s.top3.length} te kiezen.</p>` : ''}`}
     </div>
     <div class="dialoog-acties">
-      <button type="button" class="knop" data-sluit>Sluiten</button>
-      <a class="knop" href="#/vergelijk">Vergelijken</a>
       <button type="button" class="knop primair" id="kopieer-top3"${leeg ? ' disabled' : ''}>${icoon('kopieer')}Mijn top 3 kopiëren</button>
+      <button type="button" class="knop" id="maak-kaart"${leeg ? ' disabled' : ''}>Ansichtkaart</button>
+      <a class="knop" href="#/uitslag">Groepsuitslag</a>
+      <button type="button" class="knop" data-sluit>Sluiten</button>
     </div>`;
+    $('#maak-kaart').addEventListener('click', toonAnsichtkaart);
     $('#kopieer-top3').addEventListener('click', async () => {
       const tekst = top3Tekst();
       el.dialoog.close();
@@ -633,11 +664,102 @@ function toonTop3() {
   el.dialoog.showModal();
 }
 
+// ---------- groepsuitslag en ansichtkaart ----------
+
+function toonUitslag() {
+  const code = mijnCode();
+  el.vergelijk.innerHTML = `<div class="vgl uitslag">
+    <p class="kicker">${esc(meta().reisdata)}</p>
+    <h1>Groepsuitslag</h1>
+    <p class="lead">Iedereen deelt zijn code in de groepsapp. Plak hier alle berichten in één keer, dan tellen we de punten.</p>
+
+    <div class="codevak">
+      <p class="kicker">Jouw code</p>
+      ${code
+        ? `<code id="mijn-code">${esc(code)}</code><button type="button" class="knop primair" id="kopieer-code">${icoon('kopieer')}Kopieer mijn code</button>`
+        : '<p>Kies eerst je top 3 met de hartjes, dan krijg je hier je code.</p>'}
+    </div>
+
+    <label class="veld" for="codes">Codes van de anderen</label>
+    <textarea id="codes" rows="4" placeholder="Plak hier de berichten uit de groepsapp. Tekst eromheen is geen probleem.">${esc(staat().codes ?? '')}</textarea>
+    <p class="klein">Een eerste plek is 3 punten waard, een tweede 2 en een derde 1. Er gaat niets naar een server.</p>
+    <div id="uitslag-lijst"></div>
+  </div>`;
+
+  const teken = () => {
+    const s = staat();
+    const eigen = code ? leesCodes(code) : [];
+    const anderen = leesCodes(s.codes ?? '').filter((d) => !eigen.some((e) => e.naam.toLowerCase() === d.naam.toLowerCase()));
+    const deelnemers = [...eigen, ...anderen];
+    const rijen = uitslag(deelnemers);
+    $('#uitslag-lijst').innerHTML = deelnemers.length ? `
+      <h2>${deelnemers.length === 1 ? '1 stem geteld' : `${deelnemers.length} stemmen geteld`}</h2>
+      <p class="dim">${deelnemers.map((d) => esc(d.naam)).join(', ')}</p>
+      <ol class="uitslaglijst">${rijen.map((r, i) => {
+        const bekend = s.bezocht.includes(r.o.id);
+        return `<li style="${themaStijl(r.o)}">
+          <span class="plek">${i + 1}</span>
+          <span class="uitslag-naam"><strong>${bekend ? esc(r.o.naam) : `Nog geheim voor jou (gate ${gateCode(r.o)})`}</strong>
+            <span class="dim">${esc(r.o.land)} · ${r.wie.map((w) => `${esc(w.naam)} (${w.plek}e)`).join(', ')}</span>
+            ${r.match == null ? '' : `<span class="dim">gezamenlijke koffermatch ${pct(r.match)}</span>`}</span>
+          <span class="punten"><b>${r.punten}</b>${r.punten === 1 ? 'punt' : 'punten'}</span>
+        </li>`;
+      }).join('')}</ol>` : '<p class="leeg">Nog geen codes gevonden.</p>';
+  };
+
+  $('#kopieer-code')?.addEventListener('click', () => kopieer(`Mijn vakantiecode: ${code}`, 'Code gekopieerd: plak hem in de groepsapp'));
+  $('#codes').addEventListener('input', (e) => {
+    wijzig({ codes: e.target.value });
+    teken();
+  });
+  teken();
+}
+
+async function toonAnsichtkaart() {
+  el.dialoog.onclick = null;
+  el.dialoog.innerHTML = `<div class="dialoog-in">
+      <h2>Je ansichtkaart</h2>
+      <canvas id="ansicht" class="ansicht" role="img" aria-label="Ansichtkaart met je top 3 en hun stempels"></canvas>
+    </div>
+    <div class="dialoog-acties">
+      <button type="button" class="knop primair" id="kaart-download">Download als PNG</button>
+      <button type="button" class="knop" id="kaart-deel" hidden>Delen</button>
+      <button type="button" class="knop" data-sluit>Sluiten</button>
+    </div>`;
+  el.dialoog.className = 'dialoog breed';
+  el.dialoog.setAttribute('aria-label', 'Ansichtkaart');
+  if (!el.dialoog.open) el.dialoog.showModal();
+  const canvas = $('#ansicht');
+  await tekenAnsichtkaart(canvas);
+  const alsBestand = () => new Promise((klaar) => canvas.toBlob((blob) => klaar(blob && new File([blob], kaartNaam(), { type: 'image/png' })), 'image/png'));
+  $('#kaart-download')?.addEventListener('click', async () => {
+    const bestand = await alsBestand();
+    if (!bestand) return toast('De kaart kon niet worden opgeslagen');
+    const link = Object.assign(document.createElement('a'), { href: URL.createObjectURL(bestand), download: bestand.name });
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(link.href), 2000);
+  });
+  const deel = $('#kaart-deel');
+  const proef = await alsBestand();
+  if (deel && proef && navigator.canShare?.({ files: [proef] })) {
+    deel.hidden = false;
+    deel.addEventListener('click', async () => {
+      try {
+        await navigator.share({ files: [await alsBestand()], title: meta().titel });
+      } catch {
+        // delen afgebroken: niets aan de hand
+      }
+    });
+  }
+}
+
 // ---------- klikken ----------
 
 function klik(e) {
   const hart = e.target.closest('[data-hart]');
   if (hart) return wisselHart(hart.dataset.hart);
+  const spel = e.target.closest('[data-spel]');
+  if (spel) return speel(optie(spel.dataset.spel) ?? optie(staat().bezocht.at(-1)) ?? null);
   const instap = e.target.closest('[data-instappen]');
   if (instap) return instappen(instap.dataset.instappen);
   if (e.target.closest('[data-sluit], dialog a') || e.target === el.dialoog) el.dialoog.close();

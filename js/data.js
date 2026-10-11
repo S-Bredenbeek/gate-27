@@ -13,9 +13,8 @@ export async function laadData() {
 export const meta = () => D.meta;
 export const opties = () => D.opties;
 export const optie = (id) => D.opties.find((o) => o.id === id);
-export const groepen = () => D.meta.groepen;
-export const groep = (id) => D.meta.groepen.find((g) => g.id === id);
-export const optiesVan = (groepId) => D.opties.filter((o) => o.groep === groepId);
+export const landNamen = () => [...new Set(D.opties.map((o) => o.land))];
+export const optiesIn = (landNaam) => D.opties.filter((o) => o.land === landNaam);
 export const categorieen = () => D.meta.mogelijkheden.categorieen;
 export const criteria = () => Object.keys(D.meta.scorecriteria);
 export const profielen = () => D.meta.profielen.lijst;
@@ -31,10 +30,9 @@ export function volwassenen() {
   return g ? g.stellen * 2 + g.singles : 8;
 }
 
-// Gate A, B, C... per groep; A1, A2... per optie binnen de groep.
-export const gateLetter = (groepId) =>
-  String.fromCharCode(65 + Math.max(0, groepen().findIndex((g) => g.id === groepId)));
-export const gateCode = (o) => gateLetter(o.groep) + (optiesVan(o.groep).indexOf(o) + 1);
+// Gate A, B, C... per land; A1, A2... per plek binnen het land.
+export const gateLetter = (landNaam) => String.fromCharCode(65 + Math.max(0, landNamen().indexOf(landNaam)));
+export const gateCode = (o) => gateLetter(o.land) + (optiesIn(o.land).indexOf(o) + 1);
 
 const NEUTRAAL = { basis: '#12305A', licht: '#F4ECDD', accent: '#E3A72F' };
 export const land = (o) => D.meta.landen[o.land] ?? { welkom: '', kleuren: NEUTRAAL, motieven: [], pils: [] };

@@ -1,12 +1,13 @@
 // De bestemmingspagina: onderste sheet op mobiel, zijpaneel op desktop, met tabbladen.
 
 import {
-  meta, groep, categorieen, criteria, critNaam, profielen, gateLetter,
+  meta, categorieen, criteria, critNaam, profielen, gateLetter,
   koffermatch, kosten, airbnbUrl, euro, pct, esc, themaStijl, volwassenen,
 } from './data.js';
 import { staat, wijzig } from './store.js';
 import { land } from './data.js';
-import { patroon } from './patterns.js';
+import { thema } from './patterns.js';
+import { pilsmeter, kostenverdeler, koppelKostenverdeler, kamerverdeling, koppelKamers, voorbereiden, koppelVoorbereiden } from './extras.js';
 import { motief, heeftMotief } from './motifs.js';
 import { icoon } from './icons.js';
 import { statusLabel, hartKnop, bolletjes, beren, bronnenBlok, toast } from './ui.js';
@@ -28,17 +29,18 @@ export function toonBestemming(paneel, o, tab, animeer) {
   if (!TABS.some(([id]) => id === tab)) tab = 'kan';
   paneel.className = 'paneel thema';
   const l = land(o);
-  paneel.style.cssText = `${themaStijl(o)};--patroon:${patroon(l.patroon, l.kleuren?.licht ?? '#FFFFFF')}`;
+  paneel.style.cssText = thema(o);
   const motieven = (l.motieven ?? []).filter(heeftMotief).map((m) => motief(m)).join('');
   const k = o.klimaat ?? {};
   paneel.innerHTML = `
     <header class="best-kop">
-      <a class="teruglink" href="#/gate/${esc(o.groep)}">${icoon('terug')}Gate ${gateLetter(o.groep)} · ${esc(groep(o.groep)?.naam)}</a>
+      <a class="teruglink" href="#/gate/${encodeURIComponent(o.land)}">${icoon('terug')}Gate ${gateLetter(o.land)} · ${esc(o.land)}</a>
       <div class="best-band">
         <div class="best-titel">
           <div>
-            <p class="kicker">${esc(o.land)} · ${esc(o.subregio)}</p>
+            <p class="kicker">${esc(o.land)}</p>
             <h1>${esc(o.naam)}</h1>
+            <p class="best-waar">${esc(o.subregio)}</p>
           </div>
           ${hartKnop(o.id, o.naam)}
         </div>
@@ -50,6 +52,8 @@ export function toonBestemming(paneel, o, tab, animeer) {
         <li>${icoon('zon')}${esc(k.lucht)}°C</li>
         <li>${icoon('golf')}${k.zee == null ? 'geen zee' : `zee ${esc(k.zee)}°C`}</li>
       </ul>
+      ${scorekaart(o)}
+      <button type="button" class="knop spelknop" data-spel="${esc(o.id)}">${icoon('hooghouden')}Hooghouden in ${esc(o.land)}</button>
     </header>
     <div class="tabs" role="tablist" aria-label="Onderdelen van ${esc(o.naam)}">
       ${TABS.map(([id, naam]) => `<button type="button" role="tab" id="tab-${id}" data-tab="${id}" aria-controls="tabinhoud">${naam}</button>`).join('')}
@@ -87,6 +91,9 @@ export function toonBestemming(paneel, o, tab, animeer) {
   }
 
   function koppel(id) {
+    koppelKamers(inhoud);
+    koppelVoorbereiden(inhoud, o);
+    koppelKostenverdeler(inhoud, kosten(o, o.huizen[huisIndex(o)]).totaal);
     for (const foto of inhoud.querySelectorAll('.huisfoto img')) {
       const mislukt = () => {
         foto.nextElementSibling.hidden = false;
@@ -116,6 +123,10 @@ export function toonBestemming(paneel, o, tab, animeer) {
     });
   }
 
+  paneel.querySelector('.scorekaart')?.addEventListener('click', () => {
+    toonTab('scores');
+    lijst.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  });
   lijst.addEventListener('click', (e) => {
     const knop = e.target.closest('[data-tab]');
     if (knop) toonTab(knop.dataset.tab);
@@ -207,6 +218,7 @@ function tabHuis(o) {
           <button type="button" class="knop" data-rit="${i}">${icoon('auto')}Rij erheen</button>
           <button type="button" class="knop" data-kieshuis="${i}" aria-pressed="${i === gekozen}">${i === gekozen ? `${icoon('check')}Kosten met dit huis` : 'Reken met dit huis'}</button>
         </div>
+        ${kamerverdeling(h)}
       </div>
     </article>`;
   }).join('');
@@ -270,7 +282,6 @@ function tabKosten(o) {
   const h = o.huizen[i];
   const k = kosten(o, h);
   const kl = o.klimaat ?? {};
-  const bier = o.pils?.prijs ?? o.lokaal?.bier;
   const keuze = o.huizen.length > 1
     ? `<label class="veld">Gerekend met
         <select id="huiskeuze">${o.huizen.map((x, n) => `<option value="${n}"${n === i ? ' selected' : ''}>${esc(x.naam)} (${esc(x.rol)})</option>`).join('')}</select>
@@ -284,6 +295,8 @@ function tabKosten(o) {
       <tfoot><tr><th scope="row">Totaal per volwassene</th><td>${euro(k.totaal)}</td></tr></tfoot>
     </table>
     ${budgetBalk(k.totaal)}
+    <h3 class="tussenkop">Wat betekent dat voor jou?</h3>
+    ${kostenverdeler()}
     <p class="klein">${esc(meta().bronnen?.kosten)}</p>
 
     <h2>Vlucht en vervoer</h2>
@@ -303,17 +316,24 @@ function tabKosten(o) {
       <li>${icoon('regen')}<strong>${esc(kl.regendagen)}</strong><span>regendagen</span></li>
     </ul>
 
-    <h2>Aan tafel</h2>
+    <h2>Pilsmeter</h2>
+    ${pilsmeter(o)}
     <dl class="weetjes">
-      <div><dt>${icoon('bier')}Pils (0,5 l van de tap)</dt><dd>${bier == null ? 'onbekend' : euro(bier, 2)}</dd></div>
       <div><dt>${icoon('restaurants')}Diner voor 2</dt><dd>${o.lokaal?.diner2 == null ? 'onbekend' : euro(o.lokaal.diner2)}</dd></div>
-    </dl>`;
+    </dl>
+    <p class="klein">${esc(meta().bronnen?.pils)}</p>`;
 }
 
-function tabVoorbereiden() {
-  return `<div class="leeg groot">${icoon('koffer')}
-    <p><strong>Vragen voor de host en de paklijst</strong></p>
-    <p>Deze twee hulpjes komen in een volgende stap op dit tabblad.</p></div>`;
+// De scorekaart staat bovenaan elke bestemming: alle scores in één oogopslag.
+// Criteria die in jouw weging meetellen zijn gemarkeerd.
+function scorekaart(o) {
+  const gewichten = staat().gewichten ?? {};
+  return `<button type="button" class="scorekaart" aria-label="Scores van ${esc(o.naam)}: bekijk de toelichting">
+    ${criteria().map((c) => {
+      const score = o.scores?.[c]?.[0] ?? 0;
+      return `<span class="sk${gewichten[c] > 0 ? ' telt' : ''}"><b>${score}</b><span class="sk-balk"><i style="width:${score * 20}%"></i></span><span class="sk-naam">${esc(critNaam(c))}</span></span>`;
+    }).join('')}
+  </button>`;
 }
 
-const TABINHOUD = { kan: tabKan, huis: tabHuis, kids: tabKids, scores: tabScores, kosten: tabKosten, voorbereiden: tabVoorbereiden };
+const TABINHOUD = { kan: tabKan, huis: tabHuis, kids: tabKids, scores: tabScores, kosten: tabKosten, voorbereiden };
